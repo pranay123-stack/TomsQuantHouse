@@ -1,0 +1,305 @@
+# Blackbox Exporter Configuration
+# Used for monitoring external endpoints and services
+
+modules:
+  # HTTP GET probe for health checks
+  http_2xx:
+    prober: http
+    timeout: 5s
+    http:
+      valid_http_versions: ["HTTP/1.1", "HTTP/2.0"]
+      valid_status_codes: [200, 201, 202]  # Allow 2xx and some 3xx codes
+      method: GET
+      headers:
+        User-Agent: "Blackbox-Exporter/1.0"
+        Accept: "application/json"
+      no_follow_redirects: false
+      fail_if_ssl: false
+      fail_if_not_ssl: false
+      tls_config:
+        insecure_skip_verify: false
+      preferred_ip_protocol: "ip4"
+
+  # HTTP POST probe for API endpoints
+  http_post_2xx:
+    prober: http
+    timeout: 10s
+    http:
+      valid_http_versions: ["HTTP/1.1", "HTTP/2.0"]
+      valid_status_codes: [200, 201, 202, 204]
+      method: POST
+      headers:
+        Content-Type: "application/json"
+        User-Agent: "Blackbox-Exporter/1.0"
+      body: '{"health_check": true}'
+      no_follow_redirects: false
+
+  # TCP probe for port connectivity
+  tcp_connect:
+    prober: tcp
+    timeout: 5s
+
+  # ICMP ping probe
+  icmp:
+    prober: icmp
+    timeout: 5s
+    icmp:
+      preferred_ip_protocol: "ip4"
+
+  # HTTPS probe with certificate validation
+  https_2xx:
+    prober: http
+    timeout: 10s
+    http:
+      valid_http_versions: ["HTTP/1.1", "HTTP/2.0"]
+      valid_status_codes: [200, 201, 202]
+      method: GET
+      tls_config:
+        insecure_skip_verify: false
+      preferred_ip_protocol: "ip4"
+
+  # DNS probe for domain resolution
+  dns_xdp:
+    prober: dns
+    timeout: 5s
+    dns:
+      query_name: "example.com"
+      query_type: "A"
+      valid_rcodes:
+        - NOERROR
+      validate_answer_rrs:
+        fail_if_matches_regexp:
+          - ".*127.0.0.1"
+        fail_if_not_matches_regexp:
+          - ".*"
+
+  # Custom trading system probe
+  trading_health_check:
+    prober: http
+    timeout: 15s
+    http:
+      valid_http_versions: ["HTTP/1.1", "HTTP/2.0"]
+      valid_status_codes: [200]
+      method: GET
+      headers:
+        User-Agent: "TradingSystem-Monitor/1.0"
+        Accept: "application/json"
+        X-Monitor-Source: "blackbox-exporter"
+      body: ""
+      fail_if_not_matches_regexp:
+        - '"status":\s*"healthy"'
+        - '"uptime":'
+      tls_config:
+        insecure_skip_verify: false
+
+  # Database connectivity probe
+  database_connectivity:
+    prober: tcp
+    timeout: 5s
+
+  # Message queue probe
+  message_queue_probe:
+    prober: tcp
+    timeout: 5s
+
+  # SSL certificate expiration probe
+  ssl_cert_check:
+    prober: http
+    timeout: 10s
+    http:
+      method: GET
+      tls_config:
+        insecure_skip_verify: false
+      headers:
+        User-Agent: "SSL-Check/1.0"
+
+# Module-specific configurations for trading system components
+
+# API Gateway Health Check
+api_gateway_check:
+  prober: http
+  timeout: 10s
+  http:
+    valid_status_codes: [200, 404]  # Allow 404 for health endpoint
+    method: GET
+    headers:
+      X-Health-Check: "true"
+      Accept: "application/json"
+
+# Trading Algorithm Endpoint
+trading_algorithm_check:
+  prober: http
+  timeout: 20s
+  http:
+    valid_status_codes: [200]
+    method: POST
+    headers:
+      Content-Type: "application/json"
+      X-Algorithm-Test: "connectivity"
+    body: '{"test": true, "algorithm": "connectivity_check"}'
+
+# Market Data Feed
+market_data_feed_check:
+  prober: http
+  timeout: 5s
+  http:
+    valid_status_codes: [200]
+    method: GET
+    headers:
+      Accept: "application/json"
+      X-Feed-Type: "real-time"
+    fail_if_not_matches_regexp:
+      - '"symbol":'
+      - '"price":'
+
+# Risk Management System
+risk_management_check:
+  prober: http
+  timeout: 15s
+  http:
+    valid_status_codes: [200]
+    method: GET
+    headers:
+      Accept: "application/json"
+      X-Context: "health_check"
+    body: ""
+
+# Portfolio Management
+portfolio_management_check:
+  prober: http
+  timeout: 10s
+  http:
+    valid_status_codes: [200]
+    method: GET
+    headers:
+      Accept: "application/json"
+      X-Service: "portfolio"
+
+# Order Management System
+order_management_check:
+  prober: http
+  timeout: 10s
+  http:
+    valid_status_codes: [200]
+    method: GET
+    headers:
+      Accept: "application/json"
+      X-Context: "health_check"
+
+# Settlement System
+settlement_system_check:
+  prober: http
+  timeout: 20s
+  http:
+    valid_status_codes: [200]
+    method: GET
+    headers:
+      Accept: "application/json"
+      X-System: "settlement"
+
+# External Market Data Providers
+external_data_provider_check:
+  prober: http
+  timeout: 10s
+  http:
+    valid_status_codes: [200, 206]  # Allow partial content
+    method: GET
+    headers:
+      Accept: "application/json"
+      X-Provider-Test: "connectivity"
+
+# Third-party APIs
+third_party_api_check:
+  prober: http
+  timeout: 15s
+  http:
+    valid_status_codes: [200, 401, 403]  # Allow auth responses
+    method: GET
+    headers:
+      X-Client-ID: "trading-system"
+      X-Environment: "production"
+    fail_if_not_matches_regexp:
+      - '"status":'
+      - '"timestamp":'
+
+# Database Health Checks
+postgresql_health_check:
+  prober: tcp
+  timeout: 5s
+
+redis_health_check:
+  prober: tcp
+  timeout: 5s
+
+# Load Balancer Health Check
+load_balancer_check:
+  prober: http
+  timeout: 5s
+  http:
+    valid_status_codes: [200]
+    method: GET
+    headers:
+      X-Load-Balancer-Check: "true"
+
+# Kubernetes API Server
+kubernetes_api_check:
+  prober: http
+  timeout: 10s
+  http:
+    valid_status_codes: [200]
+    method: GET
+    headers:
+      Accept: "application/json"
+    fail_if_not_matches_regexp:
+      - '"kind":'
+      - '"apiVersion":'
+
+# Monitoring Stack Components
+prometheus_check:
+  prober: http
+  timeout: 5s
+  http:
+    valid_status_codes: [200]
+    method: GET
+    headers:
+      Accept: "text/plain"
+
+grafana_check:
+  prober: http
+  timeout: 5s
+  http:
+    valid_status_codes: [200, 302]  # Allow redirects to login
+    method: GET
+
+alertmanager_check:
+  prober: http
+  timeout: 5s
+  http:
+    valid_status_codes: [200]
+    method: GET
+    headers:
+      Accept: "application/json"
+
+# Security and Compliance Checks
+security_scanner_check:
+  prober: http
+  timeout: 30s
+  http:
+    valid_status_codes: [200, 401]
+    method: GET
+    headers:
+      X-Security-Scan: "true"
+    fail_if_matches_regexp:
+      - "401 Unauthorized"
+      - "403 Forbidden"
+
+# Compliance and Audit Systems
+compliance_system_check:
+  prober: http
+  timeout: 15s
+  http:
+    valid_status_codes: [200]
+    method: GET
+    headers:
+      Accept: "application/json"
+      X-Compliance-Check: "true"

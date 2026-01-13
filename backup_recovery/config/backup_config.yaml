@@ -1,0 +1,205 @@
+# Backup Configuration for All Data Stores
+# Global backup settings and individual data store configurations
+
+global_settings:
+  backup_location: "s3://backup-bucket/primary-region/"
+  secondary_location: "s3://backup-bucket/dr-region/"
+  encryption:
+    enabled: true
+    algorithm: "AES-256"
+    key_rotation_days: 90
+  compression: true
+  compression_format: "gzip"
+  max_concurrent_backups: 5
+  backup_timeout: 3600  # seconds
+  notification_webhook: "https://hooks.slack.com/backup-notifications"
+  logging_level: "INFO"
+
+# Database Backup Configuration
+databases:
+  mysql:
+    connection_config: "/etc/backup/mysql.conf"
+    backup_type: "logical"  # or "physical"
+    continuous_backup: true
+    binary_log_retention_days: 7
+    schedule:
+      full_backup: "0 2 * * 0"  # Sunday 2 AM
+      incremental_backup: "0 2 * * 1-6"  # Monday-Saturday 2 AM
+    retention:
+      daily: 30
+      weekly: 12
+      monthly: 12
+      yearly: 7
+    point_in_time_recovery:
+      enabled: true
+      binlog_enabled: true
+      gtid_mode: "ON_PERMISSIVE"
+      max_backup_age: "7d"
+  
+  postgresql:
+    connection_config: "/etc/backup/postgresql.conf"
+    backup_type: "continuous_wal"
+    wal_archiving: true
+    archive_timeout: 300  # seconds
+    schedule:
+      full_backup: "0 1 * * 0"  # Sunday 1 AM
+      wal_backup: "*/15 * * * *"  # Every 15 minutes
+    retention:
+      daily: 30
+      weekly: 12
+      monthly: 12
+      yearly: 7
+    point_in_time_recovery:
+      enabled: true
+      continuous_archiving: true
+      max_backup_age: "30d"
+
+  mongodb:
+    connection_config: "/etc/backup/mongodb.conf"
+    backup_type: "oplog"
+    oplog_replay: true
+    schedule:
+      full_backup: "0 3 * * 0"  # Sunday 3 AM
+      incremental_backup: "0 */6 * * *"  # Every 6 hours
+    retention:
+      daily: 7
+      weekly: 4
+      monthly: 12
+    point_in_time_recovery:
+      enabled: true
+      oplog_window: "24h"
+      timestamp_mode: "iso8601"
+
+  redis:
+    connection_config: "/etc/backup/redis.conf"
+    backup_type: "rdb"
+    aof_enabled: true
+    schedule:
+      full_backup: "0 4 * * *"  # Daily 4 AM
+    retention:
+      daily: 7
+      weekly: 4
+    point_in_time_recovery:
+      enabled: true
+      aof_replication: true
+
+# File System Backup Configuration
+filesystems:
+  application_data:
+    source_paths:
+      - "/var/www/html"
+      - "/var/lib/application"
+    exclude_patterns:
+      - "*.tmp"
+      - "*.log"
+      - "node_modules"
+      - ".git"
+    backup_type: "rsync"
+    schedule:
+      full_backup: "0 1 * * *"
+      incremental_backup: "0 */4 * * *"
+    retention:
+      daily: 7
+      weekly: 4
+      monthly: 12
+
+  user_uploads:
+    source_paths:
+      - "/var/uploads"
+      - "/var/media"
+    backup_type: "rsync"
+    schedule:
+      full_backup: "0 2 * * *"
+      incremental_backup: "0 */2 * * *"
+    retention:
+      daily: 30
+      weekly: 12
+      monthly: 12
+
+# Container/Image Backup
+containers:
+  docker_registry:
+    schedule:
+      full_backup: "0 5 * * 0"  # Sunday 5 AM
+      tag_backup: "0 3 * * *"  # Daily 3 AM
+    retention:
+      images: 10
+      tags: 30
+
+# Cloud Storage Backup
+cloud_storage:
+  s3_buckets:
+    - name: "production-data"
+      backup_type: "cross_region_replication"
+      replication_target: "s3://backup-bucket/dr-region/production-data/"
+      schedule:
+        sync: "0 */1 * * *"  # Every hour
+      retention:
+        versions: 30
+  
+  gcs_buckets:
+    - name: "application-assets"
+      backup_type: "dual_region"
+      replication_target: "gs://backup-bucket-eu/application-assets/"
+      schedule:
+        sync: "0 */2 * * *"  # Every 2 hours
+      retention:
+        versions: 30
+
+# Application-Specific Backups
+applications:
+  wordpress:
+    wp_cli_config: "/etc/backup/wp-config.php"
+    backup_database: true
+    backup_files: true
+    backup_uploads: true
+    schedule:
+      full_backup: "0 2 * * *"
+    retention:
+      daily: 7
+      weekly: 4
+
+  elasticsearch:
+    cluster_config: "/etc/backup/elasticsearch.yml"
+    snapshot_repository: "s3_backup"
+    schedule:
+      snapshot: "0 */6 * * *"  # Every 6 hours
+    retention:
+      snapshots: 30
+
+# Cross-Region Replication Settings
+cross_region_replication:
+  primary_region: "us-east-1"
+  secondary_regions:
+    - "us-west-2"
+    - "eu-west-1"
+  replication_mode: "async"
+  max_replication_lag: 300  # seconds
+  failover_mode: "automatic"
+  health_check_interval: 60  # seconds
+
+# Encryption Settings
+encryption:
+  at_rest:
+    algorithm: "AES-256-GCM"
+    key_size: 256
+    key_rotation: "automatic"
+  in_transit:
+    protocol: "TLS 1.3"
+    cipher_suites:
+      - "TLS_AES_256_GCM_SHA384"
+      - "TLS_CHACHA20_POLY1305_SHA256"
+  key_management:
+    provider: "AWS KMS"
+    rotation_days: 90
+    backup_keys: true
+
+# Integrity Verification
+integrity_checks:
+  enabled: true
+  algorithm: "SHA-256"
+  verify_on_backup: true
+  verify_on_restore: true
+  checksum_storage: "separate_metadata_store"
+  automated_validation: true
+  validation_frequency: "daily"

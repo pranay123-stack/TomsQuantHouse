@@ -1,0 +1,176 @@
+# Security and Crypto Keys
+.crypto_keys/
+*.key
+*.pem
+*.p12
+*.pfx
+*.jks
+*.keystore
+
+# Audit Logs and Databases
+audit_logs.db
+*.db
+logs/
+*.log
+alerts/
+
+# Configuration Files (sensitive)
+.env
+.env.local
+.env.production
+config.yaml
+config.json
+security_config.yaml
+
+# IDE and Editor Files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual Environments
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.nox/
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+
+# Documentation
+docs/_build/
+
+# Operating System
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Temporary Files
+tmp/
+temp/
+*.tmp
+*.temp
+
+# Backup Files
+*.bak
+*.backup
+*.orig
+
+# Security Scan Results
+scan_results.json
+security_report_*
+*.vuln
+*.scan
+
+# Database Files
+*.sqlite
+*.sqlite3
+*.db3
+
+# Redis Dump
+dump.rdb
+
+# SSL Certificates
+*.crt
+*.csr
+*.pem
+*.p7s
+*.der
+
+# Local Development
+local_config/
+development_config/
+staging_config/
+production_config/
+
+# API Keys and Secrets
+secrets.txt
+secrets.json
+secrets.yml
+api_keys.txt
+credentials.txt
+
+# Log Files
+*.log.*
+log_*
+audit_log_*
+
+# Test Outputs
+test_outputs/
+*.testout
+test_results/
+
+# Coverage Reports
+coverage/
+coverage.xml
+htmlcov/
+
+# MyPy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre type checker
+.pyre/
+
+# Security Reports
+security_reports/
+vulnerability_reports/
+pentest_reports/
+
+# Backup Directories
+backups/
+backup_*
+
+# Compression Files
+*.zip
+*.tar
+*.tar.gz
+*.rar
+
+# Lock Files (keep requirements.txt but ignore lock files from package managers)
+# yarn.lock
+# package-lock.json
+# Pipfile.lock

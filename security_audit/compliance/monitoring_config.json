@@ -1,0 +1,94 @@
+{
+  "monitoring": {
+    "siem": {
+      "tool": "ELK Stack",
+      "version": "8.x",
+      "retention": "90 days",
+      "index_pattern": "security-*",
+      "alerts": {
+        "failed_logins": {
+          "threshold": 5,
+          "window": "5m",
+          "severity": "warning"
+        },
+        "privilege_escalation": {
+          "threshold": 1,
+          "window": "1m",
+          "severity": "critical"
+        },
+        "data_exfiltration": {
+          "threshold": "100MB",
+          "window": "1m",
+          "severity": "critical"
+        },
+        "malware_detection": {
+          "threshold": 1,
+          "window": "1m",
+          "severity": "critical"
+        }
+      }
+    },
+    "log_aggregation": {
+      "tool": "Fluentd",
+      "sources": [
+        "application_logs",
+        "security_logs",
+        "audit_logs",
+        "network_logs",
+        "system_logs"
+      ],
+      "destinations": [
+        "elasticsearch",
+        "s3_archive"
+      ]
+    },
+    "metrics_collection": {
+      "tool": "Prometheus",
+      "targets": [
+        "security_controls",
+        "vulnerability_scanners",
+        "authentication_servers",
+        "api_gateways",
+        "network_devices"
+      ],
+      "retention": "30 days"
+    },
+    "alerting": {
+      "tool": "AlertManager",
+      "channels": [
+        {
+          "type": "email",
+          "address": "security-team@company.com",
+          "severities": [
+            "critical",
+            "warning"
+          ]
+        },
+        {
+          "type": "slack",
+          "webhook": "${SLACK_WEBHOOK}",
+          "severities": [
+            "critical"
+          ]
+        },
+        {
+          "type": "pagerduty",
+          "service_key": "${PAGERDUTY_KEY}",
+          "severities": [
+            "critical"
+          ]
+        }
+      ]
+    },
+    "visualization": {
+      "tool": "Grafana",
+      "dashboards": [
+        "security-overview",
+        "vulnerability-status",
+        "incident-timeline",
+        "compliance-metrics",
+        "threat-intelligence"
+      ]
+    }
+  }
+}

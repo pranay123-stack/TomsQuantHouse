@@ -1,0 +1,71 @@
+# Requirements for Agent Communication System
+
+# Core dependencies
+asyncio-mqtt>=0.11.1      # Async MQTT client for transport
+redis>=4.5.0              # Redis client for pub/sub and storage
+aioredis>=2.0.0           # Async Redis operations
+
+# Cryptography for security
+cryptography>=41.0.0      # Encryption and digital signatures
+cryptography[utils]       # Additional cryptography utilities
+
+# Data serialization and validation
+pydantic>=2.0.0           # Data validation and serialization
+msgpack>=1.0.0            # Efficient binary serialization
+
+# Database and storage
+sqlite3                   # Built-in SQLite support
+aiosqlite>=0.19.0         # Async SQLite operations
+pandas>=2.0.0             # Data analysis and manipulation
+
+# Async and concurrency
+aiofiles>=23.0.0          # Async file operations
+aioredis-lock>=0.5.0      # Redis distributed locking
+apsw>=3.42.0              # Advanced SQLite wrapper
+
+# Monitoring and metrics
+prometheus-client>=0.17.0 # Prometheus metrics integration
+psutil>=5.9.0             # System and process utilities
+structlog>=23.0.0         # Structured logging
+
+# HTTP and web framework (for REST API)
+fastapi>=0.100.0          # Modern async web framework
+uvicorn>=0.23.0           # ASGI server for FastAPI
+httpx>=0.24.0             # Async HTTP client
+
+# Testing and development
+pytest>=7.4.0             # Testing framework
+pytest-asyncio>=0.21.0    # Async test support
+pytest-cov>=4.1.0         # Test coverage
+black>=23.0.0             # Code formatter
+flake8>=6.0.0             # Linting
+mypy>=1.5.0               # Type checking
+
+# Optional dependencies for enhanced features
+# Uncomment as needed for specific features
+
+# For advanced analytics
+# scikit-learn>=1.3.0     # Machine learning for anomaly detection
+# numpy>=1.24.0           # Numerical computations
+
+# For web UI
+# streamlit>=1.25.0       # Interactive web UI
+# plotly>=5.15.0          # Data visualization
+
+# For clustering and orchestration
+# kubernetes>=27.2.0      # Kubernetes integration
+# docker>=6.1.0           # Docker integration
+
+# For additional message transports
+# kafka-python>=2.0.2     # Apache Kafka support
+# pika>=1.3.0             # RabbitMQ support
+# websockets>=11.0.0      # WebSocket transport
+
+# For enhanced security
+# pyjwt>=2.8.0            # JSON Web Tokens
+# bcrypt>=4.0.0           # Password hashing
+
+# For cloud integration
+# boto3>=1.28.0           # AWS SDK
+# google-cloud>=0.34.0    # Google Cloud SDK
+# azure-storage-blob>=12.17.0  # Azure Storage

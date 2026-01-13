@@ -1,0 +1,114 @@
+# Performance Optimization Configuration - Staging
+# Configuration for staging environment performance optimization
+
+system_analyzer:
+  thresholds:
+    cpu_critical: 80
+    cpu_warning: 65
+    memory_critical: 75
+    memory_warning: 60
+    disk_critical: 80
+    disk_warning: 65
+    response_time_ms_critical: 2000
+    response_time_ms_warning: 1000
+    error_rate_critical: 0.02
+    error_rate_warning: 0.01
+
+database_optimizer:
+  connection_pool:
+    engine: postgresql
+    min_connections: 5
+    max_connections: 20
+    connection_timeout: 30
+    
+    database:
+      host: staging-db.internal
+      port: 5432
+      database: staging_db
+      user: staging_user
+      password: ${STAGING_DB_PASSWORD}
+  
+  query_optimizer:
+    slow_query_threshold: 0.8
+    cache_ttl: 180
+
+cache_manager:
+  l1_memory:
+    max_size_mb: 128
+    max_entries: 25000
+  
+  l2_redis:
+    enabled: true
+    namespace: staging_cache
+    redis:
+      host: redis.staging
+      port: 6379
+      db: 0
+      password: ${STAGING_REDIS_PASSWORD}
+
+load_balancer:
+  algorithm: round_robin
+  sticky_sessions: false
+  
+  backend_servers:
+    - server_id: staging-web-1
+      host: 10.1.1.10
+      port: 8080
+      weight: 1
+      max_connections: 500
+    
+    - server_id: staging-web-2
+      host: 10.1.1.11
+      port: 8080
+      weight: 1
+      max_connections: 500
+  
+  health_check:
+    check_interval: 30
+    timeout: 5
+    max_failures: 3
+
+container_optimizer:
+  orchestrator: docker
+  auto_optimization: true
+  optimization_interval: 3600
+
+performance_tester:
+  max_concurrent_requests: 50
+  
+  test_profiles:
+    load_test:
+      concurrent_users: 50
+      test_duration: 300
+      ramp_up_time: 60
+      ramp_down_time: 30
+
+auto_scaling:
+  evaluation_interval: 60
+  metrics_collection_interval: 30
+  
+  scaling_policies:
+    cpu_scaling:
+      enabled: true
+      cooldown_period: 300
+      conditions:
+        - trigger: cpu_utilization
+          operator: '>'
+          threshold: 70
+          duration_seconds: 180
+      actions:
+        - action: scale_out
+          target_value: 4
+          increment: 1
+          max_value: 6
+
+dashboard:
+  enabled: true
+  update_interval: 10
+  history_retention: 1800
+  max_history_size: 1000
+
+environment:
+  type: staging
+  cluster_name: staging-cluster
+  region: us-west-2

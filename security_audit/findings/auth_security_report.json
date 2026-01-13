@@ -1,0 +1,1285 @@
+{
+  "timestamp": "2025-11-02T10:45:27.252112",
+  "scan_type": "Authentication & Authorization Security",
+  "total_findings": 142,
+  "findings": [
+    {
+      "type": "Weak JWT Secret",
+      "severity": "HIGH",
+      "description": "JWT secret key appears to be weak or hardcoded",
+      "component": "/workspace/code/composio/auth/jwt_handler.py",
+      "evidence": "Weak or hardcoded secret found",
+      "recommendation": "Use strong, randomly generated secret keys",
+      "cwe_id": "CWE-521"
+    },
+    {
+      "type": "Weak JWT Secret",
+      "severity": "HIGH",
+      "description": "JWT secret key appears to be weak or hardcoded",
+      "component": "/workspace/code/security/auth/jwt_auth.py",
+      "evidence": "Weak or hardcoded secret found",
+      "recommendation": "Use strong, randomly generated secret keys",
+      "cwe_id": "CWE-521"
+    },
+    {
+      "type": "Weak JWT Secret",
+      "severity": "HIGH",
+      "description": "JWT secret key appears to be weak or hardcoded",
+      "component": "/workspace/code/security/security_system.py",
+      "evidence": "Weak or hardcoded secret found",
+      "recommendation": "Use strong, randomly generated secret keys",
+      "cwe_id": "CWE-521"
+    },
+    {
+      "type": "Weak JWT Secret",
+      "severity": "HIGH",
+      "description": "JWT secret key appears to be weak or hardcoded",
+      "component": "/workspace/code/security/test_security_system.py",
+      "evidence": "Weak or hardcoded secret found",
+      "recommendation": "Use strong, randomly generated secret keys",
+      "cwe_id": "CWE-521"
+    },
+    {
+      "type": "Missing Token Expiration",
+      "severity": "MEDIUM",
+      "description": "JWT tokens may not have expiration time",
+      "component": "/workspace/code/security/test_security_system.py",
+      "evidence": "No expiration logic found",
+      "recommendation": "Implement token expiration for all JWT tokens",
+      "cwe_id": "CWE-613"
+    },
+    {
+      "type": "Weak JWT Secret",
+      "severity": "HIGH",
+      "description": "JWT secret key appears to be weak or hardcoded",
+      "component": "/workspace/code/pubsub/security/security_manager.py",
+      "evidence": "Weak or hardcoded secret found",
+      "recommendation": "Use strong, randomly generated secret keys",
+      "cwe_id": "CWE-521"
+    },
+    {
+      "type": "Weak JWT Secret",
+      "severity": "HIGH",
+      "description": "JWT secret key appears to be weak or hardcoded",
+      "component": "/workspace/code/security/config/security_config.py",
+      "evidence": "Weak or hardcoded secret found",
+      "recommendation": "Use strong, randomly generated secret keys",
+      "cwe_id": "CWE-521"
+    },
+    {
+      "type": "Missing Token Expiration",
+      "severity": "MEDIUM",
+      "description": "JWT tokens may not have expiration time",
+      "component": "/workspace/code/security/middleware/security_middleware.py",
+      "evidence": "No expiration logic found",
+      "recommendation": "Implement token expiration for all JWT tokens",
+      "cwe_id": "CWE-613"
+    },
+    {
+      "type": "Weak JWT Secret",
+      "severity": "HIGH",
+      "description": "JWT secret key appears to be weak or hardcoded",
+      "component": "/workspace/code/security/testing/security_scanner.py",
+      "evidence": "Weak or hardcoded secret found",
+      "recommendation": "Use strong, randomly generated secret keys",
+      "cwe_id": "CWE-521"
+    },
+    {
+      "type": "Missing Password Salt",
+      "severity": "MEDIUM",
+      "description": "Password hashing without salt",
+      "component": "/workspace/environment/config_manager.py",
+      "evidence": "No salt usage detected",
+      "recommendation": "Always use unique salts for password hashing",
+      "cwe_id": "CWE-759"
+    },
+    {
+      "type": "Weak Password Hash",
+      "severity": "HIGH",
+      "description": "MD5 is being used for password hashing",
+      "component": "/workspace/backup_recovery/automation/backup_encryption.py",
+      "evidence": "MD5 hash function found",
+      "recommendation": "Use bcrypt, scrypt, or Argon2 for password hashing",
+      "cwe_id": "CWE-327"
+    },
+    {
+      "type": "Missing Password Salt",
+      "severity": "MEDIUM",
+      "description": "Password hashing without salt",
+      "component": "/workspace/backup_recovery/automation/backup_encryption.py",
+      "evidence": "No salt usage detected",
+      "recommendation": "Always use unique salts for password hashing",
+      "cwe_id": "CWE-759"
+    },
+    {
+      "type": "Missing Password Salt",
+      "severity": "MEDIUM",
+      "description": "Password hashing without salt",
+      "component": "/workspace/backup_recovery/automation/backup_scheduler.py",
+      "evidence": "No salt usage detected",
+      "recommendation": "Always use unique salts for password hashing",
+      "cwe_id": "CWE-759"
+    },
+    {
+      "type": "Missing Password Salt",
+      "severity": "MEDIUM",
+      "description": "Password hashing without salt",
+      "component": "/workspace/code/abacus_ai/example.py",
+      "evidence": "No salt usage detected",
+      "recommendation": "Always use unique salts for password hashing",
+      "cwe_id": "CWE-759"
+    },
+    {
+      "type": "Missing Password Salt",
+      "severity": "MEDIUM",
+      "description": "Password hashing without salt",
+      "component": "/workspace/code/letta_api/agent_communication.py",
+      "evidence": "No salt usage detected",
+      "recommendation": "Always use unique salts for password hashing",
+      "cwe_id": "CWE-759"
+    },
+    {
+      "type": "Missing Password Salt",
+      "severity": "MEDIUM",
+      "description": "Password hashing without salt",
+      "component": "/workspace/code/letta_api/backup_restore.py",
+      "evidence": "No salt usage detected",
+      "recommendation": "Always use unique salts for password hashing",
+      "cwe_id": "CWE-759"
+    },
+    {
+      "type": "Weak Password Hash",
+      "severity": "HIGH",
+      "description": "MD5 is being used for password hashing",
+      "component": "/workspace/code/letta_api/letta_client.py",
+      "evidence": "MD5 hash function found",
+      "recommendation": "Use bcrypt, scrypt, or Argon2 for password hashing",
+      "cwe_id": "CWE-327"
+    },
+    {
+      "type": "Missing Password Salt",
+      "severity": "MEDIUM",
+      "description": "Password hashing without salt",
+      "component": "/workspace/code/letta_api/letta_client.py",
+      "evidence": "No salt usage detected",
+      "recommendation": "Always use unique salts for password hashing",
+      "cwe_id": "CWE-759"
+    },
+    {
+      "type": "Missing Password Salt",
+      "severity": "MEDIUM",
+      "description": "Password hashing without salt",
+      "component": "/workspace/code/letta_api/memory_manager.py",
+      "evidence": "No salt usage detected",
+      "recommendation": "Always use unique salts for password hashing",
+      "cwe_id": "CWE-759"
+    },
+    {
+      "type": "Weak Password Hash",
+      "severity": "HIGH",
+      "description": "MD5 is being used for password hashing",
+      "component": "/workspace/code/letta_integration/advanced_memory_manager.py",
+      "evidence": "MD5 hash function found",
+      "recommendation": "Use bcrypt, scrypt, or Argon2 for password hashing",
+      "cwe_id": "CWE-327"
+    },
+    {
+      "type": "Missing Password Salt",
+      "severity": "MEDIUM",
+      "description": "Password hashing without salt",
+      "component": "/workspace/code/letta_integration/advanced_memory_manager.py",
+      "evidence": "No salt usage detected",
+      "recommendation": "Always use unique salts for password hashing",
+      "cwe_id": "CWE-759"
+    },
+    {
+      "type": "Missing Password Salt",
+      "severity": "MEDIUM",
+      "description": "Password hashing without salt",
+      "component": "/workspace/code/letta_integration/advanced_queries.py",
+      "evidence": "No salt usage detected",
+      "recommendation": "Always use unique salts for password hashing",
+      "cwe_id": "CWE-759"
+    },
+    {
+      "type": "Missing Password Salt",
+      "severity": "MEDIUM",
+      "description": "Password hashing without salt",
+      "component": "/workspace/code/letta_integration/backup_restore.py",
+      "evidence": "No salt usage detected",
+      "recommendation": "Always use unique salts for password hashing",
+      "cwe_id": "CWE-759"
+    },
+    {
+      "type": "Weak Password Hash",
+      "severity": "HIGH",
+      "description": "MD5 is being used for password hashing",
+      "component": "/workspace/code/letta_integration/redis_archival.py",
+      "evidence": "MD5 hash function found",
+      "recommendation": "Use bcrypt, scrypt, or Argon2 for password hashing",
+      "cwe_id": "CWE-327"
+    },
+    {
+      "type": "Missing Password Salt",
+      "severity": "MEDIUM",
+      "description": "Password hashing without salt",
+      "component": "/workspace/code/letta_integration/redis_archival.py",
+      "evidence": "No salt usage detected",
+      "recommendation": "Always use unique salts for password hashing",
+      "cwe_id": "CWE-759"
+    },
+    {
+      "type": "Missing Password Salt",
+      "severity": "MEDIUM",
+      "description": "Password hashing without salt",
+      "component": "/workspace/code/pubsub/demo.py",
+      "evidence": "No salt usage detected",
+      "recommendation": "Always use unique salts for password hashing",
+      "cwe_id": "CWE-759"
+    },
+    {
+      "type": "Missing Password Salt",
+      "severity": "MEDIUM",
+      "description": "Password hashing without salt",
+      "component": "/workspace/code/pubsub/message_persistence.py",
+      "evidence": "No salt usage detected",
+      "recommendation": "Always use unique salts for password hashing",
+      "cwe_id": "CWE-759"
+    },
+    {
+      "type": "Plaintext Password",
+      "severity": "CRITICAL",
+      "description": "Password stored in plaintext",
+      "component": "/workspace/code/redis/health_check.py",
+      "evidence": "Plaintext password found in code",
+      "recommendation": "Never store passwords in plaintext; use secure hashing",
+      "cwe_id": "CWE-256"
+    },
+    {
+      "type": "Plaintext Password",
+      "severity": "CRITICAL",
+      "description": "Password stored in plaintext",
+      "component": "/workspace/code/redis/pubsub_client.py",
+      "evidence": "Plaintext password found in code",
+      "recommendation": "Never store passwords in plaintext; use secure hashing",
+      "cwe_id": "CWE-256"
+    },
+    {
+      "type": "Plaintext Password",
+      "severity": "CRITICAL",
+      "description": "Password stored in plaintext",
+      "component": "/workspace/code/redis/redis_client.py",
+      "evidence": "Plaintext password found in code",
+      "recommendation": "Never store passwords in plaintext; use secure hashing",
+      "cwe_id": "CWE-256"
+    },
+    {
+      "type": "Plaintext Password",
+      "severity": "CRITICAL",
+      "description": "Password stored in plaintext",
+      "component": "/workspace/code/security/security_system.py",
+      "evidence": "Plaintext password found in code",
+      "recommendation": "Never store passwords in plaintext; use secure hashing",
+      "cwe_id": "CWE-256"
+    },
+    {
+      "type": "Missing Password Salt",
+      "severity": "MEDIUM",
+      "description": "Password hashing without salt",
+      "component": "/workspace/code/abacus_ai/api/prediction_api.py",
+      "evidence": "No salt usage detected",
+      "recommendation": "Always use unique salts for password hashing",
+      "cwe_id": "CWE-759"
+    },
+    {
+      "type": "Weak Password Hash",
+      "severity": "HIGH",
+      "description": "MD5 is being used for password hashing",
+      "component": "/workspace/code/abacus_ai/cache/prediction_cache.py",
+      "evidence": "MD5 hash function found",
+      "recommendation": "Use bcrypt, scrypt, or Argon2 for password hashing",
+      "cwe_id": "CWE-327"
+    },
+    {
+      "type": "Missing Password Salt",
+      "severity": "MEDIUM",
+      "description": "Password hashing without salt",
+      "component": "/workspace/code/abacus_ai/cache/prediction_cache.py",
+      "evidence": "No salt usage detected",
+      "recommendation": "Always use unique salts for password hashing",
+      "cwe_id": "CWE-759"
+    },
+    {
+      "type": "Weak Password Hash",
+      "severity": "HIGH",
+      "description": "MD5 is being used for password hashing",
+      "component": "/workspace/code/abacus_ai/client/abacus_client.py",
+      "evidence": "MD5 hash function found",
+      "recommendation": "Use bcrypt, scrypt, or Argon2 for password hashing",
+      "cwe_id": "CWE-327"
+    },
+    {
+      "type": "Missing Password Salt",
+      "severity": "MEDIUM",
+      "description": "Password hashing without salt",
+      "component": "/workspace/code/abacus_ai/client/abacus_client.py",
+      "evidence": "No salt usage detected",
+      "recommendation": "Always use unique salts for password hashing",
+      "cwe_id": "CWE-759"
+    },
+    {
+      "type": "Missing Password Salt",
+      "severity": "MEDIUM",
+      "description": "Password hashing without salt",
+      "component": "/workspace/code/abacus_ai/deployment/deploy.py",
+      "evidence": "No salt usage detected",
+      "recommendation": "Always use unique salts for password hashing",
+      "cwe_id": "CWE-759"
+    },
+    {
+      "type": "Missing Password Salt",
+      "severity": "MEDIUM",
+      "description": "Password hashing without salt",
+      "component": "/workspace/code/asymedge_api/api/database/database.py",
+      "evidence": "No salt usage detected",
+      "recommendation": "Always use unique salts for password hashing",
+      "cwe_id": "CWE-759"
+    },
+    {
+      "type": "Missing Password Salt",
+      "severity": "MEDIUM",
+      "description": "Password hashing without salt",
+      "component": "/workspace/code/asymedge_api/api/database/models.py",
+      "evidence": "No salt usage detected",
+      "recommendation": "Always use unique salts for password hashing",
+      "cwe_id": "CWE-759"
+    },
+    {
+      "type": "Missing Password Salt",
+      "severity": "MEDIUM",
+      "description": "Password hashing without salt",
+      "component": "/workspace/code/asymedge_api/api/middleware/auth.py",
+      "evidence": "No salt usage detected",
+      "recommendation": "Always use unique salts for password hashing",
+      "cwe_id": "CWE-759"
+    },
+    {
+      "type": "Missing Password Salt",
+      "severity": "MEDIUM",
+      "description": "Password hashing without salt",
+      "component": "/workspace/code/asymedge_api/api/middleware/rate_limiter.py",
+      "evidence": "No salt usage detected",
+      "recommendation": "Always use unique salts for password hashing",
+      "cwe_id": "CWE-759"
+    },
+    {
+      "type": "Missing Password Salt",
+      "severity": "MEDIUM",
+      "description": "Password hashing without salt",
+      "component": "/workspace/code/asymedge_api/api/routes/user_management.py",
+      "evidence": "No salt usage detected",
+      "recommendation": "Always use unique salts for password hashing",
+      "cwe_id": "CWE-759"
+    },
+    {
+      "type": "Missing Password Salt",
+      "severity": "MEDIUM",
+      "description": "Password hashing without salt",
+      "component": "/workspace/code/asymedge_api/api/services/streaming_service.py",
+      "evidence": "No salt usage detected",
+      "recommendation": "Always use unique salts for password hashing",
+      "cwe_id": "CWE-759"
+    },
+    {
+      "type": "Missing Password Salt",
+      "severity": "MEDIUM",
+      "description": "Password hashing without salt",
+      "component": "/workspace/code/composio/auth/jwt_handler.py",
+      "evidence": "No salt usage detected",
+      "recommendation": "Always use unique salts for password hashing",
+      "cwe_id": "CWE-759"
+    },
+    {
+      "type": "Missing Password Salt",
+      "severity": "MEDIUM",
+      "description": "Password hashing without salt",
+      "component": "/workspace/code/composio/auth/manager.py",
+      "evidence": "No salt usage detected",
+      "recommendation": "Always use unique salts for password hashing",
+      "cwe_id": "CWE-759"
+    },
+    {
+      "type": "Plaintext Password",
+      "severity": "CRITICAL",
+      "description": "Password stored in plaintext",
+      "component": "/workspace/code/composio/examples/usage_examples.py",
+      "evidence": "Plaintext password found in code",
+      "recommendation": "Never store passwords in plaintext; use secure hashing",
+      "cwe_id": "CWE-256"
+    },
+    {
+      "type": "Missing Password Salt",
+      "severity": "MEDIUM",
+      "description": "Password hashing without salt",
+      "component": "/workspace/code/composio/tools/slack.py",
+      "evidence": "No salt usage detected",
+      "recommendation": "Always use unique salts for password hashing",
+      "cwe_id": "CWE-759"
+    },
+    {
+      "type": "Weak Password Hash",
+      "severity": "HIGH",
+      "description": "MD5 is being used for password hashing",
+      "component": "/workspace/code/crewai/cache/cache_manager.py",
+      "evidence": "MD5 hash function found",
+      "recommendation": "Use bcrypt, scrypt, or Argon2 for password hashing",
+      "cwe_id": "CWE-327"
+    },
+    {
+      "type": "Missing Password Salt",
+      "severity": "MEDIUM",
+      "description": "Password hashing without salt",
+      "component": "/workspace/code/crewai/cache/cache_manager.py",
+      "evidence": "No salt usage detected",
+      "recommendation": "Always use unique salts for password hashing",
+      "cwe_id": "CWE-759"
+    },
+    {
+      "type": "Missing Password Salt",
+      "severity": "MEDIUM",
+      "description": "Password hashing without salt",
+      "component": "/workspace/code/crewai/orchestration/crew_orchestrator.py",
+      "evidence": "No salt usage detected",
+      "recommendation": "Always use unique salts for password hashing",
+      "cwe_id": "CWE-759"
+    },
+    {
+      "type": "Missing Password Salt",
+      "severity": "MEDIUM",
+      "description": "Password hashing without salt",
+      "component": "/workspace/code/crewai/utils/memory_manager.py",
+      "evidence": "No salt usage detected",
+      "recommendation": "Always use unique salts for password hashing",
+      "cwe_id": "CWE-759"
+    },
+    {
+      "type": "Missing Password Salt",
+      "severity": "MEDIUM",
+      "description": "Password hashing without salt",
+      "component": "/workspace/code/langgraph_api/alembic/versions/001_initial.py",
+      "evidence": "No salt usage detected",
+      "recommendation": "Always use unique salts for password hashing",
+      "cwe_id": "CWE-759"
+    },
+    {
+      "type": "Missing Password Salt",
+      "severity": "MEDIUM",
+      "description": "Password hashing without salt",
+      "component": "/workspace/code/langgraph_api/app/auth/auth_handler.py",
+      "evidence": "No salt usage detected",
+      "recommendation": "Always use unique salts for password hashing",
+      "cwe_id": "CWE-759"
+    },
+    {
+      "type": "Missing Password Salt",
+      "severity": "MEDIUM",
+      "description": "Password hashing without salt",
+      "component": "/workspace/code/langgraph_api/app/models/user.py",
+      "evidence": "No salt usage detected",
+      "recommendation": "Always use unique salts for password hashing",
+      "cwe_id": "CWE-759"
+    },
+    {
+      "type": "Missing Password Salt",
+      "severity": "MEDIUM",
+      "description": "Password hashing without salt",
+      "component": "/workspace/code/langgraph_api/app/services/user_service.py",
+      "evidence": "No salt usage detected",
+      "recommendation": "Always use unique salts for password hashing",
+      "cwe_id": "CWE-759"
+    },
+    {
+      "type": "Weak Password Hash",
+      "severity": "HIGH",
+      "description": "MD5 is being used for password hashing",
+      "component": "/workspace/code/lean/config/prediction_cache.py",
+      "evidence": "MD5 hash function found",
+      "recommendation": "Use bcrypt, scrypt, or Argon2 for password hashing",
+      "cwe_id": "CWE-327"
+    },
+    {
+      "type": "Missing Password Salt",
+      "severity": "MEDIUM",
+      "description": "Password hashing without salt",
+      "component": "/workspace/code/lean/config/prediction_cache.py",
+      "evidence": "No salt usage detected",
+      "recommendation": "Always use unique salts for password hashing",
+      "cwe_id": "CWE-759"
+    },
+    {
+      "type": "Missing Password Salt",
+      "severity": "MEDIUM",
+      "description": "Password hashing without salt",
+      "component": "/workspace/code/letta_api/examples/complete_trading_integration.py",
+      "evidence": "No salt usage detected",
+      "recommendation": "Always use unique salts for password hashing",
+      "cwe_id": "CWE-759"
+    },
+    {
+      "type": "Missing Password Salt",
+      "severity": "MEDIUM",
+      "description": "Password hashing without salt",
+      "component": "/workspace/code/pubsub/agents/agent_discovery.py",
+      "evidence": "No salt usage detected",
+      "recommendation": "Always use unique salts for password hashing",
+      "cwe_id": "CWE-759"
+    },
+    {
+      "type": "Missing Password Salt",
+      "severity": "MEDIUM",
+      "description": "Password hashing without salt",
+      "component": "/workspace/code/pubsub/core/event_orchestrator.py",
+      "evidence": "No salt usage detected",
+      "recommendation": "Always use unique salts for password hashing",
+      "cwe_id": "CWE-759"
+    },
+    {
+      "type": "Missing Password Salt",
+      "severity": "MEDIUM",
+      "description": "Password hashing without salt",
+      "component": "/workspace/code/pubsub/core/message_persistence.py",
+      "evidence": "No salt usage detected",
+      "recommendation": "Always use unique salts for password hashing",
+      "cwe_id": "CWE-759"
+    },
+    {
+      "type": "Missing Password Salt",
+      "severity": "MEDIUM",
+      "description": "Password hashing without salt",
+      "component": "/workspace/code/pubsub/core/message_router.py",
+      "evidence": "No salt usage detected",
+      "recommendation": "Always use unique salts for password hashing",
+      "cwe_id": "CWE-759"
+    },
+    {
+      "type": "Missing Password Salt",
+      "severity": "MEDIUM",
+      "description": "Password hashing without salt",
+      "component": "/workspace/code/pubsub/schemas/message_schemas.py",
+      "evidence": "No salt usage detected",
+      "recommendation": "Always use unique salts for password hashing",
+      "cwe_id": "CWE-759"
+    },
+    {
+      "type": "Missing Password Salt",
+      "severity": "MEDIUM",
+      "description": "Password hashing without salt",
+      "component": "/workspace/code/pubsub/security/security_manager.py",
+      "evidence": "No salt usage detected",
+      "recommendation": "Always use unique salts for password hashing",
+      "cwe_id": "CWE-759"
+    },
+    {
+      "type": "Missing Password Salt",
+      "severity": "MEDIUM",
+      "description": "Password hashing without salt",
+      "component": "/workspace/code/security/api-keys/api_key_manager.py",
+      "evidence": "No salt usage detected",
+      "recommendation": "Always use unique salts for password hashing",
+      "cwe_id": "CWE-759"
+    },
+    {
+      "type": "Missing Password Salt",
+      "severity": "MEDIUM",
+      "description": "Password hashing without salt",
+      "component": "/workspace/code/security/audit/audit_logger.py",
+      "evidence": "No salt usage detected",
+      "recommendation": "Always use unique salts for password hashing",
+      "cwe_id": "CWE-759"
+    },
+    {
+      "type": "Plaintext Password",
+      "severity": "CRITICAL",
+      "description": "Password stored in plaintext",
+      "component": "/workspace/code/security/auth/jwt_auth.py",
+      "evidence": "Plaintext password found in code",
+      "recommendation": "Never store passwords in plaintext; use secure hashing",
+      "cwe_id": "CWE-256"
+    },
+    {
+      "type": "Plaintext Password",
+      "severity": "CRITICAL",
+      "description": "Password stored in plaintext",
+      "component": "/workspace/code/security/config/security_config.py",
+      "evidence": "Plaintext password found in code",
+      "recommendation": "Never store passwords in plaintext; use secure hashing",
+      "cwe_id": "CWE-256"
+    },
+    {
+      "type": "Plaintext Password",
+      "severity": "CRITICAL",
+      "description": "Password stored in plaintext",
+      "component": "/workspace/code/security/encryption/encryption_utils.py",
+      "evidence": "Plaintext password found in code",
+      "recommendation": "Never store passwords in plaintext; use secure hashing",
+      "cwe_id": "CWE-256"
+    },
+    {
+      "type": "Plaintext Password",
+      "severity": "CRITICAL",
+      "description": "Password stored in plaintext",
+      "component": "/workspace/code/security/examples/basic_auth_example.py",
+      "evidence": "Plaintext password found in code",
+      "recommendation": "Never store passwords in plaintext; use secure hashing",
+      "cwe_id": "CWE-256"
+    },
+    {
+      "type": "Weak Password Hash",
+      "severity": "HIGH",
+      "description": "MD5 is being used for password hashing",
+      "component": "/workspace/code/security/rate-limiting/rate_limiter.py",
+      "evidence": "MD5 hash function found",
+      "recommendation": "Use bcrypt, scrypt, or Argon2 for password hashing",
+      "cwe_id": "CWE-327"
+    },
+    {
+      "type": "Missing Password Salt",
+      "severity": "MEDIUM",
+      "description": "Password hashing without salt",
+      "component": "/workspace/code/security/rate-limiting/rate_limiter.py",
+      "evidence": "No salt usage detected",
+      "recommendation": "Always use unique salts for password hashing",
+      "cwe_id": "CWE-759"
+    },
+    {
+      "type": "Weak Password Hash",
+      "severity": "HIGH",
+      "description": "MD5 is being used for password hashing",
+      "component": "/workspace/code/workflows/protocols/handoff_manager.py",
+      "evidence": "MD5 hash function found",
+      "recommendation": "Use bcrypt, scrypt, or Argon2 for password hashing",
+      "cwe_id": "CWE-327"
+    },
+    {
+      "type": "Missing Password Salt",
+      "severity": "MEDIUM",
+      "description": "Password hashing without salt",
+      "component": "/workspace/code/workflows/protocols/handoff_manager.py",
+      "evidence": "No salt usage detected",
+      "recommendation": "Always use unique salts for password hashing",
+      "cwe_id": "CWE-759"
+    },
+    {
+      "type": "Missing Password Salt",
+      "severity": "MEDIUM",
+      "description": "Password hashing without salt",
+      "component": "/workspace/code/workflows/versioning/version_manager.py",
+      "evidence": "No salt usage detected",
+      "recommendation": "Always use unique salts for password hashing",
+      "cwe_id": "CWE-759"
+    },
+    {
+      "type": "Weak Password Hash",
+      "severity": "HIGH",
+      "description": "MD5 is being used for password hashing",
+      "component": "/workspace/environment/tools/backup_migration.py",
+      "evidence": "MD5 hash function found",
+      "recommendation": "Use bcrypt, scrypt, or Argon2 for password hashing",
+      "cwe_id": "CWE-327"
+    },
+    {
+      "type": "Missing Password Salt",
+      "severity": "MEDIUM",
+      "description": "Password hashing without salt",
+      "component": "/workspace/environment/tools/backup_migration.py",
+      "evidence": "No salt usage detected",
+      "recommendation": "Always use unique salts for password hashing",
+      "cwe_id": "CWE-759"
+    },
+    {
+      "type": "Missing Password Salt",
+      "severity": "MEDIUM",
+      "description": "Password hashing without salt",
+      "component": "/workspace/environment/tools/change_tracker.py",
+      "evidence": "No salt usage detected",
+      "recommendation": "Always use unique salts for password hashing",
+      "cwe_id": "CWE-759"
+    },
+    {
+      "type": "Missing Password Salt",
+      "severity": "MEDIUM",
+      "description": "Password hashing without salt",
+      "component": "/workspace/environment/tools/config_backup_migration.py",
+      "evidence": "No salt usage detected",
+      "recommendation": "Always use unique salts for password hashing",
+      "cwe_id": "CWE-759"
+    },
+    {
+      "type": "Weak Password Hash",
+      "severity": "HIGH",
+      "description": "MD5 is being used for password hashing",
+      "component": "/workspace/environment/tools/deployment_automation.py",
+      "evidence": "MD5 hash function found",
+      "recommendation": "Use bcrypt, scrypt, or Argon2 for password hashing",
+      "cwe_id": "CWE-327"
+    },
+    {
+      "type": "Missing Password Salt",
+      "severity": "MEDIUM",
+      "description": "Password hashing without salt",
+      "component": "/workspace/environment/tools/deployment_automation.py",
+      "evidence": "No salt usage detected",
+      "recommendation": "Always use unique salts for password hashing",
+      "cwe_id": "CWE-759"
+    },
+    {
+      "type": "Plaintext Password",
+      "severity": "CRITICAL",
+      "description": "Password stored in plaintext",
+      "component": "/workspace/environment/tools/secure_credentials.py",
+      "evidence": "Plaintext password found in code",
+      "recommendation": "Never store passwords in plaintext; use secure hashing",
+      "cwe_id": "CWE-256"
+    },
+    {
+      "type": "Missing Password Salt",
+      "severity": "MEDIUM",
+      "description": "Password hashing without salt",
+      "component": "/workspace/environment/tools/secure_credentials.py",
+      "evidence": "No salt usage detected",
+      "recommendation": "Always use unique salts for password hashing",
+      "cwe_id": "CWE-759"
+    },
+    {
+      "type": "Missing Password Salt",
+      "severity": "MEDIUM",
+      "description": "Password hashing without salt",
+      "component": "/workspace/orchestration/scripts/backup_restore.py",
+      "evidence": "No salt usage detected",
+      "recommendation": "Always use unique salts for password hashing",
+      "cwe_id": "CWE-759"
+    },
+    {
+      "type": "Missing Password Salt",
+      "severity": "MEDIUM",
+      "description": "Password hashing without salt",
+      "component": "/workspace/performance/caching/cache_manager.py",
+      "evidence": "No salt usage detected",
+      "recommendation": "Always use unique salts for password hashing",
+      "cwe_id": "CWE-759"
+    },
+    {
+      "type": "Weak Password Hash",
+      "severity": "HIGH",
+      "description": "MD5 is being used for password hashing",
+      "component": "/workspace/security_audit/tools/auth_auditor.py",
+      "evidence": "MD5 hash function found",
+      "recommendation": "Use bcrypt, scrypt, or Argon2 for password hashing",
+      "cwe_id": "CWE-327"
+    },
+    {
+      "type": "Missing Password Salt",
+      "severity": "MEDIUM",
+      "description": "Password hashing without salt",
+      "component": "/workspace/security_audit/tools/vulnerability_scanner.py",
+      "evidence": "No salt usage detected",
+      "recommendation": "Always use unique salts for password hashing",
+      "cwe_id": "CWE-759"
+    },
+    {
+      "type": "Insecure Session Configuration",
+      "severity": "MEDIUM",
+      "description": "Session cookies may not have secure flags",
+      "component": "/workspace/error_handling/error_logging.py",
+      "evidence": "Session usage without secure flag configuration",
+      "recommendation": "Set Secure, HttpOnly, and SameSite flags on session cookies",
+      "cwe_id": "CWE-614"
+    },
+    {
+      "type": "Insecure Session Configuration",
+      "severity": "MEDIUM",
+      "description": "Session cookies may not have secure flags",
+      "component": "/workspace/error_handling/error_types.py",
+      "evidence": "Session usage without secure flag configuration",
+      "recommendation": "Set Secure, HttpOnly, and SameSite flags on session cookies",
+      "cwe_id": "CWE-614"
+    },
+    {
+      "type": "Insecure Session Configuration",
+      "severity": "MEDIUM",
+      "description": "Session cookies may not have secure flags",
+      "component": "/workspace/error_handling/health_checks.py",
+      "evidence": "Session usage without secure flag configuration",
+      "recommendation": "Set Secure, HttpOnly, and SameSite flags on session cookies",
+      "cwe_id": "CWE-614"
+    },
+    {
+      "type": "Insecure Session Configuration",
+      "severity": "MEDIUM",
+      "description": "Session cookies may not have secure flags",
+      "component": "/workspace/external_api/function_utils.py",
+      "evidence": "Session usage without secure flag configuration",
+      "recommendation": "Set Secure, HttpOnly, and SameSite flags on session cookies",
+      "cwe_id": "CWE-614"
+    },
+    {
+      "type": "Insecure Session Configuration",
+      "severity": "MEDIUM",
+      "description": "Session cookies may not have secure flags",
+      "component": "/workspace/code/letta/create_agents.py",
+      "evidence": "Session usage without secure flag configuration",
+      "recommendation": "Set Secure, HttpOnly, and SameSite flags on session cookies",
+      "cwe_id": "CWE-614"
+    },
+    {
+      "type": "Insecure Session Configuration",
+      "severity": "MEDIUM",
+      "description": "Session cookies may not have secure flags",
+      "component": "/workspace/code/letta_api/letta_client.py",
+      "evidence": "Session usage without secure flag configuration",
+      "recommendation": "Set Secure, HttpOnly, and SameSite flags on session cookies",
+      "cwe_id": "CWE-614"
+    },
+    {
+      "type": "Insecure Session Configuration",
+      "severity": "MEDIUM",
+      "description": "Session cookies may not have secure flags",
+      "component": "/workspace/code/letta_integration/memory_workflows.py",
+      "evidence": "Session usage without secure flag configuration",
+      "recommendation": "Set Secure, HttpOnly, and SameSite flags on session cookies",
+      "cwe_id": "CWE-614"
+    },
+    {
+      "type": "Insecure Session Configuration",
+      "severity": "MEDIUM",
+      "description": "Session cookies may not have secure flags",
+      "component": "/workspace/code/letta_integration/multi_agent_communication.py",
+      "evidence": "Session usage without secure flag configuration",
+      "recommendation": "Set Secure, HttpOnly, and SameSite flags on session cookies",
+      "cwe_id": "CWE-614"
+    },
+    {
+      "type": "Insecure Session Configuration",
+      "severity": "MEDIUM",
+      "description": "Session cookies may not have secure flags",
+      "component": "/workspace/code/pubsub/message_persistence.py",
+      "evidence": "Session usage without secure flag configuration",
+      "recommendation": "Set Secure, HttpOnly, and SameSite flags on session cookies",
+      "cwe_id": "CWE-614"
+    },
+    {
+      "type": "Insecure Session Configuration",
+      "severity": "MEDIUM",
+      "description": "Session cookies may not have secure flags",
+      "component": "/workspace/code/abacus_ai/client/abacus_client.py",
+      "evidence": "Session usage without secure flag configuration",
+      "recommendation": "Set Secure, HttpOnly, and SameSite flags on session cookies",
+      "cwe_id": "CWE-614"
+    },
+    {
+      "type": "Insecure Session Configuration",
+      "severity": "MEDIUM",
+      "description": "Session cookies may not have secure flags",
+      "component": "/workspace/code/abacus_ai/deployment/deploy.py",
+      "evidence": "Session usage without secure flag configuration",
+      "recommendation": "Set Secure, HttpOnly, and SameSite flags on session cookies",
+      "cwe_id": "CWE-614"
+    },
+    {
+      "type": "Insecure Session Configuration",
+      "severity": "MEDIUM",
+      "description": "Session cookies may not have secure flags",
+      "component": "/workspace/code/asymedge_api/api/database/database.py",
+      "evidence": "Session usage without secure flag configuration",
+      "recommendation": "Set Secure, HttpOnly, and SameSite flags on session cookies",
+      "cwe_id": "CWE-614"
+    },
+    {
+      "type": "Insecure Session Configuration",
+      "severity": "MEDIUM",
+      "description": "Session cookies may not have secure flags",
+      "component": "/workspace/code/asymedge_api/api/database/models.py",
+      "evidence": "Session usage without secure flag configuration",
+      "recommendation": "Set Secure, HttpOnly, and SameSite flags on session cookies",
+      "cwe_id": "CWE-614"
+    },
+    {
+      "type": "Insecure Session Configuration",
+      "severity": "MEDIUM",
+      "description": "Session cookies may not have secure flags",
+      "component": "/workspace/code/asymedge_api/api/middleware/auth.py",
+      "evidence": "Session usage without secure flag configuration",
+      "recommendation": "Set Secure, HttpOnly, and SameSite flags on session cookies",
+      "cwe_id": "CWE-614"
+    },
+    {
+      "type": "Insecure Session Configuration",
+      "severity": "MEDIUM",
+      "description": "Session cookies may not have secure flags",
+      "component": "/workspace/code/asymedge_api/api/routes/agents.py",
+      "evidence": "Session usage without secure flag configuration",
+      "recommendation": "Set Secure, HttpOnly, and SameSite flags on session cookies",
+      "cwe_id": "CWE-614"
+    },
+    {
+      "type": "Insecure Session Configuration",
+      "severity": "MEDIUM",
+      "description": "Session cookies may not have secure flags",
+      "component": "/workspace/code/asymedge_api/api/routes/auth.py",
+      "evidence": "Session usage without secure flag configuration",
+      "recommendation": "Set Secure, HttpOnly, and SameSite flags on session cookies",
+      "cwe_id": "CWE-614"
+    },
+    {
+      "type": "Insecure Session Configuration",
+      "severity": "MEDIUM",
+      "description": "Session cookies may not have secure flags",
+      "component": "/workspace/code/asymedge_api/api/routes/dashboard_config.py",
+      "evidence": "Session usage without secure flag configuration",
+      "recommendation": "Set Secure, HttpOnly, and SameSite flags on session cookies",
+      "cwe_id": "CWE-614"
+    },
+    {
+      "type": "Insecure Session Configuration",
+      "severity": "MEDIUM",
+      "description": "Session cookies may not have secure flags",
+      "component": "/workspace/code/asymedge_api/api/routes/trading_metrics.py",
+      "evidence": "Session usage without secure flag configuration",
+      "recommendation": "Set Secure, HttpOnly, and SameSite flags on session cookies",
+      "cwe_id": "CWE-614"
+    },
+    {
+      "type": "Insecure Session Configuration",
+      "severity": "MEDIUM",
+      "description": "Session cookies may not have secure flags",
+      "component": "/workspace/code/asymedge_api/api/routes/user_management.py",
+      "evidence": "Session usage without secure flag configuration",
+      "recommendation": "Set Secure, HttpOnly, and SameSite flags on session cookies",
+      "cwe_id": "CWE-614"
+    },
+    {
+      "type": "Insecure Session Configuration",
+      "severity": "MEDIUM",
+      "description": "Session cookies may not have secure flags",
+      "component": "/workspace/code/asymedge_api/api/routes/workflow_monitoring.py",
+      "evidence": "Session usage without secure flag configuration",
+      "recommendation": "Set Secure, HttpOnly, and SameSite flags on session cookies",
+      "cwe_id": "CWE-614"
+    },
+    {
+      "type": "Insecure Session Configuration",
+      "severity": "MEDIUM",
+      "description": "Session cookies may not have secure flags",
+      "component": "/workspace/code/asymedge_api/api/services/agent_service.py",
+      "evidence": "Session usage without secure flag configuration",
+      "recommendation": "Set Secure, HttpOnly, and SameSite flags on session cookies",
+      "cwe_id": "CWE-614"
+    },
+    {
+      "type": "Insecure Session Configuration",
+      "severity": "MEDIUM",
+      "description": "Session cookies may not have secure flags",
+      "component": "/workspace/code/asymedge_api/api/services/streaming_service.py",
+      "evidence": "Session usage without secure flag configuration",
+      "recommendation": "Set Secure, HttpOnly, and SameSite flags on session cookies",
+      "cwe_id": "CWE-614"
+    },
+    {
+      "type": "Insecure Session Configuration",
+      "severity": "MEDIUM",
+      "description": "Session cookies may not have secure flags",
+      "component": "/workspace/code/asymedge_api/api/services/trading_service.py",
+      "evidence": "Session usage without secure flag configuration",
+      "recommendation": "Set Secure, HttpOnly, and SameSite flags on session cookies",
+      "cwe_id": "CWE-614"
+    },
+    {
+      "type": "Insecure Session Configuration",
+      "severity": "MEDIUM",
+      "description": "Session cookies may not have secure flags",
+      "component": "/workspace/code/asymedge_api/api/services/workflow_service.py",
+      "evidence": "Session usage without secure flag configuration",
+      "recommendation": "Set Secure, HttpOnly, and SameSite flags on session cookies",
+      "cwe_id": "CWE-614"
+    },
+    {
+      "type": "Insecure Session Configuration",
+      "severity": "MEDIUM",
+      "description": "Session cookies may not have secure flags",
+      "component": "/workspace/code/composio/auth/manager.py",
+      "evidence": "Session usage without secure flag configuration",
+      "recommendation": "Set Secure, HttpOnly, and SameSite flags on session cookies",
+      "cwe_id": "CWE-614"
+    },
+    {
+      "type": "Insecure Session Configuration",
+      "severity": "MEDIUM",
+      "description": "Session cookies may not have secure flags",
+      "component": "/workspace/code/composio/tools/base.py",
+      "evidence": "Session usage without secure flag configuration",
+      "recommendation": "Set Secure, HttpOnly, and SameSite flags on session cookies",
+      "cwe_id": "CWE-614"
+    },
+    {
+      "type": "Insecure Session Configuration",
+      "severity": "MEDIUM",
+      "description": "Session cookies may not have secure flags",
+      "component": "/workspace/code/composio/tools/slack.py",
+      "evidence": "Session usage without secure flag configuration",
+      "recommendation": "Set Secure, HttpOnly, and SameSite flags on session cookies",
+      "cwe_id": "CWE-614"
+    },
+    {
+      "type": "Insecure Session Configuration",
+      "severity": "MEDIUM",
+      "description": "Session cookies may not have secure flags",
+      "component": "/workspace/code/langgraph/api/workflow_api.py",
+      "evidence": "Session usage without secure flag configuration",
+      "recommendation": "Set Secure, HttpOnly, and SameSite flags on session cookies",
+      "cwe_id": "CWE-614"
+    },
+    {
+      "type": "Insecure Session Configuration",
+      "severity": "MEDIUM",
+      "description": "Session cookies may not have secure flags",
+      "component": "/workspace/code/langgraph_api/examples/client_example.py",
+      "evidence": "Session usage without secure flag configuration",
+      "recommendation": "Set Secure, HttpOnly, and SameSite flags on session cookies",
+      "cwe_id": "CWE-614"
+    },
+    {
+      "type": "Insecure Session Configuration",
+      "severity": "MEDIUM",
+      "description": "Session cookies may not have secure flags",
+      "component": "/workspace/code/langgraph_api/app/auth/auth_handler.py",
+      "evidence": "Session usage without secure flag configuration",
+      "recommendation": "Set Secure, HttpOnly, and SameSite flags on session cookies",
+      "cwe_id": "CWE-614"
+    },
+    {
+      "type": "Insecure Session Configuration",
+      "severity": "MEDIUM",
+      "description": "Session cookies may not have secure flags",
+      "component": "/workspace/code/langgraph_api/app/core/database.py",
+      "evidence": "Session usage without secure flag configuration",
+      "recommendation": "Set Secure, HttpOnly, and SameSite flags on session cookies",
+      "cwe_id": "CWE-614"
+    },
+    {
+      "type": "Insecure Session Configuration",
+      "severity": "MEDIUM",
+      "description": "Session cookies may not have secure flags",
+      "component": "/workspace/code/langgraph_api/app/services/health_monitor.py",
+      "evidence": "Session usage without secure flag configuration",
+      "recommendation": "Set Secure, HttpOnly, and SameSite flags on session cookies",
+      "cwe_id": "CWE-614"
+    },
+    {
+      "type": "Insecure Session Configuration",
+      "severity": "MEDIUM",
+      "description": "Session cookies may not have secure flags",
+      "component": "/workspace/code/langgraph_api/app/services/metrics_collector.py",
+      "evidence": "Session usage without secure flag configuration",
+      "recommendation": "Set Secure, HttpOnly, and SameSite flags on session cookies",
+      "cwe_id": "CWE-614"
+    },
+    {
+      "type": "Insecure Session Configuration",
+      "severity": "MEDIUM",
+      "description": "Session cookies may not have secure flags",
+      "component": "/workspace/code/langgraph_api/app/services/monitoring_service.py",
+      "evidence": "Session usage without secure flag configuration",
+      "recommendation": "Set Secure, HttpOnly, and SameSite flags on session cookies",
+      "cwe_id": "CWE-614"
+    },
+    {
+      "type": "Insecure Session Configuration",
+      "severity": "MEDIUM",
+      "description": "Session cookies may not have secure flags",
+      "component": "/workspace/code/langgraph_api/app/services/state_service.py",
+      "evidence": "Session usage without secure flag configuration",
+      "recommendation": "Set Secure, HttpOnly, and SameSite flags on session cookies",
+      "cwe_id": "CWE-614"
+    },
+    {
+      "type": "Insecure Session Configuration",
+      "severity": "MEDIUM",
+      "description": "Session cookies may not have secure flags",
+      "component": "/workspace/code/langgraph_api/app/services/user_service.py",
+      "evidence": "Session usage without secure flag configuration",
+      "recommendation": "Set Secure, HttpOnly, and SameSite flags on session cookies",
+      "cwe_id": "CWE-614"
+    },
+    {
+      "type": "Insecure Session Configuration",
+      "severity": "MEDIUM",
+      "description": "Session cookies may not have secure flags",
+      "component": "/workspace/code/langgraph_api/app/services/visualization_service.py",
+      "evidence": "Session usage without secure flag configuration",
+      "recommendation": "Set Secure, HttpOnly, and SameSite flags on session cookies",
+      "cwe_id": "CWE-614"
+    },
+    {
+      "type": "Insecure Session Configuration",
+      "severity": "MEDIUM",
+      "description": "Session cookies may not have secure flags",
+      "component": "/workspace/code/langgraph_api/app/services/workflow_service.py",
+      "evidence": "Session usage without secure flag configuration",
+      "recommendation": "Set Secure, HttpOnly, and SameSite flags on session cookies",
+      "cwe_id": "CWE-614"
+    },
+    {
+      "type": "Insecure Session Configuration",
+      "severity": "MEDIUM",
+      "description": "Session cookies may not have secure flags",
+      "component": "/workspace/code/langgraph_api/app/utils/helpers.py",
+      "evidence": "Session usage without secure flag configuration",
+      "recommendation": "Set Secure, HttpOnly, and SameSite flags on session cookies",
+      "cwe_id": "CWE-614"
+    },
+    {
+      "type": "Insecure Session Configuration",
+      "severity": "MEDIUM",
+      "description": "Session cookies may not have secure flags",
+      "component": "/workspace/code/security/audit/audit_logger.py",
+      "evidence": "Session usage without secure flag configuration",
+      "recommendation": "Set Secure, HttpOnly, and SameSite flags on session cookies",
+      "cwe_id": "CWE-614"
+    },
+    {
+      "type": "Insecure Session Configuration",
+      "severity": "MEDIUM",
+      "description": "Session cookies may not have secure flags",
+      "component": "/workspace/code/security/config/security_config.py",
+      "evidence": "Session usage without secure flag configuration",
+      "recommendation": "Set Secure, HttpOnly, and SameSite flags on session cookies",
+      "cwe_id": "CWE-614"
+    },
+    {
+      "type": "Insecure Session Configuration",
+      "severity": "MEDIUM",
+      "description": "Session cookies may not have secure flags",
+      "component": "/workspace/code/security/examples/basic_auth_example.py",
+      "evidence": "Session usage without secure flag configuration",
+      "recommendation": "Set Secure, HttpOnly, and SameSite flags on session cookies",
+      "cwe_id": "CWE-614"
+    },
+    {
+      "type": "Insecure Session Configuration",
+      "severity": "MEDIUM",
+      "description": "Session cookies may not have secure flags",
+      "component": "/workspace/environment/tools/change_tracker.py",
+      "evidence": "Session usage without secure flag configuration",
+      "recommendation": "Set Secure, HttpOnly, and SameSite flags on session cookies",
+      "cwe_id": "CWE-614"
+    },
+    {
+      "type": "Insecure Session Configuration",
+      "severity": "MEDIUM",
+      "description": "Session cookies may not have secure flags",
+      "component": "/workspace/external_api/data_sources/booking_source.py",
+      "evidence": "Session usage without secure flag configuration",
+      "recommendation": "Set Secure, HttpOnly, and SameSite flags on session cookies",
+      "cwe_id": "CWE-614"
+    },
+    {
+      "type": "Insecure Session Configuration",
+      "severity": "MEDIUM",
+      "description": "Session cookies may not have secure flags",
+      "component": "/workspace/external_api/data_sources/commodities_source.py",
+      "evidence": "Session usage without secure flag configuration",
+      "recommendation": "Set Secure, HttpOnly, and SameSite flags on session cookies",
+      "cwe_id": "CWE-614"
+    },
+    {
+      "type": "Insecure Session Configuration",
+      "severity": "MEDIUM",
+      "description": "Session cookies may not have secure flags",
+      "component": "/workspace/external_api/data_sources/metal_source.py",
+      "evidence": "Session usage without secure flag configuration",
+      "recommendation": "Set Secure, HttpOnly, and SameSite flags on session cookies",
+      "cwe_id": "CWE-614"
+    },
+    {
+      "type": "Insecure Session Configuration",
+      "severity": "MEDIUM",
+      "description": "Session cookies may not have secure flags",
+      "component": "/workspace/external_api/data_sources/patents_source.py",
+      "evidence": "Session usage without secure flag configuration",
+      "recommendation": "Set Secure, HttpOnly, and SameSite flags on session cookies",
+      "cwe_id": "CWE-614"
+    },
+    {
+      "type": "Insecure Session Configuration",
+      "severity": "MEDIUM",
+      "description": "Session cookies may not have secure flags",
+      "component": "/workspace/external_api/data_sources/pinterest_source.py",
+      "evidence": "Session usage without secure flag configuration",
+      "recommendation": "Set Secure, HttpOnly, and SameSite flags on session cookies",
+      "cwe_id": "CWE-614"
+    },
+    {
+      "type": "Insecure Session Configuration",
+      "severity": "MEDIUM",
+      "description": "Session cookies may not have secure flags",
+      "component": "/workspace/external_api/data_sources/scholar_source.py",
+      "evidence": "Session usage without secure flag configuration",
+      "recommendation": "Set Secure, HttpOnly, and SameSite flags on session cookies",
+      "cwe_id": "CWE-614"
+    },
+    {
+      "type": "Insecure Session Configuration",
+      "severity": "MEDIUM",
+      "description": "Session cookies may not have secure flags",
+      "component": "/workspace/external_api/data_sources/twitter_source.py",
+      "evidence": "Session usage without secure flag configuration",
+      "recommendation": "Set Secure, HttpOnly, and SameSite flags on session cookies",
+      "cwe_id": "CWE-614"
+    },
+    {
+      "type": "Insecure Session Configuration",
+      "severity": "MEDIUM",
+      "description": "Session cookies may not have secure flags",
+      "component": "/workspace/external_api/data_sources/yahoo_source.py",
+      "evidence": "Session usage without secure flag configuration",
+      "recommendation": "Set Secure, HttpOnly, and SameSite flags on session cookies",
+      "cwe_id": "CWE-614"
+    },
+    {
+      "type": "Insecure Session Configuration",
+      "severity": "MEDIUM",
+      "description": "Session cookies may not have secure flags",
+      "component": "/workspace/orchestration/debugging/service_inspector.py",
+      "evidence": "Session usage without secure flag configuration",
+      "recommendation": "Set Secure, HttpOnly, and SameSite flags on session cookies",
+      "cwe_id": "CWE-614"
+    },
+    {
+      "type": "Insecure Session Configuration",
+      "severity": "MEDIUM",
+      "description": "Session cookies may not have secure flags",
+      "component": "/workspace/orchestration/scripts/health_check_coordinator.py",
+      "evidence": "Session usage without secure flag configuration",
+      "recommendation": "Set Secure, HttpOnly, and SameSite flags on session cookies",
+      "cwe_id": "CWE-614"
+    },
+    {
+      "type": "Insecure Session Configuration",
+      "severity": "MEDIUM",
+      "description": "Session cookies may not have secure flags",
+      "component": "/workspace/performance/caching/cache_manager.py",
+      "evidence": "Session usage without secure flag configuration",
+      "recommendation": "Set Secure, HttpOnly, and SameSite flags on session cookies",
+      "cwe_id": "CWE-614"
+    },
+    {
+      "type": "Insecure Session Configuration",
+      "severity": "MEDIUM",
+      "description": "Session cookies may not have secure flags",
+      "component": "/workspace/performance/database/db_optimizer.py",
+      "evidence": "Session usage without secure flag configuration",
+      "recommendation": "Set Secure, HttpOnly, and SameSite flags on session cookies",
+      "cwe_id": "CWE-614"
+    }
+  ]
+}

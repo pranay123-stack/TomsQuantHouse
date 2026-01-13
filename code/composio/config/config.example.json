@@ -1,0 +1,146 @@
+{
+  "environment": "development",
+  "debug": true,
+  "server_host": "0.0.0.0",
+  "server_port": 8000,
+  
+  "database": {
+    "url": "sqlite:///./composio.db",
+    "echo": false,
+    "pool_size": 10,
+    "max_overflow": 20
+  },
+  
+  "redis": {
+    "url": "redis://localhost:6379/0",
+    "db": 0,
+    "password": null,
+    "max_connections": 50
+  },
+  
+  "auth": {
+    "secret_key": "your-secret-key-change-in-production",
+    "algorithm": "HS256",
+    "access_token_expire_minutes": 30,
+    "refresh_token_expire_days": 7,
+    "password_salt": "your-salt-change-in-production",
+    "encryption_key": "your-encryption-key-change-in-production"
+  },
+  
+  "metrics": {
+    "enabled": true,
+    "port": 8000,
+    "endpoint": "/metrics",
+    "collection_interval": 60
+  },
+  
+  "rate_limit": {
+    "enabled": true,
+    "redis_url": "redis://localhost:6379/1",
+    "default_limits": {
+      "requests_per_minute": 100,
+      "requests_per_hour": 1000,
+      "requests_per_day": 10000
+    },
+    "tool_specific_limits": {
+      "github": {
+        "requests_per_hour": 5000
+      },
+      "slack": {
+        "requests_per_hour": 100
+      },
+      "telegram": {
+        "requests_per_hour": 30
+      },
+      "notion": {
+        "requests_per_hour": 100
+      },
+      "quantconnect": {
+        "requests_per_minute": 10
+      },
+      "abacus_ai": {
+        "requests_per_minute": 5
+      }
+    }
+  },
+  
+  "tools": {
+    "github": {
+      "enabled": true,
+      "api_url": "https://api.github.com",
+      "rate_limit": 5000,
+      "timeout": 30,
+      "user_agent": "Composio-MCP-Server/1.0"
+    },
+    "slack": {
+      "enabled": true,
+      "api_url": "https://slack.com/api",
+      "rate_limit": 100,
+      "timeout": 30
+    },
+    "telegram": {
+      "enabled": true,
+      "api_url": "https://api.telegram.org",
+      "rate_limit": 30,
+      "timeout": 30
+    },
+    "notion": {
+      "enabled": true,
+      "api_url": "https://api.notion.com",
+      "rate_limit": 100,
+      "timeout": 30,
+      "version": "2022-06-28"
+    },
+    "quantconnect": {
+      "enabled": true,
+      "api_url": "https://www.quantconnect.com/api",
+      "rate_limit": 10,
+      "timeout": 60
+    },
+    "abacus_ai": {
+      "enabled": true,
+      "api_url": "https://api.abacus.ai",
+      "rate_limit": 5,
+      "timeout": 60
+    }
+  },
+  
+  "health": {
+    "enabled": true,
+    "check_interval": 30,
+    "timeout": 10,
+    "alert_thresholds": {
+      "cpu_usage": 80,
+      "memory_usage": 85,
+      "disk_usage": 90,
+      "response_time": 5000
+    }
+  },
+  
+  "logging": {
+    "level": "INFO",
+    "format": "json",
+    "output": "stdout",
+    "file_path": "logs/composio.log",
+    "max_size": 100,
+    "backup_count": 5,
+    "structured": true
+  },
+  
+  "features": {
+    "authentication": true,
+    "rate_limiting": true,
+    "monitoring": true,
+    "metrics": true,
+    "trading_tools": true,
+    "external_integrations": true
+  },
+  
+  "cors_origins": [
+    "*"
+  ],
+  
+  "allowed_hosts": [
+    "*"
+  ]
+}

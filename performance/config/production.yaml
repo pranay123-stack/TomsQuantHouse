@@ -1,0 +1,334 @@
+# Performance Optimization Configuration - Production
+# Comprehensive configuration for production environment performance optimization
+
+system_analyzer:
+  thresholds:
+    cpu_critical: 85
+    cpu_warning: 70
+    memory_critical: 80
+    memory_warning: 65
+    disk_critical: 85
+    disk_warning: 70
+    response_time_ms_critical: 3000
+    response_time_ms_warning: 1500
+    error_rate_critical: 0.03
+    error_rate_warning: 0.01
+  
+  monitoring:
+    collection_interval: 30
+    history_retention_hours: 24
+    metrics_export_enabled: true
+
+database_optimizer:
+  connection_pool:
+    engine: postgresql
+    pool_type: simple
+    min_connections: 10
+    max_connections: 50
+    connection_timeout: 30
+    idle_timeout: 600
+    max_retries: 3
+    
+    database:
+      host: localhost
+      port: 5432
+      database: production_db
+      user: app_user
+      password: ${DB_PASSWORD}
+  
+  query_optimizer:
+    slow_query_threshold: 1.0
+    cache_ttl: 300
+    enable_query_analysis: true
+    index_recommendations_enabled: true
+
+cache_manager:
+  l1_memory:
+    max_size_mb: 256
+    max_entries: 50000
+    eviction_policy: lru
+  
+  l2_redis:
+    enabled: true
+    namespace: prod_cache
+    redis:
+      host: redis.internal
+      port: 6379
+      db: 0
+      password: ${REDIS_PASSWORD}
+      timeout: 5
+      connect_timeout: 5
+      health_check_interval: 30
+  
+  l3_cdn:
+    enabled: true
+    provider: cloudflare
+    endpoint: https://cdn.production.com
+    api_key: ${CDN_API_KEY}
+    cache_ttl: 3600
+    compression_enabled: true
+  
+  cache_routing:
+    static_content: [l1_memory, l2_redis, l3_cdn]
+    api_responses: [l1_memory, l2_redis]
+    database_results: [l1_memory, l2_redis]
+    user_sessions: [l1_memory]
+
+load_balancer:
+  algorithm: adaptive
+  sticky_sessions: true
+  session_timeout: 3600
+  hash_replicas: 150
+  
+  backend_servers:
+    - server_id: web-1
+      host: 10.0.1.10
+      port: 8080
+      weight: 2
+      max_connections: 1000
+      location: us-east-1
+    
+    - server_id: web-2
+      host: 10.0.1.11
+      port: 8080
+      weight: 2
+      max_connections: 1000
+      location: us-east-1
+    
+    - server_id: api-1
+      host: 10.0.2.10
+      port: 8081
+      weight: 3
+      max_connections: 500
+      location: us-central-1
+  
+  health_check:
+    check_interval: 15
+    timeout: 5
+    max_failures: 3
+    success_threshold: 2
+  
+  routing_rules:
+    - rule_id: mobile_traffic
+      name: Route mobile traffic
+      strategy: user_behavior
+      condition:
+        user_agents: [mobile, iphone, android, webkit]
+      target_servers: [web-1, web-2]
+      priority: 10
+      enabled: true
+    
+    - rule_id: api_traffic
+      name: Route API traffic
+      strategy: content_aware
+      condition:
+        content_types: [application/json, application/xml, application/graphql]
+      target_servers: [api-1]
+      priority: 5
+      enabled: true
+
+container_optimizer:
+  orchestrator: kubernetes
+  auto_optimization: false
+  optimization_interval: 1800
+  
+  kubernetes_config:
+    namespace: production
+    deployment_patterns:
+      resource_limits_enabled: true
+      horizontal_pod_autoscaler: true
+      vertical_pod_autoscaler: true
+  
+  optimization_rules:
+    cpu_threshold_low: 20
+    cpu_threshold_high: 85
+    memory_threshold_low: 40
+    memory_threshold_high: 80
+    network_threshold_mbps: 100
+
+performance_tester:
+  default_timeout: 30
+  max_concurrent_requests: 200
+  
+  test_profiles:
+    load_test:
+      concurrent_users: 100
+      test_duration: 600
+      ramp_up_time: 120
+      ramp_down_time: 60
+    
+    stress_test:
+      concurrent_users: 500
+      test_duration: 300
+      ramp_up_time: 180
+      ramp_down_time: 90
+    
+    spike_test:
+      baseline_users: 50
+      spike_users: 300
+      spike_duration: 60
+      recovery_duration: 180
+  
+  target_endpoints:
+    - path: /api/health
+      method: GET
+      weight: 1
+    
+    - path: /api/users
+      method: GET
+      weight: 2
+    
+    - path: /api/data
+      method: POST
+      weight: 1
+
+auto_scaling:
+  evaluation_interval: 45
+  metrics_collection_interval: 15
+  
+  scaling_policies:
+    high_cpu_scale_out:
+      name: Scale Out on High CPU
+      description: Scale out when CPU usage is high for sustained period
+      enabled: true
+      priority: 10
+      cooldown_period: 300
+      conditions:
+        - trigger: cpu_utilization
+          operator: '>'
+          threshold: 75
+          duration_seconds: 120
+          evaluation_window: 300
+      actions:
+        - action: scale_out
+          target_value: 10
+          increment: 2
+          max_value: 20
+    
+    memory_pressure:
+      name: Scale Resources on Memory Pressure
+      description: Scale up resources when memory usage is high
+      enabled: true
+      priority: 8
+      cooldown_period: 600
+      conditions:
+        - trigger: memory_utilization
+          operator: '>'
+          threshold: 80
+          duration_seconds: 180
+          evaluation_window: 360
+      actions:
+        - action: scale_up_resource
+          target_value: 2048
+          max_value: 8192
+    
+    low_load_scale_in:
+      name: Scale In on Low Load
+      description: Scale in when system load is consistently low
+      enabled: true
+      priority: 5
+      cooldown_period: 900
+      conditions:
+        - trigger: cpu_utilization
+          operator: '<'
+          threshold: 25
+          duration_seconds: 600
+          evaluation_window: 1200
+        - trigger: request_rate
+          operator: '<'
+          threshold: 50
+          duration_seconds: 600
+          evaluation_window: 1200
+      actions:
+        - action: scale_in
+          target_value: 3
+          increment: 1
+          min_value: 2
+
+monitoring:
+  enabled: true
+  metrics_export_enabled: true
+  alerts_enabled: true
+  
+  alerting:
+    email_recipients:
+      - ops@company.com
+      - engineering@company.com
+    
+    slack_webhook: ${SLACK_WEBHOOK}
+    
+    alert_rules:
+      - name: high_cpu_alert
+        condition: cpu_utilization > 80
+        severity: warning
+        duration: 300
+      
+      - name: high_memory_alert
+        condition: memory_utilization > 85
+        severity: warning
+        duration: 300
+      
+      - name: high_error_rate_alert
+        condition: error_rate > 0.05
+        severity: critical
+        duration: 60
+
+dashboard:
+  enabled: true
+  update_interval: 5
+  history_retention: 3600
+  max_history_size: 2000
+  
+  display_options:
+    show_alerts: true
+    show_summary: true
+    color_output: true
+    compact_mode: false
+  
+  alert_thresholds:
+    cpu_critical: 85
+    memory_critical: 85
+    response_time_critical: 2000
+    error_rate_critical: 0.02
+
+logging:
+  level: INFO
+  export_logs: true
+  log_retention_days: 30
+  
+  output_formats:
+    console: detailed
+    file: json
+
+optimization:
+  auto_apply_safe_optimizations: false
+  require_approval_for_critical: true
+  
+  optimization_phases:
+    - name: analysis
+      enabled: true
+      timeout: 300
+    
+    - name: recommendations
+      enabled: true
+      timeout: 180
+    
+    - name: testing
+      enabled: true
+      timeout: 600
+    
+    - name: implementation
+      enabled: true
+      timeout: 300
+  
+  backup_before_optimization: true
+  rollback_enabled: true
+
+environment:
+  type: production
+  cluster_name: production-cluster
+  region: us-east-1
+  availability_zones:
+    - us-east-1a
+    - us-east-1b
+    - us-east-1c

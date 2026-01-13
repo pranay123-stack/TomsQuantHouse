@@ -1,0 +1,82 @@
+# Core Testing Framework
+pytest>=7.4.0
+pytest-asyncio>=0.21.0
+pytest-cov>=4.1.0
+pytest-xdist>=3.3.0
+pytest-timeout>=2.1.0
+pytest-mock>=3.11.0
+pytest-html>=3.2.0
+pytest-json-report>=1.5.0
+
+# Load Testing
+locust>=2.15.0
+aiohttp>=3.8.0
+httpx>=0.24.0
+
+# Performance and Monitoring
+psutil>=5.9.0
+memory-profiler>=0.61.0
+py-spy>=0.3.14
+
+# Security and Vulnerability Testing
+bandit>=1.7.5
+safety>=2.3.0
+requests>=2.31.0
+
+# Data and Mock Services
+redis>=4.6.0
+faker>=19.3.0
+factory-boy>=3.3.0
+
+# API Testing and Validation
+jsonschema>=4.19.0
+openapi-schema-validator>=2.7.0
+swagger-ui-bundle>=0.0.9
+
+# Database and Redis Testing
+fakeredis>=2.18.0
+aioredis>=2.0.0
+
+# Agent and ML Service Testing
+langchain>=0.0.350
+llama-index>=0.9.0
+openai>=1.3.0
+
+# HTTP and WebSocket Testing
+websockets>=11.0.0
+pytest-websocket>=0.3.0
+
+# Configuration and Environment
+python-dotenv>=1.0.0
+pyyaml>=6.0.0
+click>=8.1.0
+
+# Reporting and Documentation
+allure-pytest>=2.13.0
+sphinx>=7.1.0
+myst-parser>=2.0.0
+
+# Code Quality and Linting
+flake8>=6.0.0
+black>=23.7.0
+isort>=5.12.0
+mypy>=1.5.0
+
+# Testing Utilities
+responses>=0.23.0
+freezegun>=1.2.0
+parameterized>=0.9.0
+pytest-capturelog>=0.7.0
+
+# Notification and Alerting
+slack-sdk>=3.21.0
+smtplib2>=0.2.0
+
+# Async Testing Support
+pytest-trio>=0.7.0
+pytest-tcpapi>=0.1.0
+
+# Additional Testing Tools
+testcontainers>=3.7.0
+docker>=6.1.0
+pillow>=10.0.0  # For image comparison testing

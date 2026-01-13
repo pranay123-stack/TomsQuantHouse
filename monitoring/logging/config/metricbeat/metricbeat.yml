@@ -1,0 +1,282 @@
+# Metricbeat Configuration for Trading System Metrics Collection
+
+metricbeat.config.modules:
+  path: ${path.config}/modules.d/*.yml
+  reload.enabled: true
+  reload.period: 30s
+
+# System metrics
+metricbeat.modules:
+- module: system
+  metricsets:
+    - cpu
+    - load
+    - memory
+    - network
+    - process
+    - socket
+    - filesystem
+    - diskio
+  enabled: true
+  period: 30s
+  processes: ['.*']
+  hostfs: "/hostfs"
+  processors:
+  - add_host_metadata: ~
+  - add_cloud_metadata: ~
+
+# Docker metrics
+- module: docker
+  metricsets:
+    - container
+    - cpu
+    - diskio
+    - event
+    - healthcheck
+    - image
+    - info
+    - memory
+    - network
+  enabled: true
+  period: 30s
+  hosts: ["unix:///var/run/docker.sock"]
+  processors:
+  - add_docker_metadata: ~
+
+# Kubernetes metrics
+- module: kubernetes
+  metricsets:
+    - apiserver
+    - cluster_metrics
+    - container
+    - controllermanager
+    - event
+    - node
+    - pod
+    - system
+  enabled: true
+  period: 30s
+  host: ${NODE_NAME}
+  hosts: ["kube-state-metrics:8080"]
+  processors:
+  - add_kubernetes_metadata: ~
+
+# PostgreSQL metrics
+- module: postgresql
+  metricsets:
+    - activity
+    - bgwriter
+    - database
+    -Statement
+  enabled: true
+  period: 30s
+  hosts: ["postgres:5432"]
+  username: "postgres"
+  password: "changeme"
+  ssl.enabled: false
+
+# Redis metrics
+- module: redis
+  metricsets:
+    - info
+    - keyspace
+  enabled: true
+  period: 30s
+  hosts: ["redis:6379"]
+  password: ""
+
+# Nginx metrics
+- module: nginx
+  metricsets:
+    - stubstatus
+  enabled: true
+  period: 30s
+  hosts: ["nginx:80"]
+  server_status_path: "/nginx_status"
+
+# Prometheus metrics
+- module: prometheus
+  metricsets:
+    - collector
+  enabled: true
+  period: 30s
+  hosts: ["prometheus:9090"]
+  metrics_path: "/metrics"
+  use_negative_values: false
+
+# Kafka metrics (if available)
+- module: kafka
+  metricsets:
+    - consumergroup
+    - partition
+  enabled: true
+  period: 30s
+  hosts: ["kafka-logs:9092"]
+
+# Custom trading metrics
+- module: prometheus
+  metricsets:
+    - collector
+  enabled: true
+  period: 15s
+  hosts: ["trading-collector:8080"]
+  metrics_path: "/trading-metrics"
+  fields:
+    metric_type: "trading"
+
+# HTTP status metrics
+- module: http
+  metricsets:
+    - server
+  enabled: true
+  period: 30s
+  hosts: ["localhost:9200"]
+  paths:
+    - path: "/status"
+      namespace: "status"
+
+# Logstash metrics
+- module: logstash
+  metricsets:
+    - node_stats
+    - node
+  enabled: true
+  period: 30s
+  hosts: ["logstash:9600"]
+
+# Elasticsearch metrics
+- module: elasticsearch
+  metricsets:
+    - cluster_stats
+    - index
+    - index_recovery
+    - index_summary
+    - node_stats
+    - shard
+  enabled: true
+  period: 30s
+  hosts: ["elasticsearch:9200"]
+  username: "elastic"
+  password: "changeme"
+
+# Kibana metrics
+- module: kibana
+  metricsets:
+    - stats
+  enabled: true
+  period: 30s
+  hosts: ["kibana:5601"]
+  username: "elastic"
+  password: "changeme"
+
+# Jaeger metrics
+- module: prometheus
+  metricsets:
+    - collector
+  enabled: true
+  period: 30s
+  hosts: ["jaeger:14269"]
+  metrics_path: "/metrics"
+
+# Custom application metrics
+- module: prometheus
+  metricsets:
+    - collector
+  enabled: true
+  period: 10s
+  hosts: ["trading-api:8000", "asymedge-api:8002", "abacus-ai:8001"]
+  metrics_path: "/metrics"
+
+# Output configuration
+output.elasticsearch:
+  hosts: ["elasticsearch:9200"]
+  username: "elastic"
+  password: "changeme"
+  index: "metricbeat-%{[fields.metricset.module]}-%{+yyyy.MM.dd}"
+  template.name: "metricbeat"
+  template.pattern: "metricbeat-*"
+  template.fields: "fields.yml"
+  template.overwrite: false
+ ilm.enabled: true
+  ilm.rollover_alias: "metricbeat-%{[fields.metricset.module]}"
+  lifecycle.name: "metricbeat-policy"
+  lifecycle.rollover_alias: "metricbeat-%{[fields.metricset.module]}-%{+yyyy.MM.dd}"
+
+# Logstash output for processing
+output.logstash:
+  hosts: ["logstash:5044"]
+  compression_level: 3
+  worker: 2
+
+# Console output for debugging
+output.console:
+  enabled: false
+  pretty: true
+
+# Monitoring
+xpack.monitoring.enabled: true
+xpack.monitoring.elasticsearch:
+  hosts: ["elasticsearch:9200"]
+  username: "elastic"
+  password: "changeme"
+
+# Logging
+logging.level: info
+logging.to_files: true
+logging.files:
+  path: /var/log/metricbeat
+  name: metricbeat
+  keepfiles: 7
+  permissions: 0644
+
+# Registry
+metricbeat.registry.path: /var/lib/metricbeat
+
+# Queue
+queue.mem:
+  events: 4096
+  flush.min_events: 512
+  flush.timeout: 5s
+
+# Processors for data enrichment
+processors:
+- add_host_metadata: ~
+- add_cloud_metadata: ~
+- add_docker_metadata: ~
+- add_kubernetes_metadata: ~
+- drop_fields:
+    fields: ["ecs", "agent", "host", "metricset.host"]
+
+# Shipper configuration
+shipper:
+  name: "metricbeat-trading-system"
+  tags: ["trading", "production", "metrics"]
+
+# Index template
+setup.template.settings:
+  index:
+    number_of_shards: 1
+    number_of_replicas: 0
+    refresh_interval: "10s"
+  analysis:
+    analyzer:
+      trading_analyzer:
+        type: custom
+        tokenizer: keyword
+        filter: [lowercase]
+
+# Monitoring setup
+setup.kibana:
+  host: "kibana:5601"
+  username: "elastic"
+  password: "changeme"
+
+# Dashboards
+setup.dashboards.enabled: true
+setup.dashboards.retry.enabled: true
+setup.dashboards.retry.max_count: 3
+
+# Machine learning
+xpack.monitoring.elasticsearch:
+  username: "elastic"
+  password: "changeme

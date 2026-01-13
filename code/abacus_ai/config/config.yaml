@@ -1,0 +1,43 @@
+abacus_ai:
+  api_key: your-api-key-here
+  base_url: https://api.abacus.ai
+  retries: 3
+  timeout: 30
+cache:
+  default_ttl: 300
+  max_memory: 104857600
+  strategy: ttl
+deployment:
+  environment: production
+  resources:
+    cpu: '1'
+    memory: 2Gi
+  scaling:
+    max_instances: 10
+    min_instances: 1
+features:
+  sentiment:
+    enabled: true
+    lookback_days: 7
+    news_api_key: your-news-api-key
+  technical_indicators:
+    bb_period: 20
+    bb_std: 2
+    macd_fast: 12
+    macd_slow: 26
+    rsi_period: 14
+model:
+  algorithms:
+  - random_forest
+  - xgboost
+  - lightgbm
+  cv_folds: 5
+  random_state: 42
+  scaler: standard
+  target_column: future_return
+  test_size: 0.2
+redis:
+  db: 0
+  host: localhost
+  password: null
+  port: 6379

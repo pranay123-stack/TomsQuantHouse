@@ -1,0 +1,119 @@
+# Prometheus Configuration
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+  external_labels:
+    cluster: 'trading-system'
+    environment: 'production'
+
+rule_files:
+  - "/etc/prometheus/alert_rules.yml"
+
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets:
+          # - alertmanager:9093
+
+scrape_configs:
+  # Prometheus self-monitoring
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+    scrape_interval: 5s
+
+  # LangGraph API metrics
+  - job_name: 'langgraph-api'
+    static_configs:
+      - targets: ['langgraph-api:8000']
+    scrape_interval: 10s
+    metrics_path: '/metrics'
+
+  # ASYMEdge API metrics
+  - job_name: 'asymedge-api'
+    static_configs:
+      - targets: ['asymedge-api:8002']
+    scrape_interval: 10s
+    metrics_path: '/metrics'
+
+  # Abacus.AI metrics
+  - job_name: 'abacus-ai'
+    static_configs:
+      - targets: ['abacus-ai:8001']
+    scrape_interval: 10s
+    metrics_path: '/metrics'
+
+  # Letta server metrics
+  - job_name: 'letta-server'
+    static_configs:
+      - targets: ['letta-server:8283']
+    scrape_interval: 10s
+    metrics_path: '/metrics'
+
+  # Composio MCP metrics
+  - job_name: 'composio'
+    static_configs:
+      - targets: ['composio:3000']
+    scrape_interval: 10s
+    metrics_path: '/metrics'
+
+  # Pub/Sub metrics
+  - job_name: 'pubsub'
+    static_configs:
+      - targets: ['pubsub:8003']
+    scrape_interval: 10s
+    metrics_path: '/metrics'
+
+  # Workflow service metrics
+  - job_name: 'workflows'
+    static_configs:
+      - targets: ['workflows:8004']
+    scrape_interval: 10s
+    metrics_path: '/metrics'
+
+  # Security service metrics
+  - job_name: 'security'
+    static_configs:
+      - targets: ['security:8005']
+    scrape_interval: 10s
+    metrics_path: '/metrics'
+
+  # Database monitoring
+  - job_name: 'postgres'
+    static_configs:
+      - targets: ['postgres:5432']
+    scrape_interval: 30s
+    metrics_path: '/metrics'
+
+  # Redis monitoring
+  - job_name: 'redis'
+    static_configs:
+      - targets: ['redis:6379']
+    scrape_interval: 30s
+    metrics_path: '/metrics'
+
+  # Node exporter for system metrics (if running)
+  - job_name: 'node-exporter'
+    static_configs:
+      - targets: ['node-exporter:9100']
+    scrape_interval: 30s
+
+  # cAdvisor for container metrics (if running)
+  - job_name: 'cadvisor'
+    static_configs:
+      - targets: ['cadvisor:8080']
+    scrape_interval: 30s
+
+  # Nginx metrics
+  - job_name: 'nginx'
+    static_configs:
+      - targets: ['nginx:80']
+    scrape_interval: 30s
+    metrics_path: '/nginx_status'
+
+  # Mosquitto MQTT broker metrics
+  - job_name: 'mosquitto'
+    static_configs:
+      - targets: ['mosquitto:1883']
+    scrape_interval: 30s
+    metrics_path: '/metrics'

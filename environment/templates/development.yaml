@@ -1,0 +1,78 @@
+# Development Environment Configuration Template
+# This template is used for local development and testing
+
+environment:
+  name: development
+  type: development
+  debug: true
+  logging_level: DEBUG
+
+# Application Settings
+app:
+  host: localhost
+  port: 3000
+  base_url: http://localhost:3000
+  database:
+    host: localhost
+    port: 5432
+    name: myapp_dev
+    username: dev_user
+    password: ${DB_PASSWORD} # Encrypted secret
+    pool_size: 5
+    max_overflow: 10
+    ssl_mode: disable
+  redis:
+    host: localhost
+    port: 6379
+    database: 0
+    password: ${REDIS_PASSWORD} # Encrypted secret
+  external_apis:
+    auth_service:
+      url: http://localhost:8080
+      api_key: ${AUTH_API_KEY} # Encrypted secret
+      timeout: 30
+    payment_gateway:
+      url: http://localhost:9090
+      api_key: ${PAYMENT_API_KEY} # Encrypted secret
+      webhook_secret: ${WEBHOOK_SECRET} # Encrypted secret
+      timeout: 30
+
+# Security Settings
+security:
+  jwt:
+    secret: ${JWT_SECRET} # Encrypted secret
+    expiration: 24h
+    algorithm: HS256
+  cors:
+    enabled: true
+    origins:
+      - http://localhost:3000
+      - http://localhost:8080
+  rate_limiting:
+    enabled: false
+
+# Monitoring and Observability
+monitoring:
+  metrics:
+    enabled: true
+    endpoint: /metrics
+  health_checks:
+    enabled: true
+    endpoint: /health
+  tracing:
+    enabled: false
+
+# Feature Flags
+features:
+  new_ui: true
+  experimental_features: true
+  advanced_analytics: false
+  beta_features: true
+
+# Development Specific
+development:
+  hot_reload: true
+  debug_toolbar: true
+  show_sql: true
+  cache_disabled: true
+  mock_external_services: true

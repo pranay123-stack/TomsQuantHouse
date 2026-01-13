@@ -1,0 +1,76 @@
+{
+  "id": "high_confidence_prediction",
+  "name": "High Confidence Prediction Scenario",
+  "description": "Workflow for handling trading opportunities with high confidence predictions",
+  "version": "1.0",
+  "business_rules": {
+    "min_confidence_threshold": 0.8,
+    "max_risk_level": "medium",
+    "automated_execution_allowed": true
+  },
+  "steps": [
+    {
+      "step_id": "signal_generation",
+      "name": "Signal Generation",
+      "agent_type": "technical_analyzer",
+      "conditions": {
+        "data.confidence_score": {"operator": "greater_than", "value": 0.7}
+      },
+      "actions": ["analyze_market_data", "generate_trading_signal"],
+      "timeout_seconds": 300,
+      "max_retries": 2
+    },
+    {
+      "step_id": "risk_assessment",
+      "name": "Risk Assessment",
+      "agent_type": "risk_analyzer",
+      "conditions": {
+        "data.confidence_score": {"operator": "greater_than", "value": 0.75}
+      },
+      "actions": ["assess_risk_factors", "calculate_position_size"],
+      "timeout_seconds": 180,
+      "max_retries": 1
+    },
+    {
+      "step_id": "confirmation",
+      "name": "Signal Confirmation",
+      "agent_type": "sentiment_analyzer",
+      "conditions": {
+        "data.confidence_score": {"operator": "greater_than", "value": 0.8}
+      },
+      "actions": ["confirm_signal", "update_confidence"],
+      "timeout_seconds": 120,
+      "max_retries": 1
+    },
+    {
+      "step_id": "execution",
+      "name": "Trade Execution",
+      "agent_type": "execution_agent",
+      "conditions": {
+        "data.final_confidence": {"operator": "greater_than", "value": 0.8}
+      },
+      "actions": ["execute_trade", "monitor_position"],
+      "timeout_seconds": 60,
+      "max_retries": 0
+    },
+    {
+      "step_id": "monitoring",
+      "name": "Position Monitoring",
+      "agent_type": "monitor_agent",
+      "conditions": {},
+      "actions": ["track_performance", "alert_on_changes"],
+      "timeout_seconds": 3600,
+      "max_retries": 0
+    }
+  ],
+  "handoff_rules": {
+    "max_handoffs": 5,
+    "context_preservation": true,
+    "allow_skipping": false
+  },
+  "escalation_triggers": {
+    "confidence_drop": 0.7,
+    "risk_level_increase": "high",
+    "execution_failure": true
+  }
+}

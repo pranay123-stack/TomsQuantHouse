@@ -1,0 +1,80 @@
+# Core dependencies for Error Handling System
+# Python 3.8+ required
+
+# Async support and core functionality
+aiohttp>=3.8.0              # HTTP client for health checks
+psutil>=5.9.0               # System resource monitoring
+asyncio                     # Built-in async support
+logging                     # Built-in logging
+
+# Optional dependencies for enhanced functionality
+redis>=4.0.0                # Cache fallback support
+pymongo>=4.0.0              # MongoDB health checks
+sqlalchemy>=1.4.0           # Database health checks
+aiofiles>=0.8.0             # Async file operations
+
+# Development and testing dependencies
+pytest>=7.0.0               # Testing framework
+pytest-asyncio>=0.21.0      # Async testing support
+pytest-cov>=4.0.0           # Test coverage
+black>=22.0.0               # Code formatting
+flake8>=5.0.0               # Code linting
+mypy>=1.0.0                 # Type checking
+
+# Documentation dependencies
+sphinx>=5.0.0               # Documentation generation
+sphinx-rtd-theme>=1.0.0     # Documentation theme
+
+# Monitoring and alerting (optional)
+prometheus-client>=0.16.0   # Prometheus metrics integration
+structlog>=22.0.0           # Structured logging
+sentry-sdk>=1.0.0           # Error tracking integration
+
+# Notification channels (optional)
+slack-sdk>=3.19.0           # Slack notifications
+twilio>=8.0.0               # SMS notifications
+sendgrid>=6.10.0            # Email notifications
+
+# Circuit breaker specific dependencies
+aiojobs>=1.2.1              # Background task management
+cachetools>=5.0.0           # In-memory caching
+pydantic>=1.10.0            # Data validation and configuration
+
+# Database drivers for health checks
+psycopg2-binary>=2.9.0      # PostgreSQL driver
+pymysql>=1.0.0              # MySQL driver
+aioredis>=2.0.0             # Redis async driver
+
+# HTTP framework integrations (optional)
+fastapi>=0.95.0             # FastAPI integration
+flask>=2.2.0                # Flask integration
+django>=4.0.0               # Django integration
+
+# Cloud service integrations (optional)
+boto3>=1.26.0               # AWS integration
+azure-storage-blob>=12.14.0 # Azure storage integration
+google-cloud-storage>=2.7.0 # GCP storage integration
+
+# Message queue integrations (optional)
+aio-pika>=9.0.0             # RabbitMQ async client
+kafka-python>=2.0.2         # Kafka Python client
+pulsar-client>=2.10.0       # Apache Pulsar client
+
+# Monitoring and observability (optional)
+opentelemetry-api>=1.15.0   # OpenTelemetry API
+opentelemetry-sdk>=1.15.0   # OpenTelemetry SDK
+opentelemetry-instrumentation>=0.36b0  # Auto-instrumentation
+
+# Rate limiting (optional)
+slowapi>=0.1.0              # Rate limiting for FastAPI
+ratelimit>=2.2.1            # General rate limiting
+
+# Configuration management (optional)
+pydantic-settings>=2.0.0    # Settings management
+dynaconf>=3.1.0             # Configuration loader
+python-decouple>=3.8        # Environment variable management
+
+# Development tools
+ipython>=8.0.0              # Interactive Python shell
+jupyter>=1.0.0              # Jupyter notebook support
+pre-commit>=2.20.0          # Git hooks for code quality

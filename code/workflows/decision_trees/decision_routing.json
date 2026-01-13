@@ -1,0 +1,107 @@
+{
+  "id": "decision_routing",
+  "name": "Automated vs Human Decision Routing",
+  "description": "Decision tree for routing trading decisions between automated and human agents",
+  "version": "1.0",
+  "root": {
+    "id": "start",
+    "type": "condition",
+    "field": "data.risk_level",
+    "operator": "equals",
+    "value": "critical",
+    "true_branch": "critical_escalation",
+    "false_branch": "risk_assessment"
+  },
+  "nodes": {
+    "critical_escalation": {
+      "id": "critical_escalation",
+      "type": "human_required",
+      "description": "Critical risk level requires immediate human review"
+    },
+    "risk_assessment": {
+      "id": "risk_assessment",
+      "type": "condition",
+      "field": "data.confidence_score",
+      "operator": "greater_than",
+      "value": 0.9,
+      "true_branch": "high_confidence_automated",
+      "false_branch": "medium_confidence_check"
+    },
+    "medium_confidence_check": {
+      "id": "medium_confidence_check",
+      "type": "condition",
+      "field": "data.confidence_score",
+      "operator": "greater_than",
+      "value": 0.7,
+      "true_branch": "standard_processing",
+      "false_branch": "low_confidence_escalation"
+    },
+    "high_confidence_automated": {
+      "id": "high_confidence_automated",
+      "type": "automated",
+      "description": "High confidence score allows automated execution",
+      "rules": {
+        "max_position_size": "medium",
+        "max_duration": 3600,
+        "required_monitoring": true
+      }
+    },
+    "standard_processing": {
+      "id": "standard_processing",
+      "type": "condition",
+      "field": "metadata.market_volatility",
+      "operator": "greater_than",
+      "value": 0.3,
+      "true_branch": "volatility_check",
+      "false_branch": "normal_automated"
+    },
+    "volatility_check": {
+      "id": "volatility_check",
+      "type": "condition",
+      "field": "data.position_value",
+      "operator": "greater_than",
+      "value": 1000000,
+      "true_branch": "large_position_volatility",
+      "false_branch": "small_position_volatility"
+    },
+    "large_position_volatility": {
+      "id": "large_position_volatility",
+      "type": "human_required",
+      "description": "Large position in volatile market requires human oversight"
+    },
+    "small_position_volatility": {
+      "id": "small_position_volatility",
+      "type": "automated_with_caution",
+      "description": "Automated execution with enhanced monitoring"
+    },
+    "normal_automated": {
+      "id": "normal_automated",
+      "type": "automated",
+      "description": "Standard automated execution"
+    },
+    "low_confidence_escalation": {
+      "id": "low_confidence_escalation",
+      "type": "human_required",
+      "description": "Low confidence requires human analysis"
+    }
+  },
+  "decision_weights": {
+    "risk_level": 0.4,
+    "confidence_score": 0.3,
+    "position_size": 0.2,
+    "market_conditions": 0.1
+  },
+  "escalation_thresholds": {
+    "critical_risk": true,
+    "large_position_high_volatility": true,
+    "confidence_below_0.5": true,
+    "conflicting_signals": true
+  },
+  "automation_rules": {
+    "minimum_confidence": 0.7,
+    "maximum_position_size": 500000,
+    "maximum_duration": 1800,
+    "allowed_market_hours": true,
+    "volatility_limit": 0.25
+  }
+}

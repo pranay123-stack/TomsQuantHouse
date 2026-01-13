@@ -1,0 +1,234 @@
+groups:
+  - name: trading_system_critical
+    rules:
+      # Trading Service Down
+      - alert: TradingServiceDown
+        expr: up{job=~"langgraph-api|asymedge-api|abacus-ai"} == 0
+        for: 30s
+        labels:
+          severity: critical
+          team: trading
+          service: "{{ $labels.job }}"
+        annotations:
+          summary: "Critical trading service is down"
+          description: "{{ $labels.job }} service has been down for more than 30 seconds"
+          runbook_url: "https://docs.company.com/runbooks/trading-service-down"
+
+      # High Trading Error Rate
+      - alert: HighTradingErrorRate
+        expr: rate(trading_errors_total[5m]) / rate(trading_requests_total[5m]) > 0.05
+        for: 2m
+        labels:
+          severity: critical
+          team: trading
+        annotations:
+          summary: "High trading error rate detected"
+          description: "Trading error rate is {{ $value | humanizePercentage }} for {{ $labels.service }}"
+          runbook_url: "https://docs.company.com/runbooks/high-trading-errors"
+
+      # Trading Latency SLO Violation
+      - alert: TradingLatencySLOSLIViolation
+        expr: histogram_quantile(0.99, rate(trading_request_duration_seconds_bucket[5m])) > 1
+        for: 3m
+        labels:
+          severity: critical
+          team: trading
+          sla: "99th percentile < 1s"
+        annotations:
+          summary: "Trading API latency SLO violation"
+          description: "99th percentile latency is {{ $value }}s, exceeding 1s SLO for {{ $labels.service }}"
+          runbook_url: "https://docs.company.com/runbooks/trading-latency-slo"
+
+      # Market Data Feed Issues
+      - alert: MarketDataFeedDown
+        expr: up{job="market-data"} == 0
+        for: 30s
+        labels:
+          severity: critical
+          team: trading
+          service: "market-data"
+        annotations:
+          summary: "Market data feed is down"
+          description: "Market data feed has been down for more than 30 seconds"
+          runbook_url: "https://docs.company.com/runbooks/market-data-feed"
+
+      # Unusual Market Volatility
+      - alert: HighMarketVolatility
+        expr: volatility_indicator > 3.0
+        for: 5m
+        labels:
+          severity: warning
+          team: trading
+        annotations:
+          summary: "Unusual market volatility detected"
+          description: "Market volatility indicator is {{ $value }}, indicating high market uncertainty"
+
+  - name: trading_performance
+    rules:
+      # Algorithm Performance Degradation
+      - alert: AlgorithmPerformanceDegradation
+        expr: (rate(trading_decisions_total{outcome="loss"}[10m]) / rate(trading_decisions_total[10m])) > 0.3
+        for: 10m
+        labels:
+          severity: critical
+          team: trading
+          algorithm: "{{ $labels.algorithm }}"
+        annotations:
+          summary: "Trading algorithm performance degradation"
+          description: "Loss rate for {{ $labels.algorithm }} is {{ $value | humanizePercentage }} in the last 10 minutes"
+          runbook_url: "https://docs.company.com/runbooks/algorithm-performance"
+
+      # Risk Threshold Exceeded
+      - alert: RiskThresholdExceeded
+        expr: portfolio_risk_score > 0.8
+        for: 1m
+        labels:
+          severity: critical
+          team: risk
+        annotations:
+          summary: "Portfolio risk threshold exceeded"
+          description: "Portfolio risk score is {{ $value }}, exceeding threshold of 0.8"
+          runbook_url: "https://docs.company.com/runbooks/risk-threshold"
+
+      # Position Limits Violation
+      - alert: PositionLimitsViolation
+        expr: position_limit_utilization > 0.95
+        for: 2m
+        labels:
+          severity: warning
+          team: risk
+        annotations:
+          summary: "Position limits nearing maximum"
+          description: "Position limit utilization is {{ $value | humanizePercentage }} for {{ $labels.symbol }}"
+
+      # Capital Allocation Anomaly
+      - alert: CapitalAllocationAnomaly
+        expr: capital_allocation_deviation > 2.0
+        for: 5m
+        labels:
+          severity: warning
+          team: trading
+        annotations:
+          summary: "Capital allocation anomaly detected"
+          description: "Capital allocation deviation from expected is {{ $value }} standard deviations"
+
+  - name: trading_infrastructure
+    rules:
+      # Database Connection Pool Exhaustion
+      - alert: DatabaseConnectionPoolExhaustion
+        expr: pg_stat_database_numbackends / pg_settings_max_connections > 0.8
+        for: 2m
+        labels:
+          severity: warning
+          team: infrastructure
+        annotations:
+          summary: "Database connection pool nearly exhausted"
+          description: "Database {{ $labels.datname }} has {{ $value | humanizePercentage }} connections in use"
+          runbook_url: "https://docs.company.com/runbooks/database-connections"
+
+      # Redis Memory High
+      - alert: RedisMemoryHigh
+        expr: redis_memory_used_bytes / redis_memory_max_bytes > 0.9
+        for: 3m
+        labels:
+          severity: warning
+          team: infrastructure
+        annotations:
+          summary: "Redis memory usage is high"
+          description: "Redis instance is using {{ $value | humanizePercentage }} of available memory"
+          runbook_url: "https://docs.company.com/runbooks/redis-memory"
+
+      # Message Queue Backlog
+      - alert: MessageQueueBacklog
+        expr: rabbitmq_queue_messages > 10000
+        for: 5m
+        labels:
+          severity: warning
+          team: infrastructure
+        annotations:
+          summary: "Message queue backlog detected"
+          description: "Queue {{ $labels.queue }} has {{ $value }} messages pending"
+          runbook_url: "https://docs.company.com/runbooks/message-queue"
+
+      # Container Restart Loop
+      - alert: ContainerRestartLoop
+        expr: increase(kube_pod_container_status_restarts_total[1h]) > 5
+        for: 10m
+        labels:
+          severity: critical
+          team: infrastructure
+        annotations:
+          summary: "Container restart loop detected"
+          description: "Container {{ $labels.container }} has restarted {{ $value }} times in the last hour"
+          runbook_url: "https://docs.company.com/runbooks/container-restart"
+
+  - name: trading_security
+    rules:
+      # Security Threat Detection
+      - alert: SecurityThreatDetected
+        expr: security_threats_total > 10
+        for: 1m
+        labels:
+          severity: critical
+          team: security
+        annotations:
+          summary: "Multiple security threats detected"
+          description: "{{ $value }} security threats detected in the last minute"
+
+      # Authentication Failure Rate
+      - alert: HighAuthFailureRate
+        expr: rate(auth_failures_total[5m]) > 100
+        for: 3m
+        labels:
+          severity: warning
+          team: security
+        annotations:
+          summary: "High authentication failure rate"
+          description: "Authentication failure rate is {{ $value }} failures/second"
+
+      # Unauthorized Access Attempt
+      - alert: UnauthorizedAccessAttempt
+        expr: rate(unauthorized_access_attempts_total[5m]) > 5
+        for: 2m
+        labels:
+          severity: critical
+          team: security
+        annotations:
+          summary: "Multiple unauthorized access attempts"
+          description: "{{ $value }} unauthorized access attempts per second"
+
+  - name: trading_business
+    rules:
+      # Trading Volume Anomaly
+      - alert: TradingVolumeAnomaly
+        expr: abs(trading_volume_ratio - 1) > 0.5
+        for: 15m
+        labels:
+          severity: warning
+          team: business
+        annotations:
+          summary: "Trading volume anomaly detected"
+          description: "Trading volume is {{ $value }}x normal baseline for {{ $labels.symbol }}"
+
+      # Order Processing Delays
+      - alert: OrderProcessingDelay
+        expr: histogram_quantile(0.95, rate(order_processing_duration_seconds_bucket[10m])) > 5
+        for: 5m
+        labels:
+          severity: critical
+          team: operations
+        annotations:
+          summary: "Order processing delays detected"
+          description: "95th percentile order processing time is {{ $value }}s"
+
+      # Settlement Failure Rate
+      - alert: SettlementFailureRate
+        expr: rate(settlement_failures_total[10m]) > 0.01
+        for: 5m
+        labels:
+          severity: critical
+          team: operations
+        annotations:
+          summary: "High settlement failure rate"
+          description: "Settlement failure rate is {{ $value | humanizePercentage }}"
+          runbook_url: "https://docs.company.com/runbooks/settlement-failures"

@@ -1,0 +1,108 @@
+# Staging Environment Configuration Template
+# This template is used for pre-production testing and validation
+
+environment:
+  name: staging
+  type: staging
+  debug: false
+  logging_level: INFO
+
+# Application Settings
+app:
+  host: 0.0.0.0
+  port: 8080
+  base_url: https://staging.myapp.com
+  database:
+    host: ${DB_HOST_STAGING}
+    port: 5432
+    name: myapp_staging
+    username: ${DB_USER_STAGING}
+    password: ${DB_PASSWORD} # Encrypted secret
+    pool_size: 10
+    max_overflow: 20
+    ssl_mode: require
+  redis:
+    host: ${REDIS_HOST_STAGING}
+    port: 6379
+    database: 0
+    password: ${REDIS_PASSWORD} # Encrypted secret
+    cluster_mode: false
+  external_apis:
+    auth_service:
+      url: https://auth.staging.myapp.com
+      api_key: ${AUTH_API_KEY_STAGING} # Encrypted secret
+      timeout: 30
+      retries: 3
+    payment_gateway:
+      url: https://payment.staging.gateway.com
+      api_key: ${PAYMENT_API_KEY_STAGING} # Encrypted secret
+      webhook_secret: ${WEBHOOK_SECRET_STAGING} # Encrypted secret
+      timeout: 30
+      retries: 3
+
+# Security Settings
+security:
+  jwt:
+    secret: ${JWT_SECRET_STAGING} # Encrypted secret
+    expiration: 1h
+    algorithm: HS256
+  cors:
+    enabled: true
+    origins:
+      - https://staging.myapp.com
+      - https://staging-admin.myapp.com
+  rate_limiting:
+    enabled: true
+    requests_per_minute: 100
+    burst_capacity: 20
+  encryption:
+    algorithm: AES-256-GCM
+    key_rotation_days: 30
+
+# Monitoring and Observability
+monitoring:
+  metrics:
+    enabled: true
+    endpoint: /metrics
+    collection_interval: 30s
+  health_checks:
+    enabled: true
+    endpoint: /health
+    timeout: 10s
+  tracing:
+    enabled: true
+    service_name: myapp-staging
+    sampling_rate: 0.1
+  logging:
+    structured: true
+    include_stack_trace: true
+    sensitive_data_masking: true
+
+# Feature Flags
+features:
+  new_ui: true
+  experimental_features: false
+  advanced_analytics: true
+  beta_features: false
+  canary_deployment: true
+
+# Infrastructure
+infrastructure:
+  load_balancer:
+    enabled: true
+    health_check_interval: 30s
+    unhealthy_threshold: 3
+    healthy_threshold: 2
+  auto_scaling:
+    enabled: true
+    min_instances: 2
+    max_instances: 10
+    target_cpu_utilization: 70
+
+# Staging Specific
+staging:
+  data_seed_enabled: true
+  test_data_cleanup: true
+  integration_tests: true
+  performance_tests: false
+  load_tests: false

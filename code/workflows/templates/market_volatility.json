@@ -1,0 +1,97 @@
+{
+  "id": "market_volatility",
+  "name": "Market Volatility Scenario",
+  "description": "Workflow for handling high market volatility periods",
+  "version": "1.0",
+  "business_rules": {
+    "volatility_threshold": 0.25,
+    "adaptive_position_sizing": true,
+    "enhanced_monitoring": true
+  },
+  "steps": [
+    {
+      "step_id": "volatility_detection",
+      "name": "Volatility Detection",
+      "agent_type": "volatility_monitor",
+      "conditions": {},
+      "actions": ["measure_volatility", "compare_to_baseline"],
+      "timeout_seconds": 30,
+      "max_retries": 0
+    },
+    {
+      "step_id": "volatility_analysis",
+      "name": "Volatility Analysis",
+      "agent_type": "technical_analyzer",
+      "conditions": {
+        "data.volatility_score": {"operator": "greater_than", "value": 0.2}
+      },
+      "actions": ["analyze_volatility_drivers", "predict_volatility_trend"],
+      "timeout_seconds": 180,
+      "max_retries": 2
+    },
+    {
+      "step_id": "position_adjustment",
+      "name": "Position Adjustment",
+      "agent_type": "position_manager",
+      "conditions": {
+        "data.volatility_score": {"operator": "greater_than", "value": 0.25}
+      },
+      "actions": ["adjust_position_sizes", "implement_stop_losses"],
+      "timeout_seconds": 120,
+      "max_retries": 1,
+      "requires_human": true
+    },
+    {
+      "step_id": "strategy_adaptation",
+      "name": "Strategy Adaptation",
+      "agent_type": "strategy_agent",
+      "conditions": {
+        "data.volatility_duration": {"operator": "greater_than", "value": 3600}
+      },
+      "actions": ["adapt_trading_strategy", "implement_volatililty_hedging"],
+      "timeout_seconds": 300,
+      "max_retries": 1,
+      "requires_human": true
+    },
+    {
+      "step_id": "enhanced_monitoring",
+      "name": "Enhanced Monitoring",
+      "agent_type": "monitor_agent",
+      "conditions": {
+        "data.volatility_score": {"operator": "greater_than", "value": 0.2}
+      },
+      "actions": ["increase_monitoring_frequency", "set_volatility_alerts"],
+      "timeout_seconds": 1800,
+      "max_retries": 0
+    },
+    {
+      "step_id": "recovery_detection",
+      "name": "Recovery Detection",
+      "agent_type": "volatility_monitor",
+      "conditions": {},
+      "actions": ["detect_volatility_normalization", "adjust_monitoring_level"],
+      "timeout_seconds": 300,
+      "max_retries": 0
+    }
+  ],
+  "handoff_rules": {
+    "max_handoffs": 6,
+    "context_preservation": true,
+    "allow_skipping": true,
+    "adaptive_timeout": true
+  },
+  "escalation_triggers": {
+    "volatility_excessive": 0.5,
+    "prolonged_volatility": 7200,
+    "position_losses": 0.1
+  },
+  "adaptive_rules": {
+    "timeout_scaling": {
+      "enabled": true,
+      "factor": 1.5
+    },
+    "confidence_adjustment": {
+      "volatility_penalty": 0.1
+    }
+  }
+}

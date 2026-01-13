@@ -1,0 +1,342 @@
+{
+  "timestamp": "2025-11-02T10:47:34.872003",
+  "scan_type": "Security Compliance Assessment",
+  "total_checks": 37,
+  "framework_scores": {
+    "OWASP Top 10 2021": {
+      "compliant": 0,
+      "total": 10,
+      "percentage": 0.0
+    },
+    "NIST Cybersecurity Framework": {
+      "compliant": 0,
+      "total": 6,
+      "percentage": 0.0
+    },
+    "PCI DSS": {
+      "compliant": 0,
+      "total": 7,
+      "percentage": 0.0
+    },
+    "GDPR": {
+      "compliant": 0,
+      "total": 4,
+      "percentage": 0.0
+    },
+    "ISO 27001": {
+      "compliant": 0,
+      "total": 5,
+      "percentage": 0.0
+    },
+    "CIS Controls": {
+      "compliant": 0,
+      "total": 5,
+      "percentage": 0.0
+    }
+  },
+  "compliance_items": [
+    {
+      "framework": "OWASP Top 10 2021",
+      "requirement": "A01 - Broken Access Control",
+      "status": "PARTIAL",
+      "evidence": "Some RBAC implementation found but may lack comprehensive enforcement",
+      "recommendation": "Implement comprehensive access control testing and validation",
+      "priority": "HIGH"
+    },
+    {
+      "framework": "OWASP Top 10 2021",
+      "requirement": "A02 - Cryptographic Failures",
+      "status": "NON_COMPLIANT",
+      "evidence": "Found weak JWT secrets and potential hardcoded credentials",
+      "recommendation": "Implement proper key management and strong cryptography",
+      "priority": "HIGH"
+    },
+    {
+      "framework": "OWASP Top 10 2021",
+      "requirement": "A03 - Injection",
+      "status": "NON_COMPLIANT",
+      "evidence": "Potential SQL injection vulnerabilities detected",
+      "recommendation": "Use parameterized queries and input validation",
+      "priority": "HIGH"
+    },
+    {
+      "framework": "OWASP Top 10 2021",
+      "requirement": "A04 - Insecure Design",
+      "status": "PARTIAL",
+      "evidence": "Some security patterns implemented but comprehensive design review needed",
+      "recommendation": "Implement threat modeling and security by design",
+      "priority": "MEDIUM"
+    },
+    {
+      "framework": "OWASP Top 10 2021",
+      "requirement": "A05 - Security Misconfiguration",
+      "status": "NON_COMPLIANT",
+      "evidence": "Missing security headers and permissive CORS policies found",
+      "recommendation": "Harden all system configurations",
+      "priority": "HIGH"
+    },
+    {
+      "framework": "OWASP Top 10 2021",
+      "requirement": "A06 - Vulnerable and Outdated Components",
+      "status": "PARTIAL",
+      "evidence": "Dependency scanning needed to verify component versions",
+      "recommendation": "Implement automated dependency scanning and updates",
+      "priority": "MEDIUM"
+    },
+    {
+      "framework": "OWASP Top 10 2021",
+      "requirement": "A07 - Identification and Authentication Failures",
+      "status": "NON_COMPLIANT",
+      "evidence": "Weak authentication mechanisms and missing MFA found",
+      "recommendation": "Implement strong authentication and MFA",
+      "priority": "HIGH"
+    },
+    {
+      "framework": "OWASP Top 10 2021",
+      "requirement": "A08 - Software and Data Integrity Failures",
+      "status": "PARTIAL",
+      "evidence": "Some integrity checks may be missing",
+      "recommendation": "Implement integrity validation for all software components",
+      "priority": "MEDIUM"
+    },
+    {
+      "framework": "OWASP Top 10 2021",
+      "requirement": "A09 - Security Logging and Monitoring Failures",
+      "status": "PARTIAL",
+      "evidence": "Some audit logging implemented but may lack comprehensive monitoring",
+      "recommendation": "Implement comprehensive security logging and monitoring",
+      "priority": "MEDIUM"
+    },
+    {
+      "framework": "OWASP Top 10 2021",
+      "requirement": "A10 - Server-Side Request Forgery (SSRF)",
+      "status": "PARTIAL",
+      "evidence": "SSRF protection needs verification",
+      "recommendation": "Implement SSRF protection mechanisms",
+      "priority": "MEDIUM"
+    },
+    {
+      "framework": "NIST Cybersecurity Framework",
+      "requirement": "ID.AM - Asset Management",
+      "status": "PARTIAL",
+      "evidence": "Some asset inventory found but may not be comprehensive",
+      "recommendation": "Maintain complete and accurate asset inventory",
+      "priority": "MEDIUM"
+    },
+    {
+      "framework": "NIST Cybersecurity Framework",
+      "requirement": "PR.AC - Access Control",
+      "status": "NON_COMPLIANT",
+      "evidence": "Access control issues found in the system",
+      "recommendation": "Implement comprehensive access control measures",
+      "priority": "HIGH"
+    },
+    {
+      "framework": "NIST Cybersecurity Framework",
+      "requirement": "PR.DS - Data Security",
+      "status": "NON_COMPLIANT",
+      "evidence": "Data protection and encryption issues identified",
+      "recommendation": "Implement comprehensive data protection measures",
+      "priority": "HIGH"
+    },
+    {
+      "framework": "NIST Cybersecurity Framework",
+      "requirement": "DE.AE - Anomalies and Events",
+      "status": "PARTIAL",
+      "evidence": "Some monitoring in place but may lack comprehensive detection",
+      "recommendation": "Implement comprehensive anomaly detection",
+      "priority": "MEDIUM"
+    },
+    {
+      "framework": "NIST Cybersecurity Framework",
+      "requirement": "RS.RP - Response Planning",
+      "status": "NOT_APPLICABLE",
+      "evidence": "Incident response planning requires organization-level assessment",
+      "recommendation": "Develop and document incident response procedures",
+      "priority": "HIGH"
+    },
+    {
+      "framework": "NIST Cybersecurity Framework",
+      "requirement": "RC.RP - Recovery Planning",
+      "status": "NOT_APPLICABLE",
+      "evidence": "Recovery planning requires organization-level assessment",
+      "recommendation": "Develop and test disaster recovery procedures",
+      "priority": "HIGH"
+    },
+    {
+      "framework": "PCI DSS",
+      "requirement": "1 - Firewalls",
+      "status": "PARTIAL",
+      "evidence": "Some network security measures in place",
+      "recommendation": "Implement comprehensive firewall rules",
+      "priority": "HIGH"
+    },
+    {
+      "framework": "PCI DSS",
+      "requirement": "3 - Protect Stored Data",
+      "status": "NON_COMPLIANT",
+      "evidence": "Encryption and key management issues found",
+      "recommendation": "Implement strong encryption for stored data",
+      "priority": "CRITICAL"
+    },
+    {
+      "framework": "PCI DSS",
+      "requirement": "4 - Encrypt Transmission",
+      "status": "PARTIAL",
+      "evidence": "SSL/TLS implementation found but may need strengthening",
+      "recommendation": "Ensure strong encryption for all data transmission",
+      "priority": "HIGH"
+    },
+    {
+      "framework": "PCI DSS",
+      "requirement": "6 - Secure Systems",
+      "status": "NON_COMPLIANT",
+      "evidence": "Multiple vulnerabilities in system development",
+      "recommendation": "Implement secure development practices",
+      "priority": "HIGH"
+    },
+    {
+      "framework": "PCI DSS",
+      "requirement": "7 - Restrict Access",
+      "status": "NON_COMPLIANT",
+      "evidence": "Access control vulnerabilities identified",
+      "recommendation": "Implement strict access controls",
+      "priority": "HIGH"
+    },
+    {
+      "framework": "PCI DSS",
+      "requirement": "8 - Authentication",
+      "status": "NON_COMPLIANT",
+      "evidence": "Authentication weaknesses found",
+      "recommendation": "Implement strong authentication mechanisms",
+      "priority": "HIGH"
+    },
+    {
+      "framework": "PCI DSS",
+      "requirement": "10 - Logging",
+      "status": "PARTIAL",
+      "evidence": "Some logging implemented",
+      "recommendation": "Implement comprehensive audit logging",
+      "priority": "MEDIUM"
+    },
+    {
+      "framework": "GDPR",
+      "requirement": "Article 25 - Privacy by Design",
+      "status": "PARTIAL",
+      "evidence": "Some privacy controls in place",
+      "recommendation": "Implement comprehensive privacy by design principles",
+      "priority": "HIGH"
+    },
+    {
+      "framework": "GDPR",
+      "requirement": "Article 30 - Processing Records",
+      "status": "NOT_APPLICABLE",
+      "evidence": "Requires organizational documentation review",
+      "recommendation": "Maintain records of all data processing activities",
+      "priority": "HIGH"
+    },
+    {
+      "framework": "GDPR",
+      "requirement": "Article 32 - Security of Processing",
+      "status": "NON_COMPLIANT",
+      "evidence": "Security measures insufficient for GDPR requirements",
+      "recommendation": "Implement appropriate technical and organizational measures",
+      "priority": "CRITICAL"
+    },
+    {
+      "framework": "GDPR",
+      "requirement": "Article 33 - Breach Notification",
+      "status": "NOT_APPLICABLE",
+      "evidence": "Requires organizational incident response procedures",
+      "recommendation": "Establish breach notification procedures",
+      "priority": "HIGH"
+    },
+    {
+      "framework": "ISO 27001",
+      "requirement": "A.9 - Access Control",
+      "status": "NON_COMPLIANT",
+      "evidence": "Access control weaknesses identified",
+      "recommendation": "Implement comprehensive access control policy",
+      "priority": "HIGH"
+    },
+    {
+      "framework": "ISO 27001",
+      "requirement": "A.10 - Cryptography",
+      "status": "NON_COMPLIANT",
+      "evidence": "Cryptographic implementation issues found",
+      "recommendation": "Implement proper cryptographic controls",
+      "priority": "HIGH"
+    },
+    {
+      "framework": "ISO 27001",
+      "requirement": "A.12 - Operations Security",
+      "status": "PARTIAL",
+      "evidence": "Some operational security measures in place",
+      "recommendation": "Enhance operational security procedures",
+      "priority": "MEDIUM"
+    },
+    {
+      "framework": "ISO 27001",
+      "requirement": "A.13 - Communications Security",
+      "status": "PARTIAL",
+      "evidence": "Network security controls need strengthening",
+      "recommendation": "Implement comprehensive network security",
+      "priority": "HIGH"
+    },
+    {
+      "framework": "ISO 27001",
+      "requirement": "A.14 - System Development",
+      "status": "PARTIAL",
+      "evidence": "Some secure development practices in place",
+      "recommendation": "Implement secure development lifecycle",
+      "priority": "MEDIUM"
+    },
+    {
+      "framework": "CIS Controls",
+      "requirement": "Control 1 - Asset Inventory",
+      "status": "PARTIAL",
+      "evidence": "Asset management in place",
+      "recommendation": "Maintain complete asset inventory with automated discovery",
+      "priority": "HIGH"
+    },
+    {
+      "framework": "CIS Controls",
+      "requirement": "Control 2 - Software Inventory",
+      "status": "PARTIAL",
+      "evidence": "Some software inventory practices",
+      "recommendation": "Implement automated software inventory management",
+      "priority": "HIGH"
+    },
+    {
+      "framework": "CIS Controls",
+      "requirement": "Control 3 - Data Protection",
+      "status": "NON_COMPLIANT",
+      "evidence": "Data protection measures insufficient",
+      "recommendation": "Implement comprehensive data classification and protection",
+      "priority": "CRITICAL"
+    },
+    {
+      "framework": "CIS Controls",
+      "requirement": "Control 5 - Secure Configuration",
+      "status": "NON_COMPLIANT",
+      "evidence": "Configuration security issues found",
+      "recommendation": "Establish and maintain secure configurations",
+      "priority": "HIGH"
+    },
+    {
+      "framework": "CIS Controls",
+      "requirement": "Control 6 - Access Control",
+      "status": "NON_COMPLIANT",
+      "evidence": "Access control implementation issues",
+      "recommendation": "Implement comprehensive access control management",
+      "priority": "HIGH"
+    }
+  ],
+  "summary": {
+    "overall_compliance": 0.0,
+    "critical_issues": 3,
+    "high_priority": 24,
+    "medium_priority": 10,
+    "low_priority": 0
+  }
+}

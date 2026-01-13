@@ -1,0 +1,87 @@
+{
+  "id": "risk_event",
+  "name": "Risk Event Scenario",
+  "description": "Workflow for handling market risk events and emergency situations",
+  "version": "1.0",
+  "business_rules": {
+    "immediate_escalation": true,
+    "human_oversight_required": true,
+    "max_response_time": 300
+  },
+  "steps": [
+    {
+      "step_id": "risk_detection",
+      "name": "Risk Event Detection",
+      "agent_type": "risk_monitor",
+      "conditions": {},
+      "actions": ["detect_risk_event", "classify_severity"],
+      "timeout_seconds": 60,
+      "max_retries": 0
+    },
+    {
+      "step_id": "impact_assessment",
+      "name": "Impact Assessment",
+      "agent_type": "risk_analyzer",
+      "conditions": {},
+      "actions": ["assess_portfolio_impact", "calculate_exposure"],
+      "timeout_seconds": 120,
+      "max_retries": 1,
+      "requires_human": true
+    },
+    {
+      "step_id": "emergency_protocol",
+      "name": "Emergency Protocol",
+      "agent_type": "emergency_agent",
+      "conditions": {
+        "data.severity": {"operator": "in", "value": ["high", "critical"]}
+      },
+      "actions": ["implement_protective_measures", "hedge_positions"],
+      "timeout_seconds": 180,
+      "max_retries": 0,
+      "requires_human": true
+    },
+    {
+      "step_id": "stakeholder_alert",
+      "name": "Stakeholder Alert",
+      "agent_type": "communication_agent",
+      "conditions": {
+        "data.severity": {"operator": "in", "value": ["medium", "high", "critical"]}
+      },
+      "actions": ["notify_stakeholders", "create_incident_report"],
+      "timeout_seconds": 90,
+      "max_retries": 0
+    },
+    {
+      "step_id": "recovery_monitoring",
+      "name": "Recovery Monitoring",
+      "agent_type": "monitor_agent",
+      "conditions": {},
+      "actions": ["monitor_market_recovery", "assess_position_status"],
+      "timeout_seconds": 7200,
+      "max_retries": 0
+    }
+  ],
+  "handoff_rules": {
+    "max_handoffs": 3,
+    "context_preservation": true,
+    "allow_skipping": false,
+    "mandatory_human_review": true
+  },
+  "escalation_triggers": {
+    "severity_level": "high",
+    "response_time_exceeded": true,
+    "conflicting_recommendations": true
+  },
+  "human_override_points": [
+    {
+      "step": "impact_assessment",
+      "required": true,
+      "reason": "Human expertise required for risk impact evaluation"
+    },
+    {
+      "step": "emergency_protocol", 
+      "required": true,
+      "reason": "Critical decisions require human approval"
+    }
+  ]
+}

@@ -1,0 +1,236 @@
+groups:
+  - name: capacity_planning
+    rules:
+      # CPU Capacity Utilization
+      - alert: CPUCapacityWarning
+        expr: (1 - avg(rate(node_cpu_seconds_total{mode="idle"}[5m]))) > 0.7
+        for: 10m
+        labels:
+          severity: warning
+          metric_type: capacity
+        annotations:
+          summary: "CPU capacity utilization warning"
+          description: "CPU utilization is {{ $value | humanizePercentage }} for {{ $labels.instance }}"
+          capacity_trend: "capacity_planning_cpu"
+
+      - alert: CPUCapacityCritical
+        expr: (1 - avg(rate(node_cpu_seconds_total{mode="idle"}[5m]))) > 0.85
+        for: 5m
+        labels:
+          severity: critical
+          metric_type: capacity
+        annotations:
+          summary: "CPU capacity utilization critical"
+          description: "CPU utilization is {{ $value | humanizePercentage }} for {{ $labels.instance }}"
+          action_required: true
+
+      # Memory Capacity Planning
+      - alert: MemoryCapacityWarning
+        expr: (1 - (node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes)) > 0.8
+        for: 10m
+        labels:
+          severity: warning
+          metric_type: capacity
+        annotations:
+          summary: "Memory capacity utilization warning"
+          description: "Memory utilization is {{ $value | humanizePercentage }} for {{ $labels.instance }}"
+          capacity_trend: "capacity_planning_memory"
+
+      - alert: MemoryCapacityCritical
+        expr: (1 - (node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes)) > 0.9
+        for: 5m
+        labels:
+          severity: critical
+          metric_type: capacity
+        annotations:
+          summary: "Memory capacity utilization critical"
+          description: "Memory utilization is {{ $value | humanizePercentage }} for {{ $labels.instance }}"
+          action_required: true
+
+      # Storage Capacity Planning
+      - alert: StorageCapacityWarning
+        expr: (1 - (node_filesystem_avail_bytes / node_filesystem_size_bytes)) > 0.8
+        for: 5m
+        labels:
+          severity: warning
+          metric_type: capacity
+        annotations:
+          summary: "Storage capacity utilization warning"
+          description: "Storage utilization is {{ $value | humanizePercentage }} for {{ $labels.instance }}:{{ $labels.mountpoint }}"
+          capacity_trend: "capacity_planning_storage"
+
+      - alert: StorageCapacityCritical
+        expr: (1 - (node_filesystem_avail_bytes / node_filesystem_size_bytes)) > 0.9
+        for: 2m
+        labels:
+          severity: critical
+          metric_type: capacity
+        annotations:
+          summary: "Storage capacity utilization critical"
+          description: "Storage utilization is {{ $value | humanizePercentage }} for {{ $labels.instance }}:{{ $labels.mountpoint }}"
+          action_required: true
+
+      # Database Capacity Planning
+      - alert: DatabaseCapacityWarning
+        expr: (pg_database_size_bytes / (1024^3)) > (pg_settings_max_connections * 100 / 1024)
+        for: 15m
+        labels:
+          severity: warning
+          metric_type: capacity
+        annotations:
+          summary: "Database capacity warning"
+          description: "Database {{ $labels.datname }} size is approaching capacity limits"
+          capacity_trend: "capacity_planning_database"
+
+      # Network Bandwidth Utilization
+      - alert: NetworkBandwidthWarning
+        expr: rate(node_network_transmit_bytes_total[5m]) / 1000000 > 800
+        for: 10m
+        labels:
+          severity: warning
+          metric_type: capacity
+        annotations:
+          summary: "Network bandwidth utilization warning"
+          description: "Network transmit rate is {{ $value }} MB/s for {{ $labels.instance }}"
+
+      # Container Resource Usage
+      - alert: ContainerResourceWarning
+        expr: container_memory_usage_bytes / container_spec_memory_limit_bytes > 0.8
+        for: 5m
+        labels:
+          severity: warning
+          metric_type: capacity
+        annotations:
+          summary: "Container resource usage warning"
+          description: "Container {{ $labels.container }} is using {{ $value | humanizePercentage }} of memory limit"
+
+  - name: performance_degradation
+    rules:
+      # Service Response Time Degradation
+      - alert: ServiceResponseTimeDegradation
+        expr: histogram_quantile(0.95, rate(http_request_duration_seconds_bucket[5m])) > 2
+        for: 3m
+        labels:
+          severity: warning
+          metric_type: performance
+        annotations:
+          summary: "Service response time degradation"
+          description: "95th percentile response time is {{ $value }}s for {{ $labels.service }}"
+          performance_trend: "performance_degradation"
+
+      # Database Query Performance
+      - alert: DatabaseQueryPerformance
+        expr: histogram_quantile(0.95, rate(pg_stat_statements_mean_time_bucket[5m])) > 0.5
+        for: 5m
+        labels:
+          severity: warning
+          metric_type: performance
+        annotations:
+          summary: "Database query performance degradation"
+          description: "95th percentile query time is {{ $value }}s for {{ $labels.datname }}"
+
+      # Cache Hit Rate Degradation
+      - alert: CacheHitRateDegradation
+        expr: rate(redis_keyspace_hits_total[5m]) / (rate(redis_keyspace_hits_total[5m]) + rate(redis_keyspace_misses_total[5m])) < 0.8
+        for: 10m
+        labels:
+          severity: warning
+          metric_type: performance
+        annotations:
+          summary: "Cache hit rate degradation"
+          description: "Cache hit rate is {{ $value | humanizePercentage }} for {{ $labels.instance }}"
+
+      # Message Queue Processing Rate
+      - alert: MessageQueueProcessingRate
+        expr: rate(rabbitmq_channel_messages_published_total[5m]) / rate(rabbitmq_channel_messages_delivered_total[5m]) > 0.9
+        for: 5m
+        labels:
+          severity: warning
+          metric_type: performance
+        annotations:
+          summary: "Message queue processing backlog"
+          description: "Message queue {{ $labels.queue }} has processing backlog"
+
+      # Trading Algorithm Latency
+      - alert: TradingAlgorithmLatency
+        expr: histogram_quantile(0.99, rate(trading_algorithm_duration_seconds_bucket[5m])) > 0.5
+        for: 3m
+        labels:
+          severity: critical
+          metric_type: performance
+        annotations:
+          summary: "Trading algorithm latency spike"
+          description: "99th percentile algorithm execution time is {{ $value }}s for {{ $labels.algorithm }}"
+
+  - name: scaling_recommendations
+    rules:
+      # Auto-scaling Triggers
+      - alert: HorizontalScalingRecommendation
+        expr: (1 - avg(rate(node_cpu_seconds_total{mode="idle"}[5m]))) > 0.8 and increase(kube_deployment_status_replicas[10m]) > 0
+        for: 5m
+        labels:
+          severity: info
+          action_type: "scale_out"
+        annotations:
+          summary: "Horizontal scaling recommended"
+          description: "CPU utilization above 80% for 5+ minutes, consider scaling out"
+          recommended_action: "Increase pod replicas"
+
+      - alert: VerticalScalingRecommendation
+        expr: container_memory_usage_bytes / container_spec_memory_limit_bytes > 0.9
+        for: 10m
+        labels:
+          severity: info
+          action_type: "scale_up"
+        annotations:
+          summary: "Vertical scaling recommended"
+          description: "Container {{ $labels.container }} memory usage above 90%, consider increasing resource limits"
+          recommended_action: "Increase memory limits"
+
+      # Resource Optimization
+      - alert: UnderutilizedResources
+        expr: (1 - avg(rate(node_cpu_seconds_total{mode="idle"}[5m]))) < 0.3
+        for: 30m
+        labels:
+          severity: info
+          action_type: "scale_down"
+        annotations:
+          summary: "Underutilized resources detected"
+          description: "CPU utilization below 30% for 30+ minutes, consider scaling down"
+          recommended_action: "Decrease pod replicas"
+
+      # Database Connection Pool Sizing
+      - alert: DatabaseConnectionPoolRecommendation
+        expr: pg_stat_database_numbackends / pg_settings_max_connections < 0.5
+        for: 30m
+        labels:
+          severity: info
+          action_type: "optimize"
+        annotations:
+          summary: "Database connection pool optimization opportunity"
+          description: "Connection pool utilization below 50%, consider reducing max_connections or optimizing queries"
+
+  - name: predictive_capacity
+    rules:
+      # Predictive Capacity Alerts (based on trends)
+      - alert: PredictiveCapacityThreshold
+        expr: predict_linear(node_memory_MemTotal_bytes[6h], 24*3600) - predict_linear(node_memory_MemAvailable_bytes[6h], 24*3600) < 0
+        for: 15m
+        labels:
+          severity: warning
+          forecast: "24h"
+          metric_type: capacity
+        annotations:
+          summary: "Predictive memory capacity threshold"
+          description: "Memory capacity projected to be exhausted within 24 hours based on current trends"
+
+      - alert: PredictiveStorageThreshold
+        expr: predict_linear(node_filesystem_avail_bytes[6h], 48*3600) < 0
+        for: 15m
+        labels:
+          severity: warning
+          forecast: "48h"
+          metric_type: capacity
+        annotations:
+          summary: "Predictive storage capacity threshold"
+          description: "Storage capacity projected to be exhausted within 48 hours based on current trends"

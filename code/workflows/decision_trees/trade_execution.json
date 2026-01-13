@@ -1,0 +1,126 @@
+{
+  "id": "trade_execution",
+  "name": "Trade Execution Decision Tree",
+  "description": "Decision routing for trade execution scenarios",
+  "version": "1.0",
+  "root": {
+    "id": "start",
+    "type": "condition",
+    "field": "data.trade_size",
+    "operator": "greater_than",
+    "value": 1000000,
+    "true_branch": "large_trade_check",
+    "false_branch": "standard_trade_check"
+  },
+  "nodes": {
+    "large_trade_check": {
+      "id": "large_trade_check",
+      "type": "condition",
+      "field": "data.market_liquidity",
+      "operator": "less_than",
+      "value": 0.5,
+      "true_branch": "liquidity_risk",
+      "false_branch": "large_trade_approval"
+    },
+    "liquidity_risk": {
+      "id": "liquidity_risk",
+      "type": "human_required",
+      "description": "Large trade with low liquidity requires approval",
+      "required_approvals": ["senior_trader", "risk_manager"]
+    },
+    "large_trade_approval": {
+      "id": "large_trade_approval",
+      "type": "human_required",
+      "description": "Large trades require human approval",
+      "required_approvals": ["trading_desk_manager"]
+    },
+    "standard_trade_check": {
+      "id": "standard_trade_check",
+      "type": "condition",
+      "field": "data.market_hours",
+      "operator": "equals",
+      "value": false,
+      "true_branch": "after_hours_check",
+      "false_branch": "normal_hours_automation"
+    },
+    "after_hours_check": {
+      "id": "after_hours_check",
+      "type": "condition",
+      "field": "data.trade_urgency",
+      "operator": "equals",
+      "value": "high",
+      "true_branch": "after_hours_execution",
+      "false_branch": "queue_for_market_open"
+    },
+    "after_hours_execution": {
+      "id": "after_hours_execution",
+      "type": "human_required",
+      "description": "After-hours high urgency trades require approval",
+      "required_approvals": ["on_call_manager"]
+    },
+    "queue_for_market_open": {
+      "id": "queue_for_market_open",
+      "type": "automated",
+      "description": "Queue for execution when market opens",
+      "execution_type": "queued"
+    },
+    "normal_hours_automation": {
+      "id": "normal_hours_automation",
+      "type": "condition",
+      "field": "data.strategy_type",
+      "operator": "in",
+      "value": ["scalping", "momentum", "mean_reversion"],
+      "true_branch": "high_frequency_automation",
+      "false_branch": "standard_automation"
+    },
+    "high_frequency_automation": {
+      "id": "high_frequency_automation",
+      "type": "automated",
+      "description": "High frequency strategies automated with oversight",
+      "automation_level": "high_frequency",
+      "monitoring_interval": 30
+    },
+    "standard_automation": {
+      "id": "standard_automation",
+      "type": "automated",
+      "description": "Standard automated execution",
+      "automation_level": "standard"
+    }
+  },
+  "execution_types": {
+    "immediate": {
+      "timeout": 30,
+      "fallback": "queue"
+    },
+    "queued": {
+      "timeout": 3600,
+      "trigger": "market_open"
+    },
+    "conditional": {
+      "conditions": "stop_loss_take_profit"
+    }
+  },
+  "approval_workflows": {
+    "large_trade": {
+      "required_approvers": ["trading_desk_manager"],
+      "timeout_minutes": 15,
+      "escalation_enabled": true
+    },
+    "after_hours": {
+      "required_approvers": ["on_call_manager"],
+      "timeout_minutes": 10,
+      "escalation_enabled": true
+    },
+    "high_risk": {
+      "required_approvers": ["senior_trader", "risk_manager"],
+      "timeout_minutes": 5,
+      "escalation_enabled": true
+    }
+  },
+  "automation_limits": {
+    "max_daily_volume": 10000000,
+    "max_single_trade": 500000,
+    "max_position_size": 2000000,
+    "max_leverage": 3.0
+  }
+}

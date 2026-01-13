@@ -1,0 +1,148 @@
+# Production Environment Configuration Template
+# This template is used for live production environments
+
+environment:
+  name: production
+  type: production
+  debug: false
+  logging_level: WARN
+
+# Application Settings
+app:
+  host: 0.0.0.0
+  port: 8080
+  base_url: https://myapp.com
+  database:
+    host: ${DB_HOST_PROD}
+    port: 5432
+    name: ${DB_NAME_PROD}
+    username: ${DB_USER_PROD}
+    password: ${DB_PASSWORD} # Encrypted secret
+    pool_size: 20
+    max_overflow: 40
+    ssl_mode: require
+    ssl_ca: ${DB_SSL_CA} # Encrypted secret
+    ssl_cert: ${DB_SSL_CERT} # Encrypted secret
+    ssl_key: ${DB_SSL_KEY} # Encrypted secret
+  redis:
+    host: ${REDIS_HOST_PROD}
+    port: 6379
+    database: 0
+    password: ${REDIS_PASSWORD} # Encrypted secret
+    cluster_mode: true
+    cluster_nodes: ${REDIS_CLUSTER_NODES} # Encrypted secret
+  external_apis:
+    auth_service:
+      url: ${AUTH_SERVICE_URL}
+      api_key: ${AUTH_API_KEY_PROD} # Encrypted secret
+      timeout: 30
+      retries: 3
+      circuit_breaker: true
+    payment_gateway:
+      url: ${PAYMENT_GATEWAY_URL}
+      api_key: ${PAYMENT_API_KEY_PROD} # Encrypted secret
+      webhook_secret: ${WEBHOOK_SECRET_PROD} # Encrypted secret
+      timeout: 30
+      retries: 3
+      circuit_breaker: true
+
+# Security Settings
+security:
+  jwt:
+    secret: ${JWT_SECRET_PROD} # Encrypted secret
+    expiration: 15m
+    algorithm: RS256
+    rsa_private_key: ${JWT_RSA_PRIVATE_KEY} # Encrypted secret
+    rsa_public_key: ${JWT_RSA_PUBLIC_KEY} # Encrypted secret
+  cors:
+    enabled: true
+    origins: ${ALLOWED_ORIGINS} # Encrypted secret
+  rate_limiting:
+    enabled: true
+    requests_per_minute: 1000
+    burst_capacity: 100
+    distributed: true
+  encryption:
+    algorithm: AES-256-GCM
+    key_rotation_days: 7
+    encryption_key: ${ENCRYPTION_KEY} # Encrypted secret
+  session_management:
+    timeout: 30m
+    secure_cookies: true
+    http_only: true
+    same_site: strict
+  audit_logging:
+    enabled: true
+    log_successful_auth: true
+    log_failed_auth: true
+    log_data_access: true
+
+# Monitoring and Observability
+monitoring:
+  metrics:
+    enabled: true
+    endpoint: /metrics
+    collection_interval: 15s
+    retention: 30d
+  health_checks:
+    enabled: true
+    endpoint: /health
+    timeout: 5s
+    detailed: false
+  tracing:
+    enabled: true
+    service_name: myapp-prod
+    sampling_rate: 0.01
+    backend: jaeger
+  logging:
+    structured: true
+    level: WARN
+    include_stack_trace: false
+    sensitive_data_masking: true
+    log_retention: 90d
+    ship_to_centralized: true
+
+# Feature Flags
+features:
+  new_ui: true
+  experimental_features: false
+  advanced_analytics: true
+  beta_features: false
+  canary_deployment: false
+  emergency_rollout: true
+
+# Infrastructure
+infrastructure:
+  load_balancer:
+    enabled: true
+    health_check_interval: 10s
+    unhealthy_threshold: 3
+    healthy_threshold: 2
+    ssl_termination: true
+  auto_scaling:
+    enabled: true
+    min_instances: 3
+    max_instances: 50
+    target_cpu_utilization: 65
+    scale_up_cooldown: 300s
+    scale_down_cooldown: 600s
+  backup:
+    enabled: true
+    schedule: "0 2 * * *" # Daily at 2 AM
+    retention: 30d
+    encryption: true
+  disaster_recovery:
+    rto: 4h # Recovery Time Objective
+    rpo: 1h # Recovery Point Objective
+    backup_region: ${BACKUP_REGION}
+
+# Production Specific
+production:
+  high_availability: true
+  multi_region: true
+  circuit_breakers: true
+  bulkhead_isolation: true
+  graceful_shutdown: true
+  health_checks_strict: true
+  performance_monitoring: true
+  uptime_sla: 99.9

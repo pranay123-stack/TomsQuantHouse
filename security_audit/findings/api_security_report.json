@@ -1,0 +1,2259 @@
+{
+  "timestamp": "2025-11-02T10:45:44.011439",
+  "scan_type": "API Security Audit",
+  "total_findings": 104,
+  "endpoints_discovered": [
+    {
+      "file": "/workspace/code/asymedge_api/main.py",
+      "method": "GET",
+      "path": "/",
+      "full_endpoint": "GET /"
+    },
+    {
+      "file": "/workspace/code/langgraph_api/main.py",
+      "method": "GET",
+      "path": "/",
+      "full_endpoint": "GET /"
+    },
+    {
+      "file": "/workspace/code/langgraph_api/main.py",
+      "method": "GET",
+      "path": "/health",
+      "full_endpoint": "GET /health"
+    },
+    {
+      "file": "/workspace/code/langgraph_api/main.py",
+      "method": "POST",
+      "path": "/api/v1/workflows",
+      "full_endpoint": "POST /api/v1/workflows"
+    },
+    {
+      "file": "/workspace/code/langgraph_api/main.py",
+      "method": "GET",
+      "path": "/api/v1/workflows",
+      "full_endpoint": "GET /api/v1/workflows"
+    },
+    {
+      "file": "/workspace/code/langgraph_api/main.py",
+      "method": "GET",
+      "path": "/api/v1/workflows/{workflow_id}",
+      "full_endpoint": "GET /api/v1/workflows/{workflow_id}"
+    },
+    {
+      "file": "/workspace/code/langgraph_api/main.py",
+      "method": "DELETE",
+      "path": "/api/v1/workflows/{workflow_id}",
+      "full_endpoint": "DELETE /api/v1/workflows/{workflow_id}"
+    },
+    {
+      "file": "/workspace/code/langgraph_api/main.py",
+      "method": "POST",
+      "path": "/api/v1/workflows/{workflow_id}/execute",
+      "full_endpoint": "POST /api/v1/workflows/{workflow_id}/execute"
+    },
+    {
+      "file": "/workspace/code/langgraph_api/main.py",
+      "method": "POST",
+      "path": "/api/v1/workflows/{workflow_id}/execute-batch",
+      "full_endpoint": "POST /api/v1/workflows/{workflow_id}/execute-batch"
+    },
+    {
+      "file": "/workspace/code/langgraph_api/main.py",
+      "method": "GET",
+      "path": "/api/v1/executions/{execution_id}",
+      "full_endpoint": "GET /api/v1/executions/{execution_id}"
+    },
+    {
+      "file": "/workspace/code/langgraph_api/main.py",
+      "method": "GET",
+      "path": "/api/v1/workflows/{workflow_id}/state",
+      "full_endpoint": "GET /api/v1/workflows/{workflow_id}/state"
+    },
+    {
+      "file": "/workspace/code/langgraph_api/main.py",
+      "method": "POST",
+      "path": "/api/v1/workflows/{workflow_id}/state",
+      "full_endpoint": "POST /api/v1/workflows/{workflow_id}/state"
+    },
+    {
+      "file": "/workspace/code/langgraph_api/main.py",
+      "method": "GET",
+      "path": "/api/v1/workflows/{workflow_id}/executions",
+      "full_endpoint": "GET /api/v1/workflows/{workflow_id}/executions"
+    },
+    {
+      "file": "/workspace/code/langgraph_api/main.py",
+      "method": "GET",
+      "path": "/api/v1/metrics",
+      "full_endpoint": "GET /api/v1/metrics"
+    },
+    {
+      "file": "/workspace/code/langgraph_api/main.py",
+      "method": "GET",
+      "path": "/api/v1/workflows/{workflow_id}/visualization",
+      "full_endpoint": "GET /api/v1/workflows/{workflow_id}/visualization"
+    },
+    {
+      "file": "/workspace/code/asymedge_api/api/routes/agents.py",
+      "method": "GET",
+      "path": "/definitions",
+      "full_endpoint": "GET /definitions"
+    },
+    {
+      "file": "/workspace/code/asymedge_api/api/routes/agents.py",
+      "method": "GET",
+      "path": "/definitions/{definition_id}",
+      "full_endpoint": "GET /definitions/{definition_id}"
+    },
+    {
+      "file": "/workspace/code/asymedge_api/api/routes/agents.py",
+      "method": "POST",
+      "path": "/definitions",
+      "full_endpoint": "POST /definitions"
+    },
+    {
+      "file": "/workspace/code/asymedge_api/api/routes/agents.py",
+      "method": "PUT",
+      "path": "/definitions/{definition_id}",
+      "full_endpoint": "PUT /definitions/{definition_id}"
+    },
+    {
+      "file": "/workspace/code/asymedge_api/api/routes/agents.py",
+      "method": "DELETE",
+      "path": "/definitions/{definition_id}",
+      "full_endpoint": "DELETE /definitions/{definition_id}"
+    },
+    {
+      "file": "/workspace/code/asymedge_api/api/routes/agents.py",
+      "method": "GET",
+      "path": "/instances",
+      "full_endpoint": "GET /instances"
+    },
+    {
+      "file": "/workspace/code/asymedge_api/api/routes/agents.py",
+      "method": "GET",
+      "path": "/instances/{instance_id}",
+      "full_endpoint": "GET /instances/{instance_id}"
+    },
+    {
+      "file": "/workspace/code/asymedge_api/api/routes/agents.py",
+      "method": "POST",
+      "path": "/instances",
+      "full_endpoint": "POST /instances"
+    },
+    {
+      "file": "/workspace/code/asymedge_api/api/routes/agents.py",
+      "method": "PUT",
+      "path": "/instances/{instance_id}",
+      "full_endpoint": "PUT /instances/{instance_id}"
+    },
+    {
+      "file": "/workspace/code/asymedge_api/api/routes/agents.py",
+      "method": "DELETE",
+      "path": "/instances/{instance_id}",
+      "full_endpoint": "DELETE /instances/{instance_id}"
+    },
+    {
+      "file": "/workspace/code/asymedge_api/api/routes/agents.py",
+      "method": "POST",
+      "path": "/instances/{instance_id}/start",
+      "full_endpoint": "POST /instances/{instance_id}/start"
+    },
+    {
+      "file": "/workspace/code/asymedge_api/api/routes/agents.py",
+      "method": "POST",
+      "path": "/instances/{instance_id}/stop",
+      "full_endpoint": "POST /instances/{instance_id}/stop"
+    },
+    {
+      "file": "/workspace/code/asymedge_api/api/routes/agents.py",
+      "method": "POST",
+      "path": "/instances/{instance_id}/query",
+      "full_endpoint": "POST /instances/{instance_id}/query"
+    },
+    {
+      "file": "/workspace/code/asymedge_api/api/routes/agents.py",
+      "method": "GET",
+      "path": "/instances/{instance_id}/queries",
+      "full_endpoint": "GET /instances/{instance_id}/queries"
+    },
+    {
+      "file": "/workspace/code/asymedge_api/api/routes/agents.py",
+      "method": "GET",
+      "path": "/instances/{instance_id}/metrics",
+      "full_endpoint": "GET /instances/{instance_id}/metrics"
+    },
+    {
+      "file": "/workspace/code/asymedge_api/api/routes/agents.py",
+      "method": "GET",
+      "path": "/instances/{instance_id}/status",
+      "full_endpoint": "GET /instances/{instance_id}/status"
+    },
+    {
+      "file": "/workspace/code/asymedge_api/api/routes/dashboard_config.py",
+      "method": "GET",
+      "path": "/configs",
+      "full_endpoint": "GET /configs"
+    },
+    {
+      "file": "/workspace/code/asymedge_api/api/routes/dashboard_config.py",
+      "method": "GET",
+      "path": "/configs/{config_id}",
+      "full_endpoint": "GET /configs/{config_id}"
+    },
+    {
+      "file": "/workspace/code/asymedge_api/api/routes/dashboard_config.py",
+      "method": "POST",
+      "path": "/configs",
+      "full_endpoint": "POST /configs"
+    },
+    {
+      "file": "/workspace/code/asymedge_api/api/routes/dashboard_config.py",
+      "method": "PUT",
+      "path": "/configs/{config_id}",
+      "full_endpoint": "PUT /configs/{config_id}"
+    },
+    {
+      "file": "/workspace/code/asymedge_api/api/routes/dashboard_config.py",
+      "method": "DELETE",
+      "path": "/configs/{config_id}",
+      "full_endpoint": "DELETE /configs/{config_id}"
+    },
+    {
+      "file": "/workspace/code/asymedge_api/api/routes/dashboard_config.py",
+      "method": "GET",
+      "path": "/configs/{config_id}/clone",
+      "full_endpoint": "GET /configs/{config_id}/clone"
+    },
+    {
+      "file": "/workspace/code/asymedge_api/api/routes/dashboard_config.py",
+      "method": "POST",
+      "path": "/configs/{config_id}/set-default",
+      "full_endpoint": "POST /configs/{config_id}/set-default"
+    },
+    {
+      "file": "/workspace/code/asymedge_api/api/routes/dashboard_config.py",
+      "method": "GET",
+      "path": "/default",
+      "full_endpoint": "GET /default"
+    },
+    {
+      "file": "/workspace/code/asymedge_api/api/routes/dashboard_config.py",
+      "method": "GET",
+      "path": "/widgets",
+      "full_endpoint": "GET /widgets"
+    },
+    {
+      "file": "/workspace/code/asymedge_api/api/routes/dashboard_config.py",
+      "method": "GET",
+      "path": "/themes",
+      "full_endpoint": "GET /themes"
+    },
+    {
+      "file": "/workspace/code/asymedge_api/api/routes/dashboard_config.py",
+      "method": "GET",
+      "path": "/templates",
+      "full_endpoint": "GET /templates"
+    },
+    {
+      "file": "/workspace/code/asymedge_api/api/routes/dashboard_config.py",
+      "method": "POST",
+      "path": "/templates/{template_id}/create",
+      "full_endpoint": "POST /templates/{template_id}/create"
+    },
+    {
+      "file": "/workspace/code/asymedge_api/api/routes/health.py",
+      "method": "GET",
+      "path": "/",
+      "full_endpoint": "GET /"
+    },
+    {
+      "file": "/workspace/code/asymedge_api/api/routes/health.py",
+      "method": "GET",
+      "path": "/detailed",
+      "full_endpoint": "GET /detailed"
+    },
+    {
+      "file": "/workspace/code/asymedge_api/api/routes/health.py",
+      "method": "GET",
+      "path": "/database",
+      "full_endpoint": "GET /database"
+    },
+    {
+      "file": "/workspace/code/asymedge_api/api/routes/health.py",
+      "method": "GET",
+      "path": "/metrics",
+      "full_endpoint": "GET /metrics"
+    },
+    {
+      "file": "/workspace/code/asymedge_api/api/routes/health.py",
+      "method": "GET",
+      "path": "/ready",
+      "full_endpoint": "GET /ready"
+    },
+    {
+      "file": "/workspace/code/asymedge_api/api/routes/health.py",
+      "method": "GET",
+      "path": "/live",
+      "full_endpoint": "GET /live"
+    },
+    {
+      "file": "/workspace/code/asymedge_api/api/routes/health.py",
+      "method": "POST",
+      "path": "/reset-stats",
+      "full_endpoint": "POST /reset-stats"
+    },
+    {
+      "file": "/workspace/code/asymedge_api/api/routes/streaming.py",
+      "method": "GET",
+      "path": "/ws",
+      "full_endpoint": "GET /ws"
+    },
+    {
+      "file": "/workspace/code/asymedge_api/api/routes/streaming.py",
+      "method": "GET",
+      "path": "/subscriptions",
+      "full_endpoint": "GET /subscriptions"
+    },
+    {
+      "file": "/workspace/code/asymedge_api/api/routes/streaming.py",
+      "method": "POST",
+      "path": "/publish/agent-update",
+      "full_endpoint": "POST /publish/agent-update"
+    },
+    {
+      "file": "/workspace/code/asymedge_api/api/routes/streaming.py",
+      "method": "POST",
+      "path": "/publish/metric-update",
+      "full_endpoint": "POST /publish/metric-update"
+    },
+    {
+      "file": "/workspace/code/asymedge_api/api/routes/streaming.py",
+      "method": "POST",
+      "path": "/publish/workflow-update",
+      "full_endpoint": "POST /publish/workflow-update"
+    },
+    {
+      "file": "/workspace/code/asymedge_api/api/routes/streaming.py",
+      "method": "POST",
+      "path": "/publish/system-alert",
+      "full_endpoint": "POST /publish/system-alert"
+    },
+    {
+      "file": "/workspace/code/asymedge_api/api/routes/streaming.py",
+      "method": "GET",
+      "path": "/stats",
+      "full_endpoint": "GET /stats"
+    },
+    {
+      "file": "/workspace/code/asymedge_api/api/routes/streaming.py",
+      "method": "GET",
+      "path": "/health",
+      "full_endpoint": "GET /health"
+    },
+    {
+      "file": "/workspace/code/asymedge_api/api/routes/streaming.py",
+      "method": "GET",
+      "path": "/test-stream",
+      "full_endpoint": "GET /test-stream"
+    },
+    {
+      "file": "/workspace/code/asymedge_api/api/routes/trading_metrics.py",
+      "method": "GET",
+      "path": "/market-data/{symbol}",
+      "full_endpoint": "GET /market-data/{symbol}"
+    },
+    {
+      "file": "/workspace/code/asymedge_api/api/routes/trading_metrics.py",
+      "method": "GET",
+      "path": "/realtime-prices",
+      "full_endpoint": "GET /realtime-prices"
+    },
+    {
+      "file": "/workspace/code/asymedge_api/api/routes/trading_metrics.py",
+      "method": "GET",
+      "path": "/market-overview",
+      "full_endpoint": "GET /market-overview"
+    },
+    {
+      "file": "/workspace/code/asymedge_api/api/routes/trading_metrics.py",
+      "method": "GET",
+      "path": "/portfolio/analytics",
+      "full_endpoint": "GET /portfolio/analytics"
+    },
+    {
+      "file": "/workspace/code/asymedge_api/api/routes/trading_metrics.py",
+      "method": "GET",
+      "path": "/portfolio/performance",
+      "full_endpoint": "GET /portfolio/performance"
+    },
+    {
+      "file": "/workspace/code/asymedge_api/api/routes/trading_metrics.py",
+      "method": "GET",
+      "path": "/portfolio/allocation",
+      "full_endpoint": "GET /portfolio/allocation"
+    },
+    {
+      "file": "/workspace/code/asymedge_api/api/routes/trading_metrics.py",
+      "method": "GET",
+      "path": "/symbol/{symbol}/analytics",
+      "full_endpoint": "GET /symbol/{symbol}/analytics"
+    },
+    {
+      "file": "/workspace/code/asymedge_api/api/routes/trading_metrics.py",
+      "method": "GET",
+      "path": "/symbol/{symbol}/signals",
+      "full_endpoint": "GET /symbol/{symbol}/signals"
+    },
+    {
+      "file": "/workspace/code/asymedge_api/api/routes/trading_metrics.py",
+      "method": "GET",
+      "path": "/metrics/{metric_type}",
+      "full_endpoint": "GET /metrics/{metric_type}"
+    },
+    {
+      "file": "/workspace/code/asymedge_api/api/routes/trading_metrics.py",
+      "method": "POST",
+      "path": "/metrics",
+      "full_endpoint": "POST /metrics"
+    },
+    {
+      "file": "/workspace/code/asymedge_api/api/routes/trading_metrics.py",
+      "method": "GET",
+      "path": "/risk/metrics",
+      "full_endpoint": "GET /risk/metrics"
+    },
+    {
+      "file": "/workspace/code/asymedge_api/api/routes/trading_metrics.py",
+      "method": "GET",
+      "path": "/risk/alerts",
+      "full_endpoint": "GET /risk/alerts"
+    },
+    {
+      "file": "/workspace/code/asymedge_api/api/routes/trading_metrics.py",
+      "method": "GET",
+      "path": "/market/summary",
+      "full_endpoint": "GET /market/summary"
+    },
+    {
+      "file": "/workspace/code/asymedge_api/api/routes/trading_metrics.py",
+      "method": "GET",
+      "path": "/economic/indicators",
+      "full_endpoint": "GET /economic/indicators"
+    },
+    {
+      "file": "/workspace/code/asymedge_api/api/routes/user_management.py",
+      "method": "POST",
+      "path": "/register",
+      "full_endpoint": "POST /register"
+    },
+    {
+      "file": "/workspace/code/asymedge_api/api/routes/user_management.py",
+      "method": "POST",
+      "path": "/login",
+      "full_endpoint": "POST /login"
+    },
+    {
+      "file": "/workspace/code/asymedge_api/api/routes/user_management.py",
+      "method": "POST",
+      "path": "/logout",
+      "full_endpoint": "POST /logout"
+    },
+    {
+      "file": "/workspace/code/asymedge_api/api/routes/user_management.py",
+      "method": "GET",
+      "path": "/me",
+      "full_endpoint": "GET /me"
+    },
+    {
+      "file": "/workspace/code/asymedge_api/api/routes/user_management.py",
+      "method": "PUT",
+      "path": "/me",
+      "full_endpoint": "PUT /me"
+    },
+    {
+      "file": "/workspace/code/asymedge_api/api/routes/user_management.py",
+      "method": "POST",
+      "path": "/change-password",
+      "full_endpoint": "POST /change-password"
+    },
+    {
+      "file": "/workspace/code/asymedge_api/api/routes/user_management.py",
+      "method": "POST",
+      "path": "/request-password-reset",
+      "full_endpoint": "POST /request-password-reset"
+    },
+    {
+      "file": "/workspace/code/asymedge_api/api/routes/user_management.py",
+      "method": "POST",
+      "path": "/confirm-password-reset",
+      "full_endpoint": "POST /confirm-password-reset"
+    },
+    {
+      "file": "/workspace/code/asymedge_api/api/routes/user_management.py",
+      "method": "GET",
+      "path": "/sessions",
+      "full_endpoint": "GET /sessions"
+    },
+    {
+      "file": "/workspace/code/asymedge_api/api/routes/user_management.py",
+      "method": "DELETE",
+      "path": "/sessions/{session_id}",
+      "full_endpoint": "DELETE /sessions/{session_id}"
+    },
+    {
+      "file": "/workspace/code/asymedge_api/api/routes/user_management.py",
+      "method": "DELETE",
+      "path": "/sessions",
+      "full_endpoint": "DELETE /sessions"
+    },
+    {
+      "file": "/workspace/code/asymedge_api/api/routes/user_management.py",
+      "method": "GET",
+      "path": "/",
+      "full_endpoint": "GET /"
+    },
+    {
+      "file": "/workspace/code/asymedge_api/api/routes/user_management.py",
+      "method": "PUT",
+      "path": "/{user_id}",
+      "full_endpoint": "PUT /{user_id}"
+    },
+    {
+      "file": "/workspace/code/asymedge_api/api/routes/user_management.py",
+      "method": "DELETE",
+      "path": "/{user_id}",
+      "full_endpoint": "DELETE /{user_id}"
+    },
+    {
+      "file": "/workspace/code/asymedge_api/api/routes/workflow_monitoring.py",
+      "method": "GET",
+      "path": "/definitions",
+      "full_endpoint": "GET /definitions"
+    },
+    {
+      "file": "/workspace/code/asymedge_api/api/routes/workflow_monitoring.py",
+      "method": "GET",
+      "path": "/definitions/{definition_id}",
+      "full_endpoint": "GET /definitions/{definition_id}"
+    },
+    {
+      "file": "/workspace/code/asymedge_api/api/routes/workflow_monitoring.py",
+      "method": "POST",
+      "path": "/definitions",
+      "full_endpoint": "POST /definitions"
+    },
+    {
+      "file": "/workspace/code/asymedge_api/api/routes/workflow_monitoring.py",
+      "method": "PUT",
+      "path": "/definitions/{definition_id}",
+      "full_endpoint": "PUT /definitions/{definition_id}"
+    },
+    {
+      "file": "/workspace/code/asymedge_api/api/routes/workflow_monitoring.py",
+      "method": "DELETE",
+      "path": "/definitions/{definition_id}",
+      "full_endpoint": "DELETE /definitions/{definition_id}"
+    },
+    {
+      "file": "/workspace/code/asymedge_api/api/routes/workflow_monitoring.py",
+      "method": "GET",
+      "path": "/instances",
+      "full_endpoint": "GET /instances"
+    },
+    {
+      "file": "/workspace/code/asymedge_api/api/routes/workflow_monitoring.py",
+      "method": "GET",
+      "path": "/instances/{instance_id}",
+      "full_endpoint": "GET /instances/{instance_id}"
+    },
+    {
+      "file": "/workspace/code/asymedge_api/api/routes/workflow_monitoring.py",
+      "method": "POST",
+      "path": "/instances",
+      "full_endpoint": "POST /instances"
+    },
+    {
+      "file": "/workspace/code/asymedge_api/api/routes/workflow_monitoring.py",
+      "method": "PUT",
+      "path": "/instances/{instance_id}",
+      "full_endpoint": "PUT /instances/{instance_id}"
+    },
+    {
+      "file": "/workspace/code/asymedge_api/api/routes/workflow_monitoring.py",
+      "method": "DELETE",
+      "path": "/instances/{instance_id}",
+      "full_endpoint": "DELETE /instances/{instance_id}"
+    },
+    {
+      "file": "/workspace/code/asymedge_api/api/routes/workflow_monitoring.py",
+      "method": "POST",
+      "path": "/instances/{instance_id}/start",
+      "full_endpoint": "POST /instances/{instance_id}/start"
+    },
+    {
+      "file": "/workspace/code/asymedge_api/api/routes/workflow_monitoring.py",
+      "method": "POST",
+      "path": "/instances/{instance_id}/cancel",
+      "full_endpoint": "POST /instances/{instance_id}/cancel"
+    },
+    {
+      "file": "/workspace/code/asymedge_api/api/routes/workflow_monitoring.py",
+      "method": "POST",
+      "path": "/instances/{instance_id}/restart",
+      "full_endpoint": "POST /instances/{instance_id}/restart"
+    },
+    {
+      "file": "/workspace/code/asymedge_api/api/routes/workflow_monitoring.py",
+      "method": "GET",
+      "path": "/statistics",
+      "full_endpoint": "GET /statistics"
+    },
+    {
+      "file": "/workspace/code/asymedge_api/api/routes/workflow_monitoring.py",
+      "method": "GET",
+      "path": "/types",
+      "full_endpoint": "GET /types"
+    },
+    {
+      "file": "/workspace/code/asymedge_api/api/routes/workflow_monitoring.py",
+      "method": "GET",
+      "path": "/templates",
+      "full_endpoint": "GET /templates"
+    },
+    {
+      "file": "/workspace/code/asymedge_api/api/routes/workflow_monitoring.py",
+      "method": "GET",
+      "path": "/logs/{instance_id}",
+      "full_endpoint": "GET /logs/{instance_id}"
+    },
+    {
+      "file": "/workspace/code/asymedge_api/api/routes/workflow_monitoring.py",
+      "method": "GET",
+      "path": "/health",
+      "full_endpoint": "GET /health"
+    },
+    {
+      "file": "/workspace/code/crewai/api/server.py",
+      "method": "GET",
+      "path": "/health",
+      "full_endpoint": "GET /health"
+    },
+    {
+      "file": "/workspace/code/crewai/api/server.py",
+      "method": "POST",
+      "path": "/crew/initialize",
+      "full_endpoint": "POST /crew/initialize"
+    },
+    {
+      "file": "/workspace/code/crewai/api/server.py",
+      "method": "POST",
+      "path": "/crew/shutdown",
+      "full_endpoint": "POST /crew/shutdown"
+    },
+    {
+      "file": "/workspace/code/crewai/api/server.py",
+      "method": "POST",
+      "path": "/analysis/complete",
+      "full_endpoint": "POST /analysis/complete"
+    },
+    {
+      "file": "/workspace/code/crewai/api/server.py",
+      "method": "POST",
+      "path": "/analysis/market",
+      "full_endpoint": "POST /analysis/market"
+    },
+    {
+      "file": "/workspace/code/crewai/api/server.py",
+      "method": "POST",
+      "path": "/analysis/sector",
+      "full_endpoint": "POST /analysis/sector"
+    },
+    {
+      "file": "/workspace/code/crewai/api/server.py",
+      "method": "POST",
+      "path": "/trade/submit",
+      "full_endpoint": "POST /trade/submit"
+    },
+    {
+      "file": "/workspace/code/crewai/api/server.py",
+      "method": "POST",
+      "path": "/trade/optimize-strategy",
+      "full_endpoint": "POST /trade/optimize-strategy"
+    },
+    {
+      "file": "/workspace/code/crewai/api/server.py",
+      "method": "POST",
+      "path": "/portfolio/review",
+      "full_endpoint": "POST /portfolio/review"
+    },
+    {
+      "file": "/workspace/code/crewai/api/server.py",
+      "method": "POST",
+      "path": "/portfolio/risk-assessment",
+      "full_endpoint": "POST /portfolio/risk-assessment"
+    },
+    {
+      "file": "/workspace/code/crewai/api/server.py",
+      "method": "POST",
+      "path": "/ml/build-model",
+      "full_endpoint": "POST /ml/build-model"
+    },
+    {
+      "file": "/workspace/code/crewai/api/server.py",
+      "method": "POST",
+      "path": "/ml/predict",
+      "full_endpoint": "POST /ml/predict"
+    },
+    {
+      "file": "/workspace/code/crewai/api/server.py",
+      "method": "POST",
+      "path": "/ml/backtest",
+      "full_endpoint": "POST /ml/backtest"
+    },
+    {
+      "file": "/workspace/code/crewai/api/server.py",
+      "method": "GET",
+      "path": "/approvals/pending",
+      "full_endpoint": "GET /approvals/pending"
+    },
+    {
+      "file": "/workspace/code/crewai/api/server.py",
+      "method": "POST",
+      "path": "/approvals/{approval_id}/decision",
+      "full_endpoint": "POST /approvals/{approval_id}/decision"
+    },
+    {
+      "file": "/workspace/code/crewai/api/server.py",
+      "method": "GET",
+      "path": "/approvals/{approval_id}/status",
+      "full_endpoint": "GET /approvals/{approval_id}/status"
+    },
+    {
+      "file": "/workspace/code/crewai/api/server.py",
+      "method": "GET",
+      "path": "/monitoring/active",
+      "full_endpoint": "GET /monitoring/active"
+    },
+    {
+      "file": "/workspace/code/crewai/api/server.py",
+      "method": "GET",
+      "path": "/monitoring/alerts",
+      "full_endpoint": "GET /monitoring/alerts"
+    },
+    {
+      "file": "/workspace/code/crewai/api/server.py",
+      "method": "GET",
+      "path": "/metrics/crew",
+      "full_endpoint": "GET /metrics/crew"
+    },
+    {
+      "file": "/workspace/code/crewai/api/server.py",
+      "method": "GET",
+      "path": "/execution/history",
+      "full_endpoint": "GET /execution/history"
+    },
+    {
+      "file": "/workspace/code/crewai/api/server.py",
+      "method": "POST",
+      "path": "/execution/monitor",
+      "full_endpoint": "POST /execution/monitor"
+    },
+    {
+      "file": "/workspace/code/langgraph/api/workflow_api.py",
+      "method": "GET",
+      "path": "/health",
+      "full_endpoint": "GET /health"
+    },
+    {
+      "file": "/workspace/code/langgraph/api/workflow_api.py",
+      "method": "GET",
+      "path": "/api/v1/system/overview",
+      "full_endpoint": "GET /api/v1/system/overview"
+    },
+    {
+      "file": "/workspace/code/langgraph/api/workflow_api.py",
+      "method": "GET",
+      "path": "/api/v1/system/metrics",
+      "full_endpoint": "GET /api/v1/system/metrics"
+    },
+    {
+      "file": "/workspace/code/langgraph/api/workflow_api.py",
+      "method": "POST",
+      "path": "/api/v1/workflows/execute",
+      "full_endpoint": "POST /api/v1/workflows/execute"
+    },
+    {
+      "file": "/workspace/code/langgraph/api/workflow_api.py",
+      "method": "POST",
+      "path": "/api/v1/workflows/batch",
+      "full_endpoint": "POST /api/v1/workflows/batch"
+    },
+    {
+      "file": "/workspace/code/langgraph/api/workflow_api.py",
+      "method": "GET",
+      "path": "/api/v1/workflows/{workflow_id}",
+      "full_endpoint": "GET /api/v1/workflows/{workflow_id}"
+    },
+    {
+      "file": "/workspace/code/langgraph/api/workflow_api.py",
+      "method": "GET",
+      "path": "/api/v1/workflows/{workflow_id}/results",
+      "full_endpoint": "GET /api/v1/workflows/{workflow_id}/results"
+    },
+    {
+      "file": "/workspace/code/langgraph/api/workflow_api.py",
+      "method": "GET",
+      "path": "/api/v1/workflows/{workflow_id}/history",
+      "full_endpoint": "GET /api/v1/workflows/{workflow_id}/history"
+    },
+    {
+      "file": "/workspace/code/langgraph/api/workflow_api.py",
+      "method": "GET",
+      "path": "/api/v1/workflows",
+      "full_endpoint": "GET /api/v1/workflows"
+    },
+    {
+      "file": "/workspace/code/langgraph/api/workflow_api.py",
+      "method": "POST",
+      "path": "/api/v1/workflows/{workflow_id}/cancel",
+      "full_endpoint": "POST /api/v1/workflows/{workflow_id}/cancel"
+    },
+    {
+      "file": "/workspace/code/langgraph/api/workflow_api.py",
+      "method": "DELETE",
+      "path": "/api/v1/workflows/{workflow_id}",
+      "full_endpoint": "DELETE /api/v1/workflows/{workflow_id}"
+    },
+    {
+      "file": "/workspace/code/langgraph/api/workflow_api.py",
+      "method": "POST",
+      "path": "/api/v1/workflows/{checkpoint_id}/resume",
+      "full_endpoint": "POST /api/v1/workflows/{checkpoint_id}/resume"
+    },
+    {
+      "file": "/workspace/code/langgraph/api/workflow_api.py",
+      "method": "GET",
+      "path": "/api/v1/visualization/graph/{workflow_id}",
+      "full_endpoint": "GET /api/v1/visualization/graph/{workflow_id}"
+    },
+    {
+      "file": "/workspace/code/langgraph/api/workflow_api.py",
+      "method": "GET",
+      "path": "/api/v1/visualization/timeline/{workflow_id}",
+      "full_endpoint": "GET /api/v1/visualization/timeline/{workflow_id}"
+    },
+    {
+      "file": "/workspace/code/langgraph/api/workflow_api.py",
+      "method": "GET",
+      "path": "/api/v1/visualization/metrics",
+      "full_endpoint": "GET /api/v1/visualization/metrics"
+    },
+    {
+      "file": "/workspace/code/langgraph/api/workflow_api.py",
+      "method": "GET",
+      "path": "/api/v1/monitoring/status",
+      "full_endpoint": "GET /api/v1/monitoring/status"
+    },
+    {
+      "file": "/workspace/code/langgraph/api/workflow_api.py",
+      "method": "GET",
+      "path": "/api/v1/monitoring/health/{workflow_id}",
+      "full_endpoint": "GET /api/v1/monitoring/health/{workflow_id}"
+    },
+    {
+      "file": "/workspace/code/langgraph/api/workflow_api.py",
+      "method": "POST",
+      "path": "/api/v1/maintenance/cleanup",
+      "full_endpoint": "POST /api/v1/maintenance/cleanup"
+    },
+    {
+      "file": "/workspace/code/langgraph_api/app/main.py",
+      "method": "GET",
+      "path": "/",
+      "full_endpoint": "GET /"
+    },
+    {
+      "file": "/workspace/code/langgraph_api/app/main.py",
+      "method": "GET",
+      "path": "/health",
+      "full_endpoint": "GET /health"
+    },
+    {
+      "file": "/workspace/code/langgraph_api/app/main.py",
+      "method": "GET",
+      "path": "/metrics",
+      "full_endpoint": "GET /metrics"
+    },
+    {
+      "file": "/workspace/code/langgraph_api/app/api/v1/auth.py",
+      "method": "POST",
+      "path": "/login",
+      "full_endpoint": "POST /login"
+    },
+    {
+      "file": "/workspace/code/langgraph_api/app/api/v1/auth.py",
+      "method": "POST",
+      "path": "/register",
+      "full_endpoint": "POST /register"
+    },
+    {
+      "file": "/workspace/code/langgraph_api/app/api/v1/auth.py",
+      "method": "POST",
+      "path": "/refresh",
+      "full_endpoint": "POST /refresh"
+    },
+    {
+      "file": "/workspace/code/langgraph_api/app/api/v1/auth.py",
+      "method": "GET",
+      "path": "/me",
+      "full_endpoint": "GET /me"
+    },
+    {
+      "file": "/workspace/code/langgraph_api/app/api/v1/auth.py",
+      "method": "PUT",
+      "path": "/me",
+      "full_endpoint": "PUT /me"
+    },
+    {
+      "file": "/workspace/code/langgraph_api/app/api/v1/auth.py",
+      "method": "POST",
+      "path": "/change-password",
+      "full_endpoint": "POST /change-password"
+    },
+    {
+      "file": "/workspace/code/langgraph_api/app/api/v1/auth.py",
+      "method": "POST",
+      "path": "/logout",
+      "full_endpoint": "POST /logout"
+    },
+    {
+      "file": "/workspace/code/langgraph_api/app/api/v1/auth.py",
+      "method": "POST",
+      "path": "/verify-email",
+      "full_endpoint": "POST /verify-email"
+    },
+    {
+      "file": "/workspace/code/langgraph_api/app/api/v1/auth.py",
+      "method": "POST",
+      "path": "/request-password-reset",
+      "full_endpoint": "POST /request-password-reset"
+    },
+    {
+      "file": "/workspace/code/langgraph_api/app/api/v1/auth.py",
+      "method": "POST",
+      "path": "/reset-password",
+      "full_endpoint": "POST /reset-password"
+    },
+    {
+      "file": "/workspace/code/langgraph_api/app/api/v1/auth.py",
+      "method": "GET",
+      "path": "/permissions",
+      "full_endpoint": "GET /permissions"
+    },
+    {
+      "file": "/workspace/code/langgraph_api/app/api/v1/auth.py",
+      "method": "POST",
+      "path": "/impersonate/{user_id}",
+      "full_endpoint": "POST /impersonate/{user_id}"
+    },
+    {
+      "file": "/workspace/code/langgraph_api/app/api/v1/auth.py",
+      "method": "GET",
+      "path": "/health",
+      "full_endpoint": "GET /health"
+    },
+    {
+      "file": "/workspace/code/langgraph_api/app/api/v1/monitoring.py",
+      "method": "GET",
+      "path": "/health",
+      "full_endpoint": "GET /health"
+    },
+    {
+      "file": "/workspace/code/langgraph_api/app/api/v1/monitoring.py",
+      "method": "GET",
+      "path": "/health/{workflow_id}",
+      "full_endpoint": "GET /health/{workflow_id}"
+    },
+    {
+      "file": "/workspace/code/langgraph_api/app/api/v1/monitoring.py",
+      "method": "GET",
+      "path": "/metrics",
+      "full_endpoint": "GET /metrics"
+    },
+    {
+      "file": "/workspace/code/langgraph_api/app/api/v1/monitoring.py",
+      "method": "GET",
+      "path": "/metrics/workflow/{workflow_id}",
+      "full_endpoint": "GET /metrics/workflow/{workflow_id}"
+    },
+    {
+      "file": "/workspace/code/langgraph_api/app/api/v1/monitoring.py",
+      "method": "GET",
+      "path": "/alerts",
+      "full_endpoint": "GET /alerts"
+    },
+    {
+      "file": "/workspace/code/langgraph_api/app/api/v1/monitoring.py",
+      "method": "POST",
+      "path": "/alerts/{alert_id}/resolve",
+      "full_endpoint": "POST /alerts/{alert_id}/resolve"
+    },
+    {
+      "file": "/workspace/code/langgraph_api/app/api/v1/monitoring.py",
+      "method": "GET",
+      "path": "/performance",
+      "full_endpoint": "GET /performance"
+    },
+    {
+      "file": "/workspace/code/langgraph_api/app/api/v1/monitoring.py",
+      "method": "GET",
+      "path": "/throughput",
+      "full_endpoint": "GET /throughput"
+    },
+    {
+      "file": "/workspace/code/langgraph_api/app/api/v1/monitoring.py",
+      "method": "GET",
+      "path": "/errors",
+      "full_endpoint": "GET /errors"
+    },
+    {
+      "file": "/workspace/code/langgraph_api/app/api/v1/monitoring.py",
+      "method": "GET",
+      "path": "/resources",
+      "full_endpoint": "GET /resources"
+    },
+    {
+      "file": "/workspace/code/langgraph_api/app/api/v1/monitoring.py",
+      "method": "GET",
+      "path": "/trends",
+      "full_endpoint": "GET /trends"
+    },
+    {
+      "file": "/workspace/code/langgraph_api/app/api/v1/monitoring.py",
+      "method": "POST",
+      "path": "/maintenance/cleanup",
+      "full_endpoint": "POST /maintenance/cleanup"
+    },
+    {
+      "file": "/workspace/code/langgraph_api/app/api/v1/monitoring.py",
+      "method": "GET",
+      "path": "/dashboards/summary",
+      "full_endpoint": "GET /dashboards/summary"
+    },
+    {
+      "file": "/workspace/code/langgraph_api/app/api/v1/monitoring.py",
+      "method": "GET",
+      "path": "/dashboards/workflow/{workflow_id}",
+      "full_endpoint": "GET /dashboards/workflow/{workflow_id}"
+    },
+    {
+      "file": "/workspace/code/langgraph_api/app/api/v1/monitoring.py",
+      "method": "GET",
+      "path": "/checks/comprehensive",
+      "full_endpoint": "GET /checks/comprehensive"
+    },
+    {
+      "file": "/workspace/code/langgraph_api/app/api/v1/monitoring.py",
+      "method": "POST",
+      "path": "/notifications/test",
+      "full_endpoint": "POST /notifications/test"
+    },
+    {
+      "file": "/workspace/code/langgraph_api/app/api/v1/monitoring.py",
+      "method": "GET",
+      "path": "/compliance",
+      "full_endpoint": "GET /compliance"
+    },
+    {
+      "file": "/workspace/code/langgraph_api/app/api/v1/states.py",
+      "method": "POST",
+      "path": "/",
+      "full_endpoint": "POST /"
+    },
+    {
+      "file": "/workspace/code/langgraph_api/app/api/v1/states.py",
+      "method": "GET",
+      "path": "/",
+      "full_endpoint": "GET /"
+    },
+    {
+      "file": "/workspace/code/langgraph_api/app/api/v1/states.py",
+      "method": "GET",
+      "path": "/{state_id}",
+      "full_endpoint": "GET /{state_id}"
+    },
+    {
+      "file": "/workspace/code/langgraph_api/app/api/v1/states.py",
+      "method": "GET",
+      "path": "/workflow/{workflow_id}",
+      "full_endpoint": "GET /workflow/{workflow_id}"
+    },
+    {
+      "file": "/workspace/code/langgraph_api/app/api/v1/states.py",
+      "method": "PUT",
+      "path": "/{state_id}",
+      "full_endpoint": "PUT /{state_id}"
+    },
+    {
+      "file": "/workspace/code/langgraph_api/app/api/v1/states.py",
+      "method": "DELETE",
+      "path": "/{state_id}",
+      "full_endpoint": "DELETE /{state_id}"
+    },
+    {
+      "file": "/workspace/code/langgraph_api/app/api/v1/states.py",
+      "method": "DELETE",
+      "path": "/workflow/{workflow_id}",
+      "full_endpoint": "DELETE /workflow/{workflow_id}"
+    },
+    {
+      "file": "/workspace/code/langgraph_api/app/api/v1/states.py",
+      "method": "GET",
+      "path": "/{state_id}/history",
+      "full_endpoint": "GET /{state_id}/history"
+    },
+    {
+      "file": "/workspace/code/langgraph_api/app/api/v1/states.py",
+      "method": "POST",
+      "path": "/{state_id}/checkpoint",
+      "full_endpoint": "POST /{state_id}/checkpoint"
+    },
+    {
+      "file": "/workspace/code/langgraph_api/app/api/v1/states.py",
+      "method": "POST",
+      "path": "/restore/{checkpoint_id}",
+      "full_endpoint": "POST /restore/{checkpoint_id}"
+    },
+    {
+      "file": "/workspace/code/langgraph_api/app/api/v1/states.py",
+      "method": "GET",
+      "path": "/{state_id}/diff",
+      "full_endpoint": "GET /{state_id}/diff"
+    },
+    {
+      "file": "/workspace/code/langgraph_api/app/api/v1/states.py",
+      "method": "POST",
+      "path": "/{state_id}/export",
+      "full_endpoint": "POST /{state_id}/export"
+    },
+    {
+      "file": "/workspace/code/langgraph_api/app/api/v1/states.py",
+      "method": "POST",
+      "path": "/import",
+      "full_endpoint": "POST /import"
+    },
+    {
+      "file": "/workspace/code/langgraph_api/app/api/v1/states.py",
+      "method": "GET",
+      "path": "/workflow/{workflow_id}/latest",
+      "full_endpoint": "GET /workflow/{workflow_id}/latest"
+    },
+    {
+      "file": "/workspace/code/langgraph_api/app/api/v1/visualization.py",
+      "method": "GET",
+      "path": "/graph/{workflow_id}",
+      "full_endpoint": "GET /graph/{workflow_id}"
+    },
+    {
+      "file": "/workspace/code/langgraph_api/app/api/v1/visualization.py",
+      "method": "GET",
+      "path": "/timeline/{workflow_id}",
+      "full_endpoint": "GET /timeline/{workflow_id}"
+    },
+    {
+      "file": "/workspace/code/langgraph_api/app/api/v1/visualization.py",
+      "method": "GET",
+      "path": "/state-flow/{workflow_id}",
+      "full_endpoint": "GET /state-flow/{workflow_id}"
+    },
+    {
+      "file": "/workspace/code/langgraph_api/app/api/v1/visualization.py",
+      "method": "GET",
+      "path": "/execution-path/{workflow_id}",
+      "full_endpoint": "GET /execution-path/{workflow_id}"
+    },
+    {
+      "file": "/workspace/code/langgraph_api/app/api/v1/visualization.py",
+      "method": "GET",
+      "path": "/metrics/charts",
+      "full_endpoint": "GET /metrics/charts"
+    },
+    {
+      "file": "/workspace/code/langgraph_api/app/api/v1/visualization.py",
+      "method": "GET",
+      "path": "/heatmap",
+      "full_endpoint": "GET /heatmap"
+    },
+    {
+      "file": "/workspace/code/langgraph_api/app/api/v1/visualization.py",
+      "method": "GET",
+      "path": "/network/{workflow_id}",
+      "full_endpoint": "GET /network/{workflow_id}"
+    },
+    {
+      "file": "/workspace/code/langgraph_api/app/api/v1/visualization.py",
+      "method": "GET",
+      "path": "/dashboard/widgets",
+      "full_endpoint": "GET /dashboard/widgets"
+    },
+    {
+      "file": "/workspace/code/langgraph_api/app/api/v1/visualization.py",
+      "method": "POST",
+      "path": "/dashboard/widgets",
+      "full_endpoint": "POST /dashboard/widgets"
+    },
+    {
+      "file": "/workspace/code/langgraph_api/app/api/v1/visualization.py",
+      "method": "GET",
+      "path": "/anomalies",
+      "full_endpoint": "GET /anomalies"
+    },
+    {
+      "file": "/workspace/code/langgraph_api/app/api/v1/visualization.py",
+      "method": "GET",
+      "path": "/comparisons",
+      "full_endpoint": "GET /comparisons"
+    },
+    {
+      "file": "/workspace/code/langgraph_api/app/api/v1/visualization.py",
+      "method": "GET",
+      "path": "/export/{workflow_id}",
+      "full_endpoint": "GET /export/{workflow_id}"
+    },
+    {
+      "file": "/workspace/code/langgraph_api/app/api/v1/visualization.py",
+      "method": "GET",
+      "path": "/themes",
+      "full_endpoint": "GET /themes"
+    },
+    {
+      "file": "/workspace/code/langgraph_api/app/api/v1/visualization.py",
+      "method": "POST",
+      "path": "/themes/preview",
+      "full_endpoint": "POST /themes/preview"
+    },
+    {
+      "file": "/workspace/code/langgraph_api/app/api/v1/visualization.py",
+      "method": "GET",
+      "path": "/interactive/{workflow_id}",
+      "full_endpoint": "GET /interactive/{workflow_id}"
+    },
+    {
+      "file": "/workspace/code/langgraph_api/app/api/v1/workflows.py",
+      "method": "POST",
+      "path": "/",
+      "full_endpoint": "POST /"
+    },
+    {
+      "file": "/workspace/code/langgraph_api/app/api/v1/workflows.py",
+      "method": "GET",
+      "path": "/",
+      "full_endpoint": "GET /"
+    },
+    {
+      "file": "/workspace/code/langgraph_api/app/api/v1/workflows.py",
+      "method": "GET",
+      "path": "/{workflow_id}",
+      "full_endpoint": "GET /{workflow_id}"
+    },
+    {
+      "file": "/workspace/code/langgraph_api/app/api/v1/workflows.py",
+      "method": "PUT",
+      "path": "/{workflow_id}",
+      "full_endpoint": "PUT /{workflow_id}"
+    },
+    {
+      "file": "/workspace/code/langgraph_api/app/api/v1/workflows.py",
+      "method": "DELETE",
+      "path": "/{workflow_id}",
+      "full_endpoint": "DELETE /{workflow_id}"
+    },
+    {
+      "file": "/workspace/code/langgraph_api/app/api/v1/workflows.py",
+      "method": "POST",
+      "path": "/{workflow_id}/execute",
+      "full_endpoint": "POST /{workflow_id}/execute"
+    },
+    {
+      "file": "/workspace/code/langgraph_api/app/api/v1/workflows.py",
+      "method": "POST",
+      "path": "/execute/batch",
+      "full_endpoint": "POST /execute/batch"
+    },
+    {
+      "file": "/workspace/code/langgraph_api/app/api/v1/workflows.py",
+      "method": "POST",
+      "path": "/{workflow_id}/cancel",
+      "full_endpoint": "POST /{workflow_id}/cancel"
+    },
+    {
+      "file": "/workspace/code/langgraph_api/app/api/v1/workflows.py",
+      "method": "GET",
+      "path": "/{workflow_id}/history",
+      "full_endpoint": "GET /{workflow_id}/history"
+    },
+    {
+      "file": "/workspace/code/langgraph_api/app/api/v1/workflows.py",
+      "method": "GET",
+      "path": "/{workflow_id}/status",
+      "full_endpoint": "GET /{workflow_id}/status"
+    },
+    {
+      "file": "/workspace/code/langgraph_api/app/api/v1/workflows.py",
+      "method": "POST",
+      "path": "/{workflow_id}/clone",
+      "full_endpoint": "POST /{workflow_id}/clone"
+    },
+    {
+      "file": "/workspace/code/langgraph_api/app/api/v1/workflows.py",
+      "method": "GET",
+      "path": "/{workflow_id}/metrics",
+      "full_endpoint": "GET /{workflow_id}/metrics"
+    },
+    {
+      "file": "/workspace/code/langgraph_api/app/api/v1/workflows.py",
+      "method": "POST",
+      "path": "/validate",
+      "full_endpoint": "POST /validate"
+    }
+  ],
+  "findings": [
+    {
+      "type": "Missing Input Validation",
+      "severity": "HIGH",
+      "endpoint": "/workspace/code/pubsub/config_example.py",
+      "description": "API endpoint may lack proper input validation",
+      "evidence": "Pattern found: \\+\\s*[\"\\'].*\\+",
+      "remediation": "Implement comprehensive input validation and sanitization",
+      "cwe_id": "CWE-20"
+    },
+    {
+      "type": "Missing Input Validation",
+      "severity": "HIGH",
+      "endpoint": "/workspace/code/abacus_ai/features/feature_engineering.py",
+      "description": "API endpoint may lack proper input validation",
+      "evidence": "Pattern found: \\+\\s*[\"\\'].*\\+",
+      "remediation": "Implement comprehensive input validation and sanitization",
+      "cwe_id": "CWE-20"
+    },
+    {
+      "type": "Missing Input Validation",
+      "severity": "HIGH",
+      "endpoint": "/workspace/code/asymedge_api/api/utils/logger.py",
+      "description": "API endpoint may lack proper input validation",
+      "evidence": "Pattern found: \\.\\s*format\\s*\\(",
+      "remediation": "Implement comprehensive input validation and sanitization",
+      "cwe_id": "CWE-20"
+    },
+    {
+      "type": "Command Injection Risk",
+      "severity": "HIGH",
+      "endpoint": "/workspace/code/composio/examples/demo.py",
+      "description": "Potential command injection vulnerability",
+      "evidence": "User input passed to subprocess functions",
+      "remediation": "Use subprocess with shell=False and validate input",
+      "cwe_id": "CWE-78"
+    },
+    {
+      "type": "Missing Input Validation",
+      "severity": "HIGH",
+      "endpoint": "/workspace/code/crewai/config/settings.py",
+      "description": "API endpoint may lack proper input validation",
+      "evidence": "Pattern found: \\.\\s*format\\s*\\(",
+      "remediation": "Implement comprehensive input validation and sanitization",
+      "cwe_id": "CWE-20"
+    },
+    {
+      "type": "SQL Injection Risk",
+      "severity": "CRITICAL",
+      "endpoint": "/workspace/code/langgraph_api/app/utils/helpers.py",
+      "description": "Potential SQL injection vulnerability found",
+      "evidence": "F-string or string formatting in SQL query",
+      "remediation": "Use parameterized queries or ORM methods",
+      "cwe_id": "CWE-89"
+    },
+    {
+      "type": "Missing Input Validation",
+      "severity": "HIGH",
+      "endpoint": "/workspace/code/workflows/escalation/escalation_manager.py",
+      "description": "API endpoint may lack proper input validation",
+      "evidence": "Pattern found: \\.\\s*format\\s*\\(",
+      "remediation": "Implement comprehensive input validation and sanitization",
+      "cwe_id": "CWE-20"
+    },
+    {
+      "type": "Missing Authentication",
+      "severity": "HIGH",
+      "endpoint": "/workspace/code/security/security_system.py",
+      "description": "Sensitive endpoints may not require authentication",
+      "evidence": "Unprotected endpoints: [\"\\']/admin, [\"\\']/api/users, [\"\\']/admin",
+      "remediation": "Implement authentication for all sensitive endpoints",
+      "cwe_id": "CWE-306"
+    },
+    {
+      "type": "Missing Authentication",
+      "severity": "HIGH",
+      "endpoint": "/workspace/code/security/examples/basic_auth_example.py",
+      "description": "Sensitive endpoints may not require authentication",
+      "evidence": "Unprotected endpoints: [\"\\']/api/users, [\"\\']/api/data",
+      "remediation": "Implement authentication for all sensitive endpoints",
+      "cwe_id": "CWE-306"
+    },
+    {
+      "type": "Missing Authentication",
+      "severity": "HIGH",
+      "endpoint": "/workspace/code/security/middleware/security_middleware.py",
+      "description": "Sensitive endpoints may not require authentication",
+      "evidence": "Unprotected endpoints: [\"\\']/api/users",
+      "remediation": "Implement authentication for all sensitive endpoints",
+      "cwe_id": "CWE-306"
+    },
+    {
+      "type": "Missing Rate Limiting",
+      "severity": "MEDIUM",
+      "endpoint": "/workspace/code/asymedge_api/api/routes/user_management.py",
+      "description": "Login endpoint may lack rate limiting",
+      "evidence": "No rate limiting found for authentication endpoint",
+      "remediation": "Implement rate limiting for authentication endpoints",
+      "cwe_id": "CWE-770"
+    },
+    {
+      "type": "Missing Rate Limiting",
+      "severity": "MEDIUM",
+      "endpoint": "/workspace/code/langgraph_api/app/api/api.py",
+      "description": "Login endpoint may lack rate limiting",
+      "evidence": "No rate limiting found for authentication endpoint",
+      "remediation": "Implement rate limiting for authentication endpoints",
+      "cwe_id": "CWE-770"
+    },
+    {
+      "type": "Missing Rate Limiting",
+      "severity": "MEDIUM",
+      "endpoint": "/workspace/code/langgraph_api/app/api/v1/auth.py",
+      "description": "Login endpoint may lack rate limiting",
+      "evidence": "No rate limiting found for authentication endpoint",
+      "remediation": "Implement rate limiting for authentication endpoints",
+      "cwe_id": "CWE-770"
+    },
+    {
+      "type": "Weak Rate Limiting",
+      "severity": "MEDIUM",
+      "endpoint": "/workspace/code/security/audit/audit_logger.py",
+      "description": "Rate limit may be too permissive",
+      "evidence": "Rate limit: 10000",
+      "remediation": "Implement stricter rate limits (100-500 requests per minute)",
+      "cwe_id": "CWE-770"
+    },
+    {
+      "type": "Information Disclosure",
+      "severity": "MEDIUM",
+      "endpoint": "/workspace/error_handling/circuit_breaker.py",
+      "description": "Error messages may reveal sensitive information",
+      "evidence": "Pattern found: import.*error",
+      "remediation": "Implement secure error handling that doesn't expose system details",
+      "cwe_id": "CWE-209"
+    },
+    {
+      "type": "Information Disclosure",
+      "severity": "MEDIUM",
+      "endpoint": "/workspace/error_handling/error_logging.py",
+      "description": "Error messages may reveal sensitive information",
+      "evidence": "Pattern found: database.*error",
+      "remediation": "Implement secure error handling that doesn't expose system details",
+      "cwe_id": "CWE-209"
+    },
+    {
+      "type": "Information Disclosure",
+      "severity": "MEDIUM",
+      "endpoint": "/workspace/error_handling/error_logging.py",
+      "description": "Error messages may reveal sensitive information",
+      "evidence": "Pattern found: connection.*error",
+      "remediation": "Implement secure error handling that doesn't expose system details",
+      "cwe_id": "CWE-209"
+    },
+    {
+      "type": "Information Disclosure",
+      "severity": "MEDIUM",
+      "endpoint": "/workspace/error_handling/error_logging.py",
+      "description": "Error messages may reveal sensitive information",
+      "evidence": "Pattern found: import.*error",
+      "remediation": "Implement secure error handling that doesn't expose system details",
+      "cwe_id": "CWE-209"
+    },
+    {
+      "type": "Information Disclosure",
+      "severity": "MEDIUM",
+      "endpoint": "/workspace/error_handling/error_types.py",
+      "description": "Error messages may reveal sensitive information",
+      "evidence": "Pattern found: database.*error",
+      "remediation": "Implement secure error handling that doesn't expose system details",
+      "cwe_id": "CWE-209"
+    },
+    {
+      "type": "Information Disclosure",
+      "severity": "MEDIUM",
+      "endpoint": "/workspace/error_handling/error_types.py",
+      "description": "Error messages may reveal sensitive information",
+      "evidence": "Pattern found: connection.*error",
+      "remediation": "Implement secure error handling that doesn't expose system details",
+      "cwe_id": "CWE-209"
+    },
+    {
+      "type": "Information Disclosure",
+      "severity": "MEDIUM",
+      "endpoint": "/workspace/error_handling/fallback_strategies.py",
+      "description": "Error messages may reveal sensitive information",
+      "evidence": "Pattern found: import.*error",
+      "remediation": "Implement secure error handling that doesn't expose system details",
+      "cwe_id": "CWE-209"
+    },
+    {
+      "type": "Information Disclosure",
+      "severity": "MEDIUM",
+      "endpoint": "/workspace/error_handling/health_checks.py",
+      "description": "Error messages may reveal sensitive information",
+      "evidence": "Pattern found: import.*error",
+      "remediation": "Implement secure error handling that doesn't expose system details",
+      "cwe_id": "CWE-209"
+    },
+    {
+      "type": "Information Disclosure",
+      "severity": "MEDIUM",
+      "endpoint": "/workspace/error_handling/retry_mechanism.py",
+      "description": "Error messages may reveal sensitive information",
+      "evidence": "Pattern found: connection.*error",
+      "remediation": "Implement secure error handling that doesn't expose system details",
+      "cwe_id": "CWE-209"
+    },
+    {
+      "type": "Information Disclosure",
+      "severity": "MEDIUM",
+      "endpoint": "/workspace/error_handling/retry_mechanism.py",
+      "description": "Error messages may reveal sensitive information",
+      "evidence": "Pattern found: import.*error",
+      "remediation": "Implement secure error handling that doesn't expose system details",
+      "cwe_id": "CWE-209"
+    },
+    {
+      "type": "Information Disclosure",
+      "severity": "MEDIUM",
+      "endpoint": "/workspace/external_api/function_utils.py",
+      "description": "Error messages may reveal sensitive information",
+      "evidence": "Pattern found: traceback",
+      "remediation": "Implement secure error handling that doesn't expose system details",
+      "cwe_id": "CWE-209"
+    },
+    {
+      "type": "Information Disclosure",
+      "severity": "MEDIUM",
+      "endpoint": "/workspace/backup_recovery/automation/pitr_system.py",
+      "description": "Error messages may reveal sensitive information",
+      "evidence": "Pattern found: sql.*error",
+      "remediation": "Implement secure error handling that doesn't expose system details",
+      "cwe_id": "CWE-209"
+    },
+    {
+      "type": "Generic Exception Handling",
+      "severity": "LOW",
+      "endpoint": "/workspace/code/abacus_ai/example.py",
+      "description": "Generic exception handling may hide security issues",
+      "evidence": "Generic Exception caught",
+      "remediation": "Use specific exception handling and implement proper logging",
+      "cwe_id": "CWE-396"
+    },
+    {
+      "type": "Information Disclosure",
+      "severity": "MEDIUM",
+      "endpoint": "/workspace/code/crewai/__init__.py",
+      "description": "Error messages may reveal sensitive information",
+      "evidence": "Pattern found: import.*error",
+      "remediation": "Implement secure error handling that doesn't expose system details",
+      "cwe_id": "CWE-209"
+    },
+    {
+      "type": "Information Disclosure",
+      "severity": "MEDIUM",
+      "endpoint": "/workspace/code/crewai/demo.py",
+      "description": "Error messages may reveal sensitive information",
+      "evidence": "Pattern found: traceback",
+      "remediation": "Implement secure error handling that doesn't expose system details",
+      "cwe_id": "CWE-209"
+    },
+    {
+      "type": "Information Disclosure",
+      "severity": "MEDIUM",
+      "endpoint": "/workspace/code/langgraph/__init__.py",
+      "description": "Error messages may reveal sensitive information",
+      "evidence": "Pattern found: import.*error",
+      "remediation": "Implement secure error handling that doesn't expose system details",
+      "cwe_id": "CWE-209"
+    },
+    {
+      "type": "Information Disclosure",
+      "severity": "MEDIUM",
+      "endpoint": "/workspace/code/lean/example_complete.py",
+      "description": "Error messages may reveal sensitive information",
+      "evidence": "Pattern found: import.*error",
+      "remediation": "Implement secure error handling that doesn't expose system details",
+      "cwe_id": "CWE-209"
+    },
+    {
+      "type": "Information Disclosure",
+      "severity": "MEDIUM",
+      "endpoint": "/workspace/code/letta_api/letta_integration_api.py",
+      "description": "Error messages may reveal sensitive information",
+      "evidence": "Pattern found: connection.*error",
+      "remediation": "Implement secure error handling that doesn't expose system details",
+      "cwe_id": "CWE-209"
+    },
+    {
+      "type": "Generic Exception Handling",
+      "severity": "LOW",
+      "endpoint": "/workspace/code/pubsub/communication_system.py",
+      "description": "Generic exception handling may hide security issues",
+      "evidence": "Generic Exception caught",
+      "remediation": "Use specific exception handling and implement proper logging",
+      "cwe_id": "CWE-396"
+    },
+    {
+      "type": "Information Disclosure",
+      "severity": "MEDIUM",
+      "endpoint": "/workspace/code/pubsub/demo.py",
+      "description": "Error messages may reveal sensitive information",
+      "evidence": "Pattern found: traceback",
+      "remediation": "Implement secure error handling that doesn't expose system details",
+      "cwe_id": "CWE-209"
+    },
+    {
+      "type": "Generic Exception Handling",
+      "severity": "LOW",
+      "endpoint": "/workspace/code/pubsub/message_persistence.py",
+      "description": "Generic exception handling may hide security issues",
+      "evidence": "Generic Exception caught",
+      "remediation": "Use specific exception handling and implement proper logging",
+      "cwe_id": "CWE-396"
+    },
+    {
+      "type": "Information Disclosure",
+      "severity": "MEDIUM",
+      "endpoint": "/workspace/code/redis/health_check.py",
+      "description": "Error messages may reveal sensitive information",
+      "evidence": "Pattern found: connection.*error",
+      "remediation": "Implement secure error handling that doesn't expose system details",
+      "cwe_id": "CWE-209"
+    },
+    {
+      "type": "Generic Exception Handling",
+      "severity": "LOW",
+      "endpoint": "/workspace/code/redis/pubsub_client.py",
+      "description": "Generic exception handling may hide security issues",
+      "evidence": "Generic Exception caught",
+      "remediation": "Use specific exception handling and implement proper logging",
+      "cwe_id": "CWE-396"
+    },
+    {
+      "type": "Information Disclosure",
+      "severity": "MEDIUM",
+      "endpoint": "/workspace/code/redis/redis_client.py",
+      "description": "Error messages may reveal sensitive information",
+      "evidence": "Pattern found: connection.*error",
+      "remediation": "Implement secure error handling that doesn't expose system details",
+      "cwe_id": "CWE-209"
+    },
+    {
+      "type": "Information Disclosure",
+      "severity": "MEDIUM",
+      "endpoint": "/workspace/code/workflows/demo.py",
+      "description": "Error messages may reveal sensitive information",
+      "evidence": "Pattern found: traceback",
+      "remediation": "Implement secure error handling that doesn't expose system details",
+      "cwe_id": "CWE-209"
+    },
+    {
+      "type": "Generic Exception Handling",
+      "severity": "LOW",
+      "endpoint": "/workspace/code/abacus_ai/cache/prediction_cache.py",
+      "description": "Generic exception handling may hide security issues",
+      "evidence": "Generic Exception caught",
+      "remediation": "Use specific exception handling and implement proper logging",
+      "cwe_id": "CWE-396"
+    },
+    {
+      "type": "Information Disclosure",
+      "severity": "MEDIUM",
+      "endpoint": "/workspace/code/abacus_ai/deployment/deploy.py",
+      "description": "Error messages may reveal sensitive information",
+      "evidence": "Pattern found: import.*error",
+      "remediation": "Implement secure error handling that doesn't expose system details",
+      "cwe_id": "CWE-209"
+    },
+    {
+      "type": "Information Disclosure",
+      "severity": "MEDIUM",
+      "endpoint": "/workspace/code/abacus_ai/training/model_trainer.py",
+      "description": "Error messages may reveal sensitive information",
+      "evidence": "Pattern found: import.*error",
+      "remediation": "Implement secure error handling that doesn't expose system details",
+      "cwe_id": "CWE-209"
+    },
+    {
+      "type": "Information Disclosure",
+      "severity": "MEDIUM",
+      "endpoint": "/workspace/code/abacus_ai/utils/helpers.py",
+      "description": "Error messages may reveal sensitive information",
+      "evidence": "Pattern found: import.*error",
+      "remediation": "Implement secure error handling that doesn't expose system details",
+      "cwe_id": "CWE-209"
+    },
+    {
+      "type": "Information Disclosure",
+      "severity": "MEDIUM",
+      "endpoint": "/workspace/code/asymedge_api/api/database/database.py",
+      "description": "Error messages may reveal sensitive information",
+      "evidence": "Pattern found: database.*error",
+      "remediation": "Implement secure error handling that doesn't expose system details",
+      "cwe_id": "CWE-209"
+    },
+    {
+      "type": "Information Disclosure",
+      "severity": "MEDIUM",
+      "endpoint": "/workspace/code/asymedge_api/api/utils/logger.py",
+      "description": "Error messages may reveal sensitive information",
+      "evidence": "Pattern found: import.*error",
+      "remediation": "Implement secure error handling that doesn't expose system details",
+      "cwe_id": "CWE-209"
+    },
+    {
+      "type": "Generic Exception Handling",
+      "severity": "LOW",
+      "endpoint": "/workspace/code/composio/monitoring/health.py",
+      "description": "Generic exception handling may hide security issues",
+      "evidence": "Generic Exception caught",
+      "remediation": "Use specific exception handling and implement proper logging",
+      "cwe_id": "CWE-396"
+    },
+    {
+      "type": "Generic Exception Handling",
+      "severity": "LOW",
+      "endpoint": "/workspace/code/composio/monitoring/metrics.py",
+      "description": "Generic exception handling may hide security issues",
+      "evidence": "Generic Exception caught",
+      "remediation": "Use specific exception handling and implement proper logging",
+      "cwe_id": "CWE-396"
+    },
+    {
+      "type": "Information Disclosure",
+      "severity": "MEDIUM",
+      "endpoint": "/workspace/code/composio/server/composio_server.py",
+      "description": "Error messages may reveal sensitive information",
+      "evidence": "Pattern found: connection.*error",
+      "remediation": "Implement secure error handling that doesn't expose system details",
+      "cwe_id": "CWE-209"
+    },
+    {
+      "type": "Information Disclosure",
+      "severity": "MEDIUM",
+      "endpoint": "/workspace/code/composio/tools/abacus_ai.py",
+      "description": "Error messages may reveal sensitive information",
+      "evidence": "Pattern found: import.*error",
+      "remediation": "Implement secure error handling that doesn't expose system details",
+      "cwe_id": "CWE-209"
+    },
+    {
+      "type": "Information Disclosure",
+      "severity": "MEDIUM",
+      "endpoint": "/workspace/code/composio/tools/base.py",
+      "description": "Error messages may reveal sensitive information",
+      "evidence": "Pattern found: connection.*error",
+      "remediation": "Implement secure error handling that doesn't expose system details",
+      "cwe_id": "CWE-209"
+    },
+    {
+      "type": "Information Disclosure",
+      "severity": "MEDIUM",
+      "endpoint": "/workspace/code/composio/tools/github.py",
+      "description": "Error messages may reveal sensitive information",
+      "evidence": "Pattern found: import.*error",
+      "remediation": "Implement secure error handling that doesn't expose system details",
+      "cwe_id": "CWE-209"
+    },
+    {
+      "type": "Information Disclosure",
+      "severity": "MEDIUM",
+      "endpoint": "/workspace/code/composio/tools/notion.py",
+      "description": "Error messages may reveal sensitive information",
+      "evidence": "Pattern found: database.*error",
+      "remediation": "Implement secure error handling that doesn't expose system details",
+      "cwe_id": "CWE-209"
+    },
+    {
+      "type": "Information Disclosure",
+      "severity": "MEDIUM",
+      "endpoint": "/workspace/code/composio/tools/notion.py",
+      "description": "Error messages may reveal sensitive information",
+      "evidence": "Pattern found: import.*error",
+      "remediation": "Implement secure error handling that doesn't expose system details",
+      "cwe_id": "CWE-209"
+    },
+    {
+      "type": "Information Disclosure",
+      "severity": "MEDIUM",
+      "endpoint": "/workspace/code/composio/tools/quantconnect.py",
+      "description": "Error messages may reveal sensitive information",
+      "evidence": "Pattern found: import.*error",
+      "remediation": "Implement secure error handling that doesn't expose system details",
+      "cwe_id": "CWE-209"
+    },
+    {
+      "type": "Information Disclosure",
+      "severity": "MEDIUM",
+      "endpoint": "/workspace/code/composio/tools/slack.py",
+      "description": "Error messages may reveal sensitive information",
+      "evidence": "Pattern found: import.*error",
+      "remediation": "Implement secure error handling that doesn't expose system details",
+      "cwe_id": "CWE-209"
+    },
+    {
+      "type": "Information Disclosure",
+      "severity": "MEDIUM",
+      "endpoint": "/workspace/code/composio/tools/telegram.py",
+      "description": "Error messages may reveal sensitive information",
+      "evidence": "Pattern found: import.*error",
+      "remediation": "Implement secure error handling that doesn't expose system details",
+      "cwe_id": "CWE-209"
+    },
+    {
+      "type": "Information Disclosure",
+      "severity": "MEDIUM",
+      "endpoint": "/workspace/code/crewai/agents/ml_prediction_engineer.py",
+      "description": "Error messages may reveal sensitive information",
+      "evidence": "Pattern found: import.*error",
+      "remediation": "Implement secure error handling that doesn't expose system details",
+      "cwe_id": "CWE-209"
+    },
+    {
+      "type": "Information Disclosure",
+      "severity": "MEDIUM",
+      "endpoint": "/workspace/code/crewai/cache/cache_manager.py",
+      "description": "Error messages may reveal sensitive information",
+      "evidence": "Pattern found: import.*error",
+      "remediation": "Implement secure error handling that doesn't expose system details",
+      "cwe_id": "CWE-209"
+    },
+    {
+      "type": "Information Disclosure",
+      "severity": "MEDIUM",
+      "endpoint": "/workspace/code/crewai/utils/memory_manager.py",
+      "description": "Error messages may reveal sensitive information",
+      "evidence": "Pattern found: import.*error",
+      "remediation": "Implement secure error handling that doesn't expose system details",
+      "cwe_id": "CWE-209"
+    },
+    {
+      "type": "Generic Exception Handling",
+      "severity": "LOW",
+      "endpoint": "/workspace/code/langgraph/checkpoints/redis_checkpointer.py",
+      "description": "Generic exception handling may hide security issues",
+      "evidence": "Generic Exception caught",
+      "remediation": "Use specific exception handling and implement proper logging",
+      "cwe_id": "CWE-396"
+    },
+    {
+      "type": "Information Disclosure",
+      "severity": "MEDIUM",
+      "endpoint": "/workspace/code/langgraph/examples/comprehensive_demo.py",
+      "description": "Error messages may reveal sensitive information",
+      "evidence": "Pattern found: import.*error",
+      "remediation": "Implement secure error handling that doesn't expose system details",
+      "cwe_id": "CWE-209"
+    },
+    {
+      "type": "Generic Exception Handling",
+      "severity": "LOW",
+      "endpoint": "/workspace/code/langgraph/utils/workflow_utils.py",
+      "description": "Generic exception handling may hide security issues",
+      "evidence": "Generic Exception caught",
+      "remediation": "Use specific exception handling and implement proper logging",
+      "cwe_id": "CWE-396"
+    },
+    {
+      "type": "Generic Exception Handling",
+      "severity": "LOW",
+      "endpoint": "/workspace/code/langgraph/visualization/monitoring.py",
+      "description": "Generic exception handling may hide security issues",
+      "evidence": "Generic Exception caught",
+      "remediation": "Use specific exception handling and implement proper logging",
+      "cwe_id": "CWE-396"
+    },
+    {
+      "type": "Generic Exception Handling",
+      "severity": "LOW",
+      "endpoint": "/workspace/code/langgraph/workflows/trading_workflow.py",
+      "description": "Generic exception handling may hide security issues",
+      "evidence": "Generic Exception caught",
+      "remediation": "Use specific exception handling and implement proper logging",
+      "cwe_id": "CWE-396"
+    },
+    {
+      "type": "Information Disclosure",
+      "severity": "MEDIUM",
+      "endpoint": "/workspace/code/langgraph_api/app/auth/auth_handler.py",
+      "description": "Error messages may reveal sensitive information",
+      "evidence": "Pattern found: import.*error",
+      "remediation": "Implement secure error handling that doesn't expose system details",
+      "cwe_id": "CWE-209"
+    },
+    {
+      "type": "Generic Exception Handling",
+      "severity": "LOW",
+      "endpoint": "/workspace/code/langgraph_api/app/core/database.py",
+      "description": "Generic exception handling may hide security issues",
+      "evidence": "Generic Exception caught",
+      "remediation": "Use specific exception handling and implement proper logging",
+      "cwe_id": "CWE-396"
+    },
+    {
+      "type": "Information Disclosure",
+      "severity": "MEDIUM",
+      "endpoint": "/workspace/code/langgraph_api/app/services/user_service.py",
+      "description": "Error messages may reveal sensitive information",
+      "evidence": "Pattern found: import.*error",
+      "remediation": "Implement secure error handling that doesn't expose system details",
+      "cwe_id": "CWE-209"
+    },
+    {
+      "type": "Information Disclosure",
+      "severity": "MEDIUM",
+      "endpoint": "/workspace/code/letta_api/examples/complete_trading_integration.py",
+      "description": "Error messages may reveal sensitive information",
+      "evidence": "Pattern found: connection.*error",
+      "remediation": "Implement secure error handling that doesn't expose system details",
+      "cwe_id": "CWE-209"
+    },
+    {
+      "type": "Information Disclosure",
+      "severity": "MEDIUM",
+      "endpoint": "/workspace/code/pubsub/core/redis_client.py",
+      "description": "Error messages may reveal sensitive information",
+      "evidence": "Pattern found: connection.*error",
+      "remediation": "Implement secure error handling that doesn't expose system details",
+      "cwe_id": "CWE-209"
+    },
+    {
+      "type": "Information Disclosure",
+      "severity": "MEDIUM",
+      "endpoint": "/workspace/code/pubsub/security/encryption.py",
+      "description": "Error messages may reveal sensitive information",
+      "evidence": "Pattern found: import.*error",
+      "remediation": "Implement secure error handling that doesn't expose system details",
+      "cwe_id": "CWE-209"
+    },
+    {
+      "type": "Generic Exception Handling",
+      "severity": "LOW",
+      "endpoint": "/workspace/code/security/encryption/encryption_utils.py",
+      "description": "Generic exception handling may hide security issues",
+      "evidence": "Generic Exception caught",
+      "remediation": "Use specific exception handling and implement proper logging",
+      "cwe_id": "CWE-396"
+    },
+    {
+      "type": "Generic Exception Handling",
+      "severity": "LOW",
+      "endpoint": "/workspace/code/security/middleware/security_middleware.py",
+      "description": "Generic exception handling may hide security issues",
+      "evidence": "Generic Exception caught",
+      "remediation": "Use specific exception handling and implement proper logging",
+      "cwe_id": "CWE-396"
+    },
+    {
+      "type": "Information Disclosure",
+      "severity": "MEDIUM",
+      "endpoint": "/workspace/environment/scripts/demo.py",
+      "description": "Error messages may reveal sensitive information",
+      "evidence": "Pattern found: traceback",
+      "remediation": "Implement secure error handling that doesn't expose system details",
+      "cwe_id": "CWE-209"
+    },
+    {
+      "type": "Generic Exception Handling",
+      "severity": "LOW",
+      "endpoint": "/workspace/environment/tools/change_tracker.py",
+      "description": "Generic exception handling may hide security issues",
+      "evidence": "Generic Exception caught",
+      "remediation": "Use specific exception handling and implement proper logging",
+      "cwe_id": "CWE-396"
+    },
+    {
+      "type": "Generic Exception Handling",
+      "severity": "LOW",
+      "endpoint": "/workspace/environment/tools/deploy_automation.py",
+      "description": "Generic exception handling may hide security issues",
+      "evidence": "Generic Exception caught",
+      "remediation": "Use specific exception handling and implement proper logging",
+      "cwe_id": "CWE-396"
+    },
+    {
+      "type": "Information Disclosure",
+      "severity": "MEDIUM",
+      "endpoint": "/workspace/environment/tools/env_validator.py",
+      "description": "Error messages may reveal sensitive information",
+      "evidence": "Pattern found: import.*error",
+      "remediation": "Implement secure error handling that doesn't expose system details",
+      "cwe_id": "CWE-209"
+    },
+    {
+      "type": "Generic Exception Handling",
+      "severity": "LOW",
+      "endpoint": "/workspace/external_api/data_sources/pinterest_source.py",
+      "description": "Generic exception handling may hide security issues",
+      "evidence": "Generic Exception caught",
+      "remediation": "Use specific exception handling and implement proper logging",
+      "cwe_id": "CWE-396"
+    },
+    {
+      "type": "Generic Exception Handling",
+      "severity": "LOW",
+      "endpoint": "/workspace/external_api/data_sources/twitter_source.py",
+      "description": "Generic exception handling may hide security issues",
+      "evidence": "Generic Exception caught",
+      "remediation": "Use specific exception handling and implement proper logging",
+      "cwe_id": "CWE-396"
+    },
+    {
+      "type": "Information Disclosure",
+      "severity": "MEDIUM",
+      "endpoint": "/workspace/orchestration/debugging/log_analyzer.py",
+      "description": "Error messages may reveal sensitive information",
+      "evidence": "Pattern found: traceback",
+      "remediation": "Implement secure error handling that doesn't expose system details",
+      "cwe_id": "CWE-209"
+    },
+    {
+      "type": "Generic Exception Handling",
+      "severity": "LOW",
+      "endpoint": "/workspace/orchestration/debugging/log_analyzer.py",
+      "description": "Generic exception handling may hide security issues",
+      "evidence": "Generic Exception caught",
+      "remediation": "Use specific exception handling and implement proper logging",
+      "cwe_id": "CWE-396"
+    },
+    {
+      "type": "Information Disclosure",
+      "severity": "MEDIUM",
+      "endpoint": "/workspace/orchestration/scripts/automated_scaling.py",
+      "description": "Error messages may reveal sensitive information",
+      "evidence": "Pattern found: import.*error",
+      "remediation": "Implement secure error handling that doesn't expose system details",
+      "cwe_id": "CWE-209"
+    },
+    {
+      "type": "Generic Exception Handling",
+      "severity": "LOW",
+      "endpoint": "/workspace/orchestration/scripts/automated_scaling.py",
+      "description": "Generic exception handling may hide security issues",
+      "evidence": "Generic Exception caught",
+      "remediation": "Use specific exception handling and implement proper logging",
+      "cwe_id": "CWE-396"
+    },
+    {
+      "type": "Information Disclosure",
+      "severity": "MEDIUM",
+      "endpoint": "/workspace/performance/analyzer/system_analyzer.py",
+      "description": "Error messages may reveal sensitive information",
+      "evidence": "Pattern found: import.*error",
+      "remediation": "Implement secure error handling that doesn't expose system details",
+      "cwe_id": "CWE-209"
+    },
+    {
+      "type": "Generic Exception Handling",
+      "severity": "LOW",
+      "endpoint": "/workspace/performance/caching/cache_manager.py",
+      "description": "Generic exception handling may hide security issues",
+      "evidence": "Generic Exception caught",
+      "remediation": "Use specific exception handling and implement proper logging",
+      "cwe_id": "CWE-396"
+    },
+    {
+      "type": "Information Disclosure",
+      "severity": "MEDIUM",
+      "endpoint": "/workspace/security_audit/tools/api_auditor.py",
+      "description": "Error messages may reveal sensitive information",
+      "evidence": "Pattern found: traceback",
+      "remediation": "Implement secure error handling that doesn't expose system details",
+      "cwe_id": "CWE-209"
+    },
+    {
+      "type": "Information Disclosure",
+      "severity": "MEDIUM",
+      "endpoint": "/workspace/security_audit/tools/api_auditor.py",
+      "description": "Error messages may reveal sensitive information",
+      "evidence": "Pattern found: stack trace",
+      "remediation": "Implement secure error handling that doesn't expose system details",
+      "cwe_id": "CWE-209"
+    },
+    {
+      "type": "Information Disclosure",
+      "severity": "MEDIUM",
+      "endpoint": "/workspace/security_audit/tools/api_auditor.py",
+      "description": "Error messages may reveal sensitive information",
+      "evidence": "Pattern found: database.*error",
+      "remediation": "Implement secure error handling that doesn't expose system details",
+      "cwe_id": "CWE-209"
+    },
+    {
+      "type": "Information Disclosure",
+      "severity": "MEDIUM",
+      "endpoint": "/workspace/security_audit/tools/api_auditor.py",
+      "description": "Error messages may reveal sensitive information",
+      "evidence": "Pattern found: sql.*error",
+      "remediation": "Implement secure error handling that doesn't expose system details",
+      "cwe_id": "CWE-209"
+    },
+    {
+      "type": "Information Disclosure",
+      "severity": "MEDIUM",
+      "endpoint": "/workspace/security_audit/tools/api_auditor.py",
+      "description": "Error messages may reveal sensitive information",
+      "evidence": "Pattern found: connection.*error",
+      "remediation": "Implement secure error handling that doesn't expose system details",
+      "cwe_id": "CWE-209"
+    },
+    {
+      "type": "Information Disclosure",
+      "severity": "MEDIUM",
+      "endpoint": "/workspace/security_audit/tools/api_auditor.py",
+      "description": "Error messages may reveal sensitive information",
+      "evidence": "Pattern found: import.*error",
+      "remediation": "Implement secure error handling that doesn't expose system details",
+      "cwe_id": "CWE-209"
+    },
+    {
+      "type": "Generic Exception Handling",
+      "severity": "LOW",
+      "endpoint": "/workspace/security_audit/tools/api_auditor.py",
+      "description": "Generic exception handling may hide security issues",
+      "evidence": "Generic Exception caught",
+      "remediation": "Use specific exception handling and implement proper logging",
+      "cwe_id": "CWE-396"
+    },
+    {
+      "type": "Generic Exception Handling",
+      "severity": "LOW",
+      "endpoint": "/workspace/security_audit/tools/auth_auditor.py",
+      "description": "Generic exception handling may hide security issues",
+      "evidence": "Generic Exception caught",
+      "remediation": "Use specific exception handling and implement proper logging",
+      "cwe_id": "CWE-396"
+    },
+    {
+      "type": "Generic Exception Handling",
+      "severity": "LOW",
+      "endpoint": "/workspace/security_audit/tools/vulnerability_scanner.py",
+      "description": "Generic exception handling may hide security issues",
+      "evidence": "Generic Exception caught",
+      "remediation": "Use specific exception handling and implement proper logging",
+      "cwe_id": "CWE-396"
+    },
+    {
+      "type": "CORS with Credentials",
+      "severity": "MEDIUM",
+      "endpoint": "/workspace/code/asymedge_api/main.py",
+      "description": "CORS allows credentials with broad origins",
+      "evidence": "allow_credentials=True with potentially broad origins",
+      "remediation": "Ensure credentials are only allowed with specific trusted origins",
+      "cwe_id": "CWE-942"
+    },
+    {
+      "type": "Permissive CORS Policy",
+      "severity": "HIGH",
+      "endpoint": "/workspace/code/langgraph_api/main.py",
+      "description": "CORS policy allows all origins",
+      "evidence": "Wildcard (*) origin allowed",
+      "remediation": "Implement specific origin whitelist instead of wildcard",
+      "cwe_id": "CWE-942"
+    },
+    {
+      "type": "CORS with Credentials",
+      "severity": "MEDIUM",
+      "endpoint": "/workspace/code/langgraph_api/main.py",
+      "description": "CORS allows credentials with broad origins",
+      "evidence": "allow_credentials=True with potentially broad origins",
+      "remediation": "Ensure credentials are only allowed with specific trusted origins",
+      "cwe_id": "CWE-942"
+    },
+    {
+      "type": "Permissive CORS Policy",
+      "severity": "HIGH",
+      "endpoint": "/workspace/code/crewai/api/server.py",
+      "description": "CORS policy allows all origins",
+      "evidence": "Wildcard (*) origin allowed",
+      "remediation": "Implement specific origin whitelist instead of wildcard",
+      "cwe_id": "CWE-942"
+    },
+    {
+      "type": "CORS with Credentials",
+      "severity": "MEDIUM",
+      "endpoint": "/workspace/code/crewai/api/server.py",
+      "description": "CORS allows credentials with broad origins",
+      "evidence": "allow_credentials=True with potentially broad origins",
+      "remediation": "Ensure credentials are only allowed with specific trusted origins",
+      "cwe_id": "CWE-942"
+    },
+    {
+      "type": "Permissive CORS Policy",
+      "severity": "HIGH",
+      "endpoint": "/workspace/code/langgraph/api/workflow_api.py",
+      "description": "CORS policy allows all origins",
+      "evidence": "Wildcard (*) origin allowed",
+      "remediation": "Implement specific origin whitelist instead of wildcard",
+      "cwe_id": "CWE-942"
+    },
+    {
+      "type": "CORS with Credentials",
+      "severity": "MEDIUM",
+      "endpoint": "/workspace/code/langgraph/api/workflow_api.py",
+      "description": "CORS allows credentials with broad origins",
+      "evidence": "allow_credentials=True with potentially broad origins",
+      "remediation": "Ensure credentials are only allowed with specific trusted origins",
+      "cwe_id": "CWE-942"
+    },
+    {
+      "type": "CORS with Credentials",
+      "severity": "MEDIUM",
+      "endpoint": "/workspace/code/langgraph_api/app/main.py",
+      "description": "CORS allows credentials with broad origins",
+      "evidence": "allow_credentials=True with potentially broad origins",
+      "remediation": "Ensure credentials are only allowed with specific trusted origins",
+      "cwe_id": "CWE-942"
+    },
+    {
+      "type": "CORS with Credentials",
+      "severity": "MEDIUM",
+      "endpoint": "/workspace/security_audit/tools/api_auditor.py",
+      "description": "CORS allows credentials with broad origins",
+      "evidence": "allow_credentials=True with potentially broad origins",
+      "remediation": "Ensure credentials are only allowed with specific trusted origins",
+      "cwe_id": "CWE-942"
+    },
+    {
+      "type": "SQL Injection Vulnerability",
+      "severity": "CRITICAL",
+      "endpoint": "/workspace/code/pubsub/monitoring/analytics.py",
+      "description": "SQL injection via string concatenation",
+      "evidence": "Dynamic SQL construction found",
+      "remediation": "Use parameterized queries or prepared statements",
+      "cwe_id": "CWE-89"
+    },
+    {
+      "type": "SQL Injection Vulnerability",
+      "severity": "CRITICAL",
+      "endpoint": "/workspace/code/pubsub/monitoring/analytics.py",
+      "description": "SQL injection via cursor concatenation",
+      "evidence": "Dynamic SQL construction found",
+      "remediation": "Use parameterized queries or prepared statements",
+      "cwe_id": "CWE-89"
+    }
+  ]
+}

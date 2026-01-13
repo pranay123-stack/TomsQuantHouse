@@ -1,0 +1,23 @@
+# Redis Trading Framework Requirements
+# Core Redis functionality
+redis>=5.0.0
+
+# System monitoring
+psutil>=5.9.0
+
+# Email functionality (for alerts)
+secure-smtplib>=0.1.1
+
+# Data serialization
+pickle5>=0.0.12
+
+# Development and testing
+pytest>=7.0.0
+pytest-asyncio>=0.21.0
+
+# Optional: Monitoring and logging enhancements
+prometheus-client>=0.17.0
+structlog>=23.0.0
+
+# Optional: Docker integration
+docker>=6.0.0

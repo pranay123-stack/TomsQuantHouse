@@ -1,0 +1,219 @@
+{
+  "system_config": {
+    "name": "Agent Handoff and Decision-Making Workflow System",
+    "version": "1.0.0",
+    "description": "Comprehensive workflow system for trading agent coordination and decision making",
+    "created_at": "2025-11-02T07:56:06Z"
+  },
+  "workflow_engine": {
+    "max_concurrent_workflows": 100,
+    "default_timeout_seconds": 3600,
+    "enable_performance_tracking": true,
+    "enable_escalation": true,
+    "enable_conflict_resolution": true,
+    "logging_level": "INFO",
+    "cleanup_interval_hours": 24
+  },
+  "agent_configuration": {
+    "agent_types": {
+      "technical_analyzer": {
+        "max_concurrent_tasks": 10,
+        "timeout_seconds": 300,
+        "retry_count": 2,
+        "confidence_threshold": 0.7
+      },
+      "risk_analyzer": {
+        "max_concurrent_tasks": 5,
+        "timeout_seconds": 180,
+        "retry_count": 1,
+        "confidence_threshold": 0.8
+      },
+      "execution_agent": {
+        "max_concurrent_tasks": 20,
+        "timeout_seconds": 60,
+        "retry_count": 0,
+        "confidence_threshold": 0.6
+      },
+      "sentiment_analyzer": {
+        "max_concurrent_tasks": 8,
+        "timeout_seconds": 120,
+        "retry_count": 2,
+        "confidence_threshold": 0.65
+      },
+      "monitor_agent": {
+        "max_concurrent_tasks": 15,
+        "timeout_seconds": 3600,
+        "retry_count": 1,
+        "confidence_threshold": 0.5
+      }
+    },
+    "agent_hierarchy": {
+      "emergency_protocol": 4,
+      "risk_monitor": 4,
+      "chief_risk_officer": 4,
+      "head_of_trading": 3,
+      "trading_manager": 2,
+      "risk_analyzer": 2,
+      "execution_agent": 2,
+      "technical_analyzer": 1,
+      "sentiment_analyzer": 1
+    }
+  },
+  "performance_thresholds": {
+    "technical_analyzer": {
+      "accuracy": 0.75,
+      "execution_speed": 300.0,
+      "risk_adjusted_return": 0.15
+    },
+    "risk_analyzer": {
+      "accuracy": 0.85,
+      "risk_avoidance": 0.90,
+      "profit_loss": 0.05
+    },
+    "execution_agent": {
+      "execution_speed": 60.0,
+      "slippage": 0.001,
+      "fill_rate": 0.95
+    },
+    "sentiment_analyzer": {
+      "accuracy": 0.70,
+      "timeliness": 180.0,
+      "correlation_strength": 0.60
+    }
+  },
+  "escalation_config": {
+    "enabled": true,
+    "max_escalation_level": 4,
+    "default_timeout_minutes": 15,
+    "notification_channels": ["email", "sms", "dashboard", "phone"],
+    "business_hours": {
+      "start": "09:00",
+      "end": "17:00",
+      "timezone": "UTC"
+    },
+    "escalation_triggers": {
+      "financial_loss_threshold": 0.05,
+      "risk_level_critical": true,
+      "consecutive_failures": 3,
+      "confidence_below_threshold": 0.3,
+      "large_position_threshold": 5000000,
+      "volatility_spike_increase": 0.5
+    }
+  },
+  "conflict_resolution": {
+    "enabled": true,
+    "default_strategy": "weighted_scoring",
+    "confidence_threshold": 0.3,
+    "severity_thresholds": {
+      "low": 0.3,
+      "medium": 0.6,
+      "high": 0.8,
+      "critical": 1.0
+    },
+    "resolution_strategies": {
+      "majority_vote": {
+        "weight": 1.0,
+        "min_participants": 3
+      },
+      "expert_preference": {
+        "weight": 1.2,
+        "required_expert": "risk_analyzer"
+      },
+      "weighted_scoring": {
+        "weight": 1.1,
+        "factors": ["confidence", "expertise", "accuracy"]
+      },
+      "hierarchy_based": {
+        "weight": 1.0,
+        "hierarchical_overrides": true
+      }
+    }
+  },
+  "versioning": {
+    "enabled": true,
+    "auto_backup": true,
+    "backup_retention_days": 90,
+    "version_comment_required": true,
+    "rollback_validation": true,
+    "max_versions_per_template": 50
+  },
+  "monitoring": {
+    "enable_real_time_monitoring": true,
+    "metrics_collection_interval_seconds": 60,
+    "alert_thresholds": {
+      "error_rate": 0.05,
+      "response_time": 5000,
+      "conflict_rate": 0.1,
+      "escalation_rate": 0.2
+    },
+    "notification_rules": {
+      "critical_errors": {
+        "immediate": true,
+        "channels": ["phone", "sms", "email"]
+      },
+      "performance_degradation": {
+        "immediate": false,
+        "channels": ["email", "dashboard"],
+        "threshold_minutes": 15
+      }
+    }
+  },
+  "security": {
+    "enable_audit_logging": true,
+    "require_agent_authentication": true,
+    "sensitive_data_encryption": true,
+    "access_control": {
+      "admin_actions": ["create_workflow", "rollback_version", "emergency_escalation"],
+      "operator_actions": ["execute_step", "resolve_conflict"],
+      "viewer_actions": ["view_dashboard", "view_metrics"]
+    }
+  },
+  "integrations": {
+    "trading_platforms": {
+      "enabled": false,
+      "apis": []
+    },
+    "notification_services": {
+      "email": {
+        "enabled": true,
+        "smtp_server": "localhost",
+        "smtp_port": 587
+      },
+      "sms": {
+        "enabled": false,
+        "provider": "twilio"
+      }
+    },
+    "monitoring_systems": {
+      "prometheus": {
+        "enabled": false,
+        "metrics_endpoint": "/metrics"
+      },
+      "datadog": {
+        "enabled": false,
+        "api_key": ""
+      }
+    }
+  },
+  "data_retention": {
+    "workflow_history_days": 365,
+    "performance_metrics_days": 90,
+    "escalation_history_days": 180,
+    "conflict_history_days": 180,
+    "audit_log_days": 2555,
+    "backup_retention_days": 2555
+  },
+  "testing": {
+    "enable_simulation_mode": true,
+    "simulation_probabilities": {
+      "agent_success": 0.85,
+      "conflict_occurrence": 0.1,
+      "escalation_triggers": 0.05
+    },
+    "test_data_generation": {
+      "enabled": true,
+      "scenarios_per_day": 100,
+      "random_seed": 42
+    }
+  }
+}

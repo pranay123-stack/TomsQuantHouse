@@ -1,0 +1,308 @@
+# AlertManager Configuration for Trading System
+
+global:
+  # SMTP server for email notifications
+  smtp_smarthost: '${EMAIL_SMTP_SERVER}:587'
+  smtp_from: 'alerts@trading-system.com'
+  smtp_auth_username: '${EMAIL_USERNAME}'
+  smtp_auth_password: '${EMAIL_PASSWORD}'
+  smtp_require_tls: true
+
+  # Slack webhook timeout
+  slack_api_url: '${SLACK_WEBHOOK_URL}'
+
+# Template files
+templates:
+  - '/etc/alertmanager/templates/*.tmpl'
+
+# Routing configuration
+route:
+  # Default receiver
+  receiver: 'default'
+  
+  # Group alerts by cluster and alertname
+  group_by: ['alertname', 'cluster', 'service']
+  
+  # Wait 30s before sending initial notification
+  group_wait: 30s
+  
+  # Send new notifications every 5m if new alerts are added
+  group_interval: 5m
+  
+  # If alert is resolved after 5m, send notification
+  repeat_interval: 5m
+  
+  # Child routes for specific alert types
+  routes:
+    # Critical trading alerts
+    - match:
+        severity: critical
+        team: trading
+      receiver: 'trading-critical'
+      group_wait: 10s
+      group_interval: 2m
+      repeat_interval: 5m
+      
+    # Infrastructure alerts
+    - match:
+        severity: warning
+        team: infrastructure
+      receiver: 'infrastructure-team'
+      group_wait: 1m
+      group_interval: 5m
+      repeat_interval: 10m
+      
+    # Security alerts
+    - match:
+        team: security
+      receiver: 'security-team'
+      group_wait: 5s
+      group_interval: 1m
+      repeat_interval: 2m
+      
+    # Business metrics alerts
+    - match:
+        team: business
+      receiver: 'business-team'
+      group_wait: 2m
+      group_interval: 10m
+      repeat_interval: 30m
+      
+    # Capacity planning alerts
+    - match:
+        metric_type: capacity
+      receiver: 'capacity-team'
+      group_wait: 5m
+      group_interval: 15m
+      repeat_interval: 1h
+
+# Inhibition rules - suppress less important alerts when critical ones are firing
+inhibit_rules:
+  # Inhibit warning alerts when critical alerts are firing
+  - source_match:
+      severity: 'critical'
+    target_match:
+      severity: 'warning'
+    equal: ['alertname', 'instance']
+    
+  # Inhibit service down warnings when service is already known to be down
+  - source_match:
+      alertname: 'ServiceDown'
+    target_match:
+      alertname: 'HighResponseTime'
+    equal: ['instance']
+    
+  # Inhibit multiple alert instances for the same service
+  - source_match:
+      severity: 'critical'
+    target_match:
+      severity: 'critical'
+    equal: ['service', 'instance']
+
+# Receiver configurations
+receivers:
+  # Default receiver (minimum notifications)
+  - name: 'default'
+    email_configs:
+      - to: '${EMAIL_RECIPIENTS}'
+        subject: '[{{ .Status | toUpper }}] {{ .GroupLabels.alertname }}'
+        body: |
+          {{ range .Alerts }}
+          Alert: {{ .Annotations.summary }}
+          Description: {{ .Annotations.description }}
+          Instance: {{ .Labels.instance }}
+          Severity: {{ .Labels.severity }}
+          Time: {{ .StartsAt.Format "2006-01-02 15:04:05" }}
+          {{ end }}
+    
+    slack_configs:
+      - api_url: '${SLACK_WEBHOOK_URL}'
+        channel: '#alerts'
+        title: '{{ range .Alerts }}{{ .Annotations.summary }}{{ end }}'
+        text: '{{ range .Alerts }}{{ .Annotations.description }}{{ end }}'
+        send_resolved: true
+    
+    # Webhook to incident response system
+    webhook_configs:
+      - url: 'http://incident-response:8080/webhook'
+        send_resolved: true
+
+  # Critical trading alerts receiver
+  - name: 'trading-critical'
+    email_configs:
+      - to: '${EMAIL_RECIPIENTS}'
+        subject: '[CRITICAL TRADING ALERT] {{ .GroupLabels.alertname }}'
+        body: |
+          🚨 CRITICAL TRADING ALERT 🚨
+          
+          {{ range .Alerts }}
+          Alert: {{ .Annotations.summary }}
+          Description: {{ .Annotations.description }}
+          Instance: {{ .Labels.instance }}
+          Algorithm: {{ .Labels.algorithm }}
+          Symbol: {{ .Labels.symbol }}
+          Severity: {{ .Labels.severity }}
+          Time: {{ .StartsAt.Format "2006-01-02 15:04:05" }}
+          Runbook: {{ .Annotations.runbook_url }}
+          {{ end }}
+    
+    slack_configs:
+      - api_url: '${SLACK_WEBHOOK_URL}'
+        channel: '#trading-critical'
+        title: '🚨 CRITICAL: {{ .GroupLabels.alertname }}'
+        text: |
+          {{ range .Alerts }}
+          *Alert:* {{ .Annotations.summary }}
+          *Description:* {{ .Annotations.description }}
+          *Instance:* {{ .Labels.instance }}
+          *Algorithm:* {{ .Labels.algorithm }}
+          *Time:* {{ .StartsAt.Format "15:04:05" }}
+          {{ end }}
+        send_resolved: true
+        
+    pagerduty_configs:
+      - routing_key: '${PAGERDUTY_INTEGRATION_KEY}'
+        description: '{{ range .Alerts }}{{ .Annotations.summary }}{{ end }}'
+        severity: 'critical'
+        component: 'trading-system'
+        
+    webhook_configs:
+      - url: 'http://incident-response:8080/webhook'
+        send_resolved: true
+
+  # Infrastructure team receiver
+  - name: 'infrastructure-team'
+    email_configs:
+      - to: 'infrastructure@company.com'
+        subject: '[INFRASTRUCTURE] {{ .GroupLabels.alertname }}'
+        body: |
+          Infrastructure Alert:
+          
+          {{ range .Alerts }}
+          Alert: {{ .Annotations.summary }}
+          Description: {{ .Annotations.description }}
+          Instance: {{ .Labels.instance }}
+          Severity: {{ .Labels.severity }}
+          {{ end }}
+    
+    slack_configs:
+      - api_url: '${SLACK_WEBHOOK_URL}'
+        channel: '#infrastructure'
+        title: 'Infrastructure Alert: {{ .GroupLabels.alertname }}'
+        text: '{{ range .Alerts }}{{ .Annotations.description }}{{ end }}'
+        send_resolved: true
+
+  # Security team receiver
+  - name: 'security-team'
+    email_configs:
+      - to: 'security@company.com'
+        subject: '[SECURITY] {{ .GroupLabels.alertname }} - URGENT'
+        body: |
+          🚨 SECURITY ALERT 🚨
+          
+          {{ range .Alerts }}
+          Alert: {{ .Annotations.summary }}
+          Description: {{ .Annotations.description }}
+          Source IP: {{ .Labels.client_ip }}
+          Severity: {{ .Labels.severity }}
+          Time: {{ .StartsAt.Format "2006-01-02 15:04:05" }}
+          {{ end }}
+    
+    slack_configs:
+      - api_url: '${SLACK_WEBHOOK_URL}'
+        channel: '#security-alerts'
+        title: '🚨 SECURITY ALERT'
+        text: |
+          {{ range .Alerts }}
+          *Alert:* {{ .Annotations.summary }}
+          *Description:* {{ .Annotations.description }}
+          *Source:* {{ .Labels.client_ip }}
+          *Severity:* {{ .Labels.severity }}
+          {{ end }}
+        send_resolved: true
+        
+    webhook_configs:
+      - url: 'http://incident-response:8080/webhook'
+        send_resolved: true
+
+  # Business team receiver
+  - name: 'business-team'
+    email_configs:
+      - to: 'business@company.com'
+        subject: '[BUSINESS] {{ .GroupLabels.alertname }}'
+        body: |
+          Business Alert:
+          
+          {{ range .Alerts }}
+          Alert: {{ .Annotations.summary }}
+          Description: {{ .Annotations.description }}
+          Impact: {{ .Labels.impact }}
+          {{ end }}
+    
+    slack_configs:
+      - api_url: '${SLACK_WEBHOOK_URL}'
+        channel: '#business-alerts'
+        title: 'Business Alert: {{ .GroupLabels.alertname }}'
+        text: '{{ range .Alerts }}{{ .Annotations.description }}{{ end }}'
+
+  # Capacity planning team receiver
+  - name: 'capacity-team'
+    email_configs:
+      - to: 'capacity@company.com'
+        subject: '[CAPACITY] {{ .GroupLabels.alertname }}'
+        body: |
+          Capacity Planning Alert:
+          
+          {{ range .Alerts }}
+          Alert: {{ .Annotations.summary }}
+          Description: {{ .Annotations.description }}
+          Current Usage: {{ .Labels.current_usage }}
+          Threshold: {{ .Labels.threshold }}
+          {{ end }}
+    
+    slack_configs:
+      - api_url: '${SLACK_WEBHOOK_URL}'
+        channel: '#capacity-planning'
+        title: 'Capacity Alert: {{ .GroupLabels.alertname }}'
+        text: '{{ range .Alerts }}{{ .Annotations.description }}{{ end }}'
+
+# Time intervals for alert suppression
+time_intervals:
+  # Business hours (9 AM - 5 PM, Monday - Friday)
+  - name: 'business_hours'
+    time_intervals:
+      - times:
+          - start_time: '09:00'
+            end_time: '17:00'
+        weekdays: ['monday:friday']
+        
+  # Outside business hours
+  - name: 'outside_business_hours'
+    time_intervals:
+      - times:
+          - start_time: '00:00'
+            end_time: '09:00'
+        weekdays: ['monday:friday']
+      - times:
+          - start_time: '17:00'
+            end_time: '24:00'
+        weekdays: ['monday:friday']
+      - times:
+          - start_time: '00:00'
+            end_time: '24:00'
+        weekdays: ['saturday', 'sunday']
+
+# Apply time intervals to routes
+route:
+  # ... (previous route configuration) ...
+  
+  # Mute non-critical alerts outside business hours
+  routes:
+    # ... (previous routes) ...
+    
+    # Mute warnings outside business hours
+    - match_re:
+        severity: 'warning'
+      mute_time_intervals:
+        - 'outside_business_hours'
+      receiver: 'default'

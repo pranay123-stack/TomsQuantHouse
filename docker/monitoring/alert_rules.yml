@@ -1,0 +1,176 @@
+groups:
+  - name: trading_system_alerts
+    rules:
+      # High CPU usage alert
+      - alert: HighCPUUsage
+        expr: 100 - (avg by(instance) (irate(node_cpu_seconds_total{mode="idle"}[5m])) * 100) > 80
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High CPU usage detected"
+          description: "CPU usage is above 80% on {{ $labels.instance }}"
+
+      # High memory usage alert
+      - alert: HighMemoryUsage
+        expr: (1 - (node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes)) * 100 > 85
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High memory usage detected"
+          description: "Memory usage is above 85% on {{ $labels.instance }}"
+
+      # Service down alert
+      - alert: ServiceDown
+        expr: up == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Service is down"
+          description: "{{ $labels.job }} service on {{ $labels.instance }} is down"
+
+      # High HTTP error rate
+      - alert: HighHTTPErrorRate
+        expr: rate(http_requests_total{status=~"5.."}[5m]) / rate(http_requests_total[5m]) > 0.1
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High HTTP error rate"
+          description: "HTTP error rate is above 10% for {{ $labels.service }}"
+
+      # Database connection issues
+      - alert: DatabaseConnectionFailure
+        expr: pg_up == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Database connection failure"
+          description: "PostgreSQL database is not responding"
+
+      # Redis connection failure
+      - alert: RedisConnectionFailure
+        expr: redis_up == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Redis connection failure"
+          description: "Redis server is not responding"
+
+      # High response time
+      - alert: HighResponseTime
+        expr: histogram_quantile(0.95, rate(http_request_duration_seconds_bucket[5m])) > 2
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High response time"
+          description: "95th percentile response time is above 2s for {{ $labels.service }}"
+
+      # Disk space low
+      - alert: DiskSpaceLow
+        expr: (1 - (node_filesystem_avail_bytes / node_filesystem_size_bytes)) * 100 > 90
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Disk space is low"
+          description: "Disk usage is above 90% on {{ $labels.instance }}"
+
+      # High queue depth (if using message queues)
+      - alert: HighQueueDepth
+        expr: rabbitmq_queue_messages > 1000
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High message queue depth"
+          description: "Queue depth is above 1000 messages for {{ $labels.queue }}"
+
+      # SSL certificate expiry
+      - alert: SSLCertificateExpiry
+        expr: probe_ssl_earliest_cert_expiry - time() < 86400 * 30
+        for: 1h
+        labels:
+          severity: warning
+        annotations:
+          summary: "SSL certificate expires soon"
+          description: "SSL certificate for {{ $labels.instance }} expires in less than 30 days"
+
+  - name: trading_specific_alerts
+    rules:
+      # Trading algorithm performance degradation
+      - alert: TradingAlgorithmPerformance
+        expr: rate(trading_decisions_total{outcome="loss"}[10m]) / rate(trading_decisions_total[10m]) > 0.3
+        for: 10m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Trading algorithm performance degradation"
+          description: "Loss rate is above 30% for {{ $labels.algorithm }}"
+
+      # Unusual market volatility detected
+      - alert: UnusualMarketVolatility
+        expr: volatility_ratio > 3
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Unusual market volatility detected"
+          description: "Market volatility ratio is {{ $value }} for {{ $labels.symbol }}"
+
+      # Risk threshold exceeded
+      - alert: RiskThresholdExceeded
+        expr: portfolio_risk_score > 0.8
+        for: 2m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Portfolio risk threshold exceeded"
+          description: "Portfolio risk score is {{ $value }}, exceeding threshold of 0.8"
+
+      # Data feed delay
+      - alert: DataFeedDelay
+        expr: time() - market_data_timestamp > 300
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Market data feed delay"
+          description: "Market data for {{ $labels.symbol }} is delayed by {{ $value }} seconds"
+
+  - name: infrastructure_alerts
+    rules:
+      # Container restart loop
+      - alert: ContainerRestartLoop
+        expr: increase(container_start_time_seconds[1h]) > 10
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Container restart loop detected"
+          description: "Container {{ $labels.container }} has restarted {{ $value }} times in the last hour"
+
+      # Network connectivity issues
+      - alert: NetworkConnectivityIssues
+        expr: rate(http_requests_total{code=~"5.."}[5m]) / rate(http_requests_total[5m]) > 0.2
+        for: 3m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Network connectivity issues"
+          description: "Network error rate is above 20% for {{ $labels.destination }}"
+
+      # Certificate expiration warning
+      - alert: CertificateExpirationWarning
+        expr: (certificate_expiration_timestamp - time()) / 86400 < 7
+        for: 1h
+        labels:
+          severity: warning
+        annotations:
+          summary: "Certificate expires soon"
+          description: "SSL certificate expires in {{ $value }} days"

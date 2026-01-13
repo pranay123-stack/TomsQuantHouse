@@ -1,0 +1,702 @@
+name: 🧪 Trading Pipeline Tests
+
+on:
+  push:
+    branches: [ main, develop ]
+    paths:
+      - 'testing/**'
+      - 'requirements.txt'
+      - 'pytest.ini'
+      - 'Makefile'
+  pull_request:
+    branches: [ main, develop ]
+    paths:
+      - 'testing/**'
+      - 'requirements.txt'
+      - 'pytest.ini'
+      - 'Makefile'
+  schedule:
+    # Run tests daily at 2 AM UTC
+    - cron: '0 2 * * *'
+  workflow_dispatch:
+    inputs:
+      test_suite:
+        description: 'Test suite to run'
+        required: true
+        default: 'all'
+        type: choice
+        options:
+          - all
+          - pipeline
+          - agents
+          - api
+          - load
+          - recovery
+          - security
+          - automation
+
+env:
+  PYTHON_VERSION: '3.9'
+  REDIS_VERSION: '7.0'
+  NODE_VERSION: '18'
+
+jobs:
+  # Job 1: Install and Cache Dependencies
+  setup:
+    name: 🛠️ Setup Environment
+    runs-on: ubuntu-latest
+    outputs:
+      cache-key: ${{ steps.cache-key.outputs.key }}
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🔑 Set up Python ${{ env.PYTHON_VERSION }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: 'pip'
+
+      - name: 🔑 Set up Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: 📦 Cache pip dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      - name: 📦 Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pytest-github-actions-annotate-failures
+
+      - name: 🔧 Generate cache key
+        id: cache-key
+        run: echo "key=${{ runner.os }}-python-${{ env.PYTHON_VERSION }}-pip-${{ hashFiles('**/requirements.txt') }}" >> $GITHUB_OUTPUT
+
+  # Job 2: Code Quality Checks
+  quality:
+    name: 🔍 Code Quality
+    runs-on: ubuntu-latest
+    needs: setup
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🔑 Set up Python ${{ env.PYTHON_VERSION }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: 'pip'
+
+      - name: 📦 Install dependencies
+        run: |
+          pip install flake8 black isort mypy bandit safety
+
+      - name: 🔍 Lint with flake8
+        run: |
+          flake8 testing/ --max-line-length=100 --ignore=E203,W503 --exit-zero --statistics
+
+      - name: 🎨 Check code formatting with black
+        run: black --check --diff testing/
+
+      - name: 📋 Check import sorting with isort
+        run: isort --check-only --diff testing/
+
+      - name: 🔍 Type checking with mypy
+        run: mypy testing/ --ignore-missing-imports --no-strict-optional --exit-zero
+
+      - name: 🔒 Security scan with bandit
+        run: bandit -r testing/ -ll -f json -o bandit-results.json
+
+      - name: 🔒 Dependency vulnerability scan with safety
+        run: safety check --json --output safety-results.json
+
+      - name: 📊 Upload security scan results
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: security-scan-results
+          path: |
+            bandit-results.json
+            safety-results.json
+
+  # Job 3: Unit and Integration Tests
+  test-integration:
+    name: 🧪 Unit & Integration Tests
+    runs-on: ubuntu-latest
+    needs: setup
+    strategy:
+      matrix:
+        python-version: ['3.8', '3.9', '3.10', '3.11']
+      fail-fast: false
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🔑 Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: 'pip'
+
+      - name: 📦 Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: 🧪 Run unit tests
+        run: |
+          pytest -v -m "unit or integration" \
+            --tb=short \
+            --maxfail=10 \
+            --durations=10 \
+            --cov=testing \
+            --cov-report=xml \
+            --cov-report=term \
+            --junit-xml=unit-test-results.xml \
+            --json-report \
+            --json-report-file=unit-test-results.json \
+            -x
+
+      - name: 📊 Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          file: ./coverage.xml
+          flags: unit-tests
+          name: codecov-umbrella
+          fail_ci_if_error: false
+
+      - name: 📊 Upload test results
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: unit-test-results-${{ matrix.python-version }}
+          path: |
+            coverage.xml
+            unit-test-results.xml
+            unit-test-results.json
+
+  # Job 4: Data Pipeline Tests
+  test-pipeline:
+    name: 🔄 Pipeline Tests
+    runs-on: ubuntu-latest
+    needs: setup
+    services:
+      redis:
+        image: redis:${{ env.REDIS_VERSION }}-alpine
+        ports:
+          - 6379:6379
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🔑 Set up Python ${{ env.PYTHON_VERSION }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: 'pip'
+
+      - name: 📦 Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: 🔴 Wait for Redis
+        run: |
+          timeout 30 bash -c 'until echo > /dev/tcp/localhost/6379; do sleep 1; done'
+
+      - name: 🧪 Run pipeline tests
+        run: |
+          pytest -v -m "pipeline or data_flow" \
+            --tb=short \
+            --maxfail=5 \
+            --durations=10 \
+            --junit-xml=pipeline-test-results.xml \
+            --json-report \
+            --json-report-file=pipeline-test-results.json
+
+      - name: 📊 Upload pipeline test results
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: pipeline-test-results
+          path: |
+            pipeline-test-results.xml
+            pipeline-test-results.json
+
+  # Job 5: API Integration Tests
+  test-api:
+    name: 🌐 API Integration Tests
+    runs-on: ubuntu-latest
+    needs: setup
+    services:
+      redis:
+        image: redis:${{ env.REDIS_VERSION }}-alpine
+        ports:
+          - 6379:6379
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    env:
+      REDIS_URL: redis://localhost:6379
+      TEST_MODE: mock
+      LETTA_BASE_URL: https://api.letta.com/v1
+      ABACUS_API_URL: https://api.abacus.ai
+      QUANTCONNECT_API_KEY: dummy_key
+      QUANTCONNECT_USER_ID: dummy_user
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🔑 Set up Python ${{ env.PYTHON_VERSION }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: 'pip'
+
+      - name: 📦 Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: 🔴 Wait for Redis
+        run: |
+          timeout 30 bash -c 'until echo > /dev/tcp/localhost/6379; do sleep 1; done'
+
+      - name: 🧪 Run API integration tests
+        run: |
+          pytest -v -m "api or integration" \
+            --tb=line \
+            --maxfail=10 \
+            --durations=20 \
+            --junit-xml=api-test-results.xml \
+            --json-report \
+            --json-report-file=api-test-results.json
+
+      - name: 📊 Upload API test results
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: api-test-results
+          path: |
+            api-test-results.xml
+            api-test-results.json
+
+  # Job 6: Agent Coordination Tests
+  test-agents:
+    name: 🤖 Agent Coordination Tests
+    runs-on: ubuntu-latest
+    needs: setup
+    env:
+      TEST_MODE: mock
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🔑 Set up Python ${{ env.PYTHON_VERSION }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: 'pip'
+
+      - name: 📦 Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: 🧪 Run agent tests
+        run: |
+          pytest -v -m "agents or agent_communication or decision_making" \
+            --tb=line \
+            --maxfail=10 \
+            --durations=20 \
+            --junit-xml=agent-test-results.xml \
+            --json-report \
+            --json-report-file=agent-test-results.json
+
+      - name: 📊 Upload agent test results
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: agent-test-results
+          path: |
+            agent-test-results.xml
+            agent-test-results.json
+
+  # Job 7: Performance and Load Tests
+  test-performance:
+    name: ⚡ Performance & Load Tests
+    runs-on: ubuntu-latest
+    needs: setup
+    services:
+      redis:
+        image: redis:${{ env.REDIS_VERSION }}-alpine
+        ports:
+          - 6379:6379
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🔑 Set up Python ${{ env.PYTHON_VERSION }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: 'pip'
+
+      - name: 📦 Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: 🧪 Run performance tests
+        run: |
+          pytest -v -m "performance or load_test or throughput or concurrent" \
+            --tb=no \
+            --maxfail=3 \
+            --timeout=600 \
+            --durations=20 \
+            --junit-xml=performance-test-results.xml \
+            --json-report \
+            --json-report-file=performance-test-results.json
+
+      - name: 🚀 Run load tests with Locust
+        run: |
+          cd load
+          locust --headless -u 5 -r 2 -t 120s --host=http://localhost --csv=load-test-results
+
+      - name: 📊 Upload performance test results
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: performance-test-results
+          path: |
+            performance-test-results.xml
+            performance-test-results.json
+            load/load-test-results*
+
+  # Job 8: Security and Vulnerability Tests
+  test-security:
+    name: 🔒 Security Assessment
+    runs-on: ubuntu-latest
+    needs: setup
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🔑 Set up Python ${{ env.PYTHON_VERSION }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: 'pip'
+
+      - name: 📦 Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: 🧪 Run security tests
+        run: |
+          pytest -v -m "security or vulnerability or authentication or encryption or owasp" \
+            --tb=line \
+            --maxfail=15 \
+            --durations=30 \
+            --junit-xml=security-test-results.xml \
+            --json-report \
+            --json-report-file=security-test-results.json
+
+      - name: 🔍 OWASP ZAP Baseline Scan
+        uses: zaproxy/action-baseline@v0.7.0
+        with:
+          target: 'http://localhost:8080'
+          rules_file_name: '.zap/rules.tsv'
+          cmd_options: '-a'
+
+      - name: 📊 Upload security test results
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: security-test-results
+          path: |
+            security-test-results.xml
+            security-test-results.json
+
+  # Job 9: Disaster Recovery Tests
+  test-recovery:
+    name: 🔄 Disaster Recovery Tests
+    runs-on: ubuntu-latest
+    needs: setup
+    services:
+      redis:
+        image: redis:${{ env.REDIS_VERSION }}-alpine
+        ports:
+          - 6379:6379
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🔑 Set up Python ${{ env.PYTHON_VERSION }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: 'pip'
+
+      - name: 📦 Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: 🔴 Wait for Redis
+        run: |
+          timeout 30 bash -c 'until echo > /dev/tcp/localhost/6379; do sleep 1; done'
+
+      - name: 🧪 Run disaster recovery tests
+        run: |
+          pytest -v -m "recovery or backup or restore or failover or corruption_recovery" \
+            --tb=line \
+            --maxfail=10 \
+            --durations=30 \
+            --junit-xml=recovery-test-results.xml \
+            --json-report \
+            --json-report-file=recovery-test-results.json
+
+      - name: 📊 Upload recovery test results
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: recovery-test-results
+          path: |
+            recovery-test-results.xml
+            recovery-test-results.json
+
+  # Job 10: CI/CD Automation Tests
+  test-automation:
+    name: ⚙️ CI/CD Automation Tests
+    runs-on: ubuntu-latest
+    needs: setup
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🔑 Set up Python ${{ env.PYTHON_VERSION }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: 'pip'
+
+      - name: 📦 Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: 🧪 Run automation tests
+        run: |
+          pytest -v -m "ci_cd or parallel or orchestration or reporting" \
+            --tb=line \
+            --maxfail=10 \
+            --durations=20 \
+            --junit-xml=automation-test-results.xml \
+            --json-report \
+            --json-report-file=automation-test-results.json
+
+      - name: 📊 Upload automation test results
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: automation-test-results
+          path: |
+            automation-test-results.xml
+            automation-test-results.json
+
+  # Job 11: End-to-End Tests
+  test-e2e:
+    name: 🎯 End-to-End Tests
+    runs-on: ubuntu-latest
+    needs: [setup, quality]
+    services:
+      redis:
+        image: redis:${{ env.REDIS_VERSION }}-alpine
+        ports:
+          - 6379:6379
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    env:
+      REDIS_URL: redis://localhost:6379
+      TEST_MODE: mock
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🔑 Set up Python ${{ env.PYTHON_VERSION }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: 'pip'
+
+      - name: 📦 Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: 🔴 Wait for Redis
+        run: |
+          timeout 30 bash -c 'until echo > /dev/tcp/localhost/6379; do sleep 1; done'
+
+      - name: 🧪 Run end-to-end tests
+        run: |
+          pytest -v -m "e2e or end_to_end" \
+            --tb=short \
+            --maxfail=5 \
+            --durations=30 \
+            --junit-xml=e2e-test-results.xml \
+            --json-report \
+            --json-report-file=e2e-test-results.json
+
+      - name: 📊 Upload e2e test results
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: e2e-test-results
+          path: |
+            e2e-test-results.xml
+            e2e-test-results.json
+
+  # Job 12: Generate Test Reports
+  generate-reports:
+    name: 📊 Generate Test Reports
+    runs-on: ubuntu-latest
+    needs: [
+      test-integration,
+      test-pipeline,
+      test-api,
+      test-agents,
+      test-performance,
+      test-security,
+      test-recovery,
+      test-automation,
+      test-e2e
+    ]
+    if: always()
+    steps:
+      - name: 📥 Download all artifacts
+        uses: actions/download-artifact@v3
+
+      - name: 📊 Generate test summary
+        run: |
+          echo "## 🧪 Test Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          # Count test results
+          total_tests=0
+          total_failures=0
+          
+          for result_dir in */; do
+            if [ -f "${result_dir}*.xml" ]; then
+              tests=$(find "$result_dir" -name "*.xml" -exec grep -o 'tests="[0-9]*"' {} \; | head -1 | grep -o '[0-9]*')
+              failures=$(find "$result_dir" -name "*.xml" -exec grep -o 'failures="[0-9]*"' {} \; | head -1 | grep -o '[0-9]*')
+              
+              if [ ! -z "$tests" ]; then
+                total_tests=$((total_tests + tests))
+                total_failures=$((total_failures + failures))
+                echo "- **${result_dir%/}**: $tests tests, $failures failures" >> $GITHUB_STEP_SUMMARY
+              fi
+            fi
+          done
+          
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Total**: $total_tests tests, $total_failures failures" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          if [ $total_failures -eq 0 ]; then
+            echo "✅ **All tests passed!**" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "❌ **$total_failures tests failed**" >> $GITHUB_STEP_SUMMARY
+          fi
+
+      - name: 📊 Upload combined test results
+        uses: actions/upload-artifact@v3
+        with:
+          name: combined-test-results
+          path: |
+            */**
+
+  # Job 13: Notify Results
+  notify:
+    name: 📢 Notify Results
+    runs-on: ubuntu-latest
+    needs: [generate-reports]
+    if: always()
+    steps:
+      - name: 💬 Notify Slack on failure
+        if: failure()
+        uses: 8398a7/action-slack@v3
+        with:
+          status: failure
+          text: '❌ Trading Pipeline Tests Failed'
+          webhook_url: ${{ secrets.SLACK_WEBHOOK }}
+          fields: repo,message,commit,author,action,eventName,ref,workflow
+
+      - name: 💬 Notify Slack on success
+        if: success()
+        uses: 8398a7/action-slack@v3
+        with:
+          status: success
+          text: '✅ Trading Pipeline Tests Passed'
+          webhook_url: ${{ secrets.SLACK_WEBHOOK }}
+          fields: repo,message,commit,author,action,eventName,ref,workflow
+
+  # Job 14: Performance Regression Analysis
+  performance-regression:
+    name: 📈 Performance Regression
+    runs-on: ubuntu-latest
+    needs: test-performance
+    if: github.event_name == 'pull_request'
+    steps:
+      - name: 📥 Download performance results
+        uses: actions/download-artifact@v3
+        with:
+          name: performance-test-results
+
+      - name: 📈 Analyze performance regression
+        run: |
+          # This would compare current performance with baseline
+          # For now, just create a placeholder analysis
+          echo "## 📈 Performance Analysis" > performance-analysis.md
+          echo "Performance tests completed successfully." >> performance-analysis.md
+          echo "" >> performance-analysis.md
+          echo "### Load Test Results" >> performance-analysis.md
+          echo "- Response time: [To be analyzed]" >> performance-analysis.md
+          echo "- Throughput: [To be analyzed]" >> performance-analysis.md
+          echo "- Error rate: [To be analyzed]" >> performance-analysis.md
+
+      - name: 📊 Upload performance analysis
+        uses: actions/upload-artifact@v3
+        with:
+          name: performance-analysis
+          path: performance-analysis.md

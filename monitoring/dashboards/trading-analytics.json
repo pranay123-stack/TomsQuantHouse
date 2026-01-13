@@ -1,0 +1,312 @@
+{
+  "dashboard": {
+    "id": null,
+    "title": "Trading Analytics Dashboard",
+    "tags": ["trading", "analytics", "business"],
+    "timezone": "UTC",
+    "refresh": "30s",
+    "time": {
+      "from": "now-24h",
+      "to": "now"
+    },
+    "panels": [
+      {
+        "id": 1,
+        "title": "Trading Performance Summary",
+        "type": "stat",
+        "targets": [
+          {
+            "expr": "rate(trading_decisions_total[1h])",
+            "legendFormat": "Decisions/Hour",
+            "refId": "A"
+          },
+          {
+            "expr": "rate(trading_decisions_total{outcome=\"win\"}[1h]) / rate(trading_decisions_total[1h]) * 100",
+            "legendFormat": "Win Rate %",
+            "refId": "B"
+          },
+          {
+            "expr": "rate(trading_profit_total[1h])",
+            "legendFormat": "Profit/Hour",
+            "refId": "C"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "color": {"mode": "thresholds"},
+            "thresholds": {
+              "steps": [
+                {"color": "red", "value": 0},
+                {"color": "yellow", "value": 50},
+                {"color": "green", "value": 75}
+              ]
+            }
+          }
+        },
+        "gridPos": {"h": 8, "w": 12, "x": 0, "y": 0}
+      },
+      {
+        "id": 2,
+        "title": "Algorithm Performance",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "rate(trading_decisions_total{outcome=\"win\"}[5m]) / rate(trading_decisions_total[5m]) * 100",
+            "legendFormat": "{{algorithm}} - Win Rate %",
+            "refId": "A"
+          }
+        ],
+        "yAxes": [
+          {"label": "Win Rate (%)", "min": 0, "max": 100},
+          {"show": false}
+        ],
+        "gridPos": {"h": 8, "w": 12, "x": 12, "y": 0}
+      },
+      {
+        "id": 3,
+        "title": "Trading Volume by Symbol",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "rate(trading_volume_total[5m])",
+            "legendFormat": "{{symbol}}",
+            "refId": "A"
+          }
+        ],
+        "yAxes": [
+          {"label": "Volume/second", "min": 0},
+          {"show": false}
+        ],
+        "gridPos": {"h": 8, "w": 12, "x": 0, "y": 8}
+      },
+      {
+        "id": 4,
+        "title": "Profit/Loss by Algorithm",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "rate(trading_profit_total[5m])",
+            "legendFormat": "{{algorithm}} - {{symbol}}",
+            "refId": "A"
+          }
+        ],
+        "yAxes": [
+          {"label": "Profit/second", "min": 0},
+          {"show": false}
+        ],
+        "gridPos": {"h": 8, "w": 12, "x": 12, "y": 8}
+      },
+      {
+        "id": 5,
+        "title": "Risk Metrics",
+        "type": "stat",
+        "targets": [
+          {
+            "expr": "portfolio_risk_score",
+            "legendFormat": "Risk Score",
+            "refId": "A"
+          },
+          {
+            "expr": "max(trading_var_95[1h])",
+            "legendFormat": "VaR 95%",
+            "refId": "B"
+          },
+          {
+            "expr": "portfolio_drawdown_max",
+            "legendFormat": "Max Drawdown",
+            "refId": "C"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "color": {"mode": "thresholds"},
+            "thresholds": {
+              "steps": [
+                {"color": "green", "value": 0},
+                {"color": "yellow", "value": 0.5},
+                {"color": "red", "value": 0.8}
+              ]
+            }
+          }
+        },
+        "gridPos": {"h": 8, "w": 8, "x": 0, "y": 16}
+      },
+      {
+        "id": 6,
+        "title": "Market Volatility Indicators",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "volatility_indicator",
+            "legendFormat": "{{symbol}}",
+            "refId": "A"
+          }
+        ],
+        "yAxes": [
+          {"label": "Volatility", "min": 0},
+          {"show": false}
+        ],
+        "gridPos": {"h": 8, "w": 8, "x": 8, "y": 16}
+      },
+      {
+        "id": 7,
+        "title": "Order Processing Performance",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "histogram_quantile(0.50, rate(order_processing_duration_seconds_bucket[5m]))",
+            "legendFormat": "50th percentile",
+            "refId": "A"
+          },
+          {
+            "expr": "histogram_quantile(0.90, rate(order_processing_duration_seconds_bucket[5m]))",
+            "legendFormat": "90th percentile",
+            "refId": "B"
+          },
+          {
+            "expr": "histogram_quantile(0.95, rate(order_processing_duration_seconds_bucket[5m]))",
+            "legendFormat": "95th percentile",
+            "refId": "C"
+          }
+        ],
+        "yAxes": [
+          {"label": "Processing Time (s)", "min": 0},
+          {"show": false}
+        ],
+        "gridPos": {"h": 8, "w": 8, "x": 16, "y": 16}
+      },
+      {
+        "id": 8,
+        "title": "Market Data Feed Health",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "rate(market_data_points_total[5m])",
+            "legendFormat": "{{symbol}} - {{exchange}}",
+            "refId": "A"
+          },
+          {
+            "expr": "time() - market_data_last_timestamp",
+            "legendFormat": "Data Age - {{symbol}}",
+            "refId": "B"
+          }
+        ],
+        "yAxes": [
+          {"label": "Points/sec / Age (s)", "min": 0},
+          {"show": false}
+        ],
+        "gridPos": {"h": 8, "w": 12, "x": 0, "y": 24}
+      },
+      {
+        "id": 9,
+        "title": "Position Analysis",
+        "type": "table",
+        "targets": [
+          {
+            "expr": "position_size_bytes",
+            "legendFormat": "{{symbol}}",
+            "refId": "A"
+          }
+        ],
+        "gridPos": {"h": 8, "w": 12, "x": 12, "y": 24}
+      },
+      {
+        "id": 10,
+        "title": "Capital Allocation",
+        "type": "piechart",
+        "targets": [
+          {
+            "expr": "capital_allocation",
+            "legendFormat": "{{symbol}}",
+            "refId": "A"
+          }
+        ],
+        "gridPos": {"h": 8, "w": 12, "x": 0, "y": 32}
+      },
+      {
+        "id": 11,
+        "title": "Settlement Status",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "rate(settlement_successes_total[5m])",
+            "legendFormat": "Success",
+            "refId": "A"
+          },
+          {
+            "expr": "rate(settlement_failures_total[5m])",
+            "legendFormat": "Failures",
+            "refId": "B"
+          }
+        ],
+        "yAxes": [
+          {"label": "Settlements/sec", "min": 0},
+          {"show": false}
+        ],
+        "gridPos": {"h": 8, "w": 12, "x": 12, "y": 32}
+      },
+      {
+        "id": 12,
+        "title": "Algorithm Decision Distribution",
+        "type": "piechart",
+        "targets": [
+          {
+            "expr": "rate(trading_decisions_total[1h])",
+            "legendFormat": "{{algorithm}} - {{outcome}}",
+            "refId": "A"
+          }
+        ],
+        "gridPos": {"h": 8, "w": 24, "x": 0, "y": 40}
+      }
+    ],
+    "templating": {
+      "list": [
+        {
+          "name": "algorithm",
+          "type": "query",
+          "query": "label_values(trading_decisions_total, algorithm)",
+          "refresh": 1,
+          "hide": 0,
+          "multi": true
+        },
+        {
+          "name": "symbol",
+          "type": "query",
+          "query": "label_values(trading_volume_total, symbol)",
+          "refresh": 1,
+          "hide": 0,
+          "multi": true
+        },
+        {
+          "name": "time_range",
+          "type": "interval",
+          "query": "1m,5m,15m,1h,6h,12h,1d",
+          "refresh": 2,
+          "hide": 0
+        }
+      ]
+    },
+    "annotations": {
+      "list": [
+        {
+          "name": "Trading Events",
+          "datasource": "Prometheus",
+          "enable": true,
+          "expr": "increase(trading_decisions_total[1m]) > 0",
+          "titleFormat": "Trading Decision",
+          "textFormat": "{{algorithm}} - {{outcome}}"
+        },
+        {
+          "name": "Risk Events",
+          "datasource": "Prometheus",
+          "enable": true,
+          "expr": "risk_events_total > 0",
+          "titleFormat": "Risk Event",
+          "textFormat": "{{type}} - {{severity}}"
+        }
+      ]
+    }
+  },
+  "folderId": null,
+  "overwrite": true
+}

@@ -1,0 +1,289 @@
+# Enhanced Prometheus Configuration for Trading System
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+  external_labels:
+    cluster: 'trading-system'
+    environment: 'production'
+    datacenter: 'primary'
+
+rule_files:
+  - "/etc/prometheus/alert_rules.yml"
+  - "/etc/prometheus/trading_alerts.yml"
+  - "/etc/prometheus/capacity_alerts.yml"
+
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets:
+          - alertmanager:9093
+    - timeout: 30s
+
+scrape_configs:
+  # Prometheus self-monitoring with enhanced metrics
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+    scrape_interval: 5s
+    metrics_path: '/metrics'
+    honor_labels: true
+
+  # Core API Services
+  - job_name: 'langgraph-api'
+    static_configs:
+      - targets: ['langgraph-api:8000']
+    scrape_interval: 10s
+    metrics_path: '/metrics'
+    scrape_timeout: 8s
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: service
+        replacement: 'langgraph-api'
+
+  - job_name: 'asymedge-api'
+    static_configs:
+      - targets: ['asymedge-api:8002']
+    scrape_interval: 10s
+    metrics_path: '/metrics'
+    scrape_timeout: 8s
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: service
+        replacement: 'asymedge-api'
+
+  - job_name: 'abacus-ai'
+    static_configs:
+      - targets: ['abacus-ai:8001']
+    scrape_interval: 10s
+    metrics_path: '/metrics'
+    scrape_timeout: 8s
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: service
+        replacement: 'abacus-ai'
+
+  - job_name: 'letta-server'
+    static_configs:
+      - targets: ['letta-server:8283']
+    scrape_interval: 10s
+    metrics_path: '/metrics'
+    scrape_timeout: 8s
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: service
+        replacement: 'letta-server'
+
+  - job_name: 'composio'
+    static_configs:
+      - targets: ['composio:3000']
+    scrape_interval: 10s
+    metrics_path: '/metrics'
+    scrape_timeout: 8s
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: service
+        replacement: 'composio'
+
+  # Message Queue & PubSub
+  - job_name: 'pubsub'
+    static_configs:
+      - targets: ['pubsub:8003']
+    scrape_interval: 10s
+    metrics_path: '/metrics'
+    scrape_timeout: 8s
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: service
+        replacement: 'pubsub'
+
+  # Workflow & Security
+  - job_name: 'workflows'
+    static_configs:
+      - targets: ['workflows:8004']
+    scrape_interval: 10s
+    metrics_path: '/metrics'
+    scrape_timeout: 8s
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: service
+        replacement: 'workflows'
+
+  - job_name: 'security'
+    static_configs:
+      - targets: ['security:8005']
+    scrape_interval: 10s
+    metrics_path: '/metrics'
+    scrape_timeout: 8s
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: service
+        replacement: 'security'
+
+  # Database Monitoring with Enhanced Metrics
+  - job_name: 'postgres'
+    static_configs:
+      - targets: ['postgres-exporter:9187']
+    scrape_interval: 30s
+    metrics_path: '/metrics'
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: service
+        replacement: 'postgres'
+      - source_labels: [__param_target]
+        target_label: postgres_exporter_target
+
+  # Redis Monitoring with Enhanced Metrics
+  - job_name: 'redis'
+    static_configs:
+      - targets: ['redis-exporter:9121']
+    scrape_interval: 30s
+    metrics_path: '/metrics'
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: service
+        replacement: 'redis'
+
+  # System Metrics
+  - job_name: 'node-exporter'
+    static_configs:
+      - targets: ['node-exporter:9100']
+    scrape_interval: 30s
+    metrics_path: '/metrics'
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: service
+        replacement: 'node-exporter'
+
+  # Container Metrics
+  - job_name: 'cadvisor'
+    static_configs:
+      - targets: ['cadvisor:8080']
+    scrape_interval: 30s
+    metrics_path: '/metrics'
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: service
+        replacement: 'cadvisor'
+
+  # Load Balancer Metrics
+  - job_name: 'nginx'
+    static_configs:
+      - targets: ['nginx-exporter:9113']
+    scrape_interval: 30s
+    metrics_path: '/nginx_status'
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: service
+        replacement: 'nginx'
+
+  # MQTT Broker Metrics
+  - job_name: 'mosquitto'
+    static_configs:
+      - targets: ['mosquitto-exporter:9618']
+    scrape_interval: 30s
+    metrics_path: '/metrics'
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: service
+        replacement: 'mosquitto'
+
+  # Blackbox Monitoring
+  - job_name: 'blackbox'
+    metrics_path: /probe
+    params:
+      module: [http_2xx]
+    static_configs:
+      - targets:
+        - http://frontend:3000/health
+        - http://langgraph-api:8000/health
+        - http://asymedge-api:8002/health
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: blackbox-exporter:9115
+
+  # SSL/TLS Certificate Monitoring
+  - job_name: 'ssl-certificates'
+    static_configs:
+      - targets: ['blackbox-exporter:9115']
+    metrics_path: /probe
+    params:
+      module: [http_2xx]
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_module]
+        target_label: ssl_module
+
+  # Custom Trading Metrics (if implemented)
+  - job_name: 'trading-metrics'
+    static_configs:
+      - targets: ['trading-collector:8080']
+    scrape_interval: 15s
+    metrics_path: '/trading-metrics'
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: service
+        replacement: 'trading-metrics'
+
+  # Performance Metrics Collector
+  - job_name: 'performance-collector'
+    static_configs:
+      - targets: ['performance-collector:9090']
+    scrape_interval: 20s
+    metrics_path: '/performance-metrics'
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: service
+        replacement: 'performance-collector'
+
+  # Business Metrics Collector
+  - job_name: 'business-metrics'
+    static_configs:
+      - targets: ['business-collector:8080']
+    scrape_interval: 30s
+    metrics_path: '/business-metrics'
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: service
+        replacement: 'business-metrics'
+
+  # Jaeger Tracing Metrics
+  - job_name: 'jaeger'
+    static_configs:
+      - targets: ['jaeger:14269']
+    scrape_interval: 30s
+    metrics_path: '/metrics'
+
+  # Custom Service Discovery for Dynamic Scaling
+  - job_name: 'consul'
+    static_configs:
+      - targets: ['consul:8500']
+    scrape_interval: 30s
+    metrics_path: '/metrics'
+
+remote_write:
+  - url: "http://victoriametrics:8428/api/v1/write"
+    queue_config:
+      max_samples_per_send: 10000
+      max_shards: 200
+      capacity: 2500
+    write_relabel_configs:
+      - source_labels: [__name__]
+        regex: "trading_.*"
+        target_label: __name__
+        replacement: "metrics_$1"
+
+remote_read:
+  - url: "http://victoriametrics:8428/api/v1/read"
+    read_recent: true
+
+# Service Discovery Configuration
+service_discovery_configs:
+  - name: "consul_sd"
+    config:
+      - server: "localhost:8500"
+        services: ["trading-api", "market-data", "risk-engine"]

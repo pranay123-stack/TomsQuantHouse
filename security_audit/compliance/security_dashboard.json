@@ -1,0 +1,239 @@
+{
+  "dashboard": {
+    "title": "Security Metrics Dashboard",
+    "refresh_interval": "30s",
+    "time_range": "24h",
+    "panels": [
+      {
+        "title": "Vulnerability Summary",
+        "type": "stat",
+        "targets": [
+          {
+            "query": "vulnerabilities_total",
+            "legend": "Total Vulnerabilities"
+          },
+          {
+            "query": "vulnerabilities_critical",
+            "legend": "Critical"
+          },
+          {
+            "query": "vulnerabilities_high",
+            "legend": "High"
+          },
+          {
+            "query": "vulnerabilities_medium",
+            "legend": "Medium"
+          },
+          {
+            "query": "vulnerabilities_low",
+            "legend": "Low"
+          }
+        ]
+      },
+      {
+        "title": "Security Incidents (Last 30 Days)",
+        "type": "graph",
+        "targets": [
+          {
+            "query": "security_incidents_total",
+            "legend": "Total Incidents"
+          },
+          {
+            "query": "security_incidents_critical",
+            "legend": "Critical"
+          },
+          {
+            "query": "security_incidents_high",
+            "legend": "High"
+          },
+          {
+            "query": "security_incidents_medium",
+            "legend": "Medium"
+          }
+        ]
+      },
+      {
+        "title": "Authentication Failures",
+        "type": "graph",
+        "targets": [
+          {
+            "query": "auth_failures_total",
+            "legend": "Total Failures"
+          },
+          {
+            "query": "auth_failures_brute_force",
+            "legend": "Brute Force"
+          },
+          {
+            "query": "auth_failures_invalid_credentials",
+            "legend": "Invalid Credentials"
+          }
+        ]
+      },
+      {
+        "title": "API Security Metrics",
+        "type": "stat",
+        "targets": [
+          {
+            "query": "api_requests_total",
+            "legend": "Total Requests"
+          },
+          {
+            "query": "api_requests_blocked",
+            "legend": "Blocked Requests"
+          },
+          {
+            "query": "api_rate_limit_violations",
+            "legend": "Rate Limit Violations"
+          }
+        ]
+      },
+      {
+        "title": "Network Security",
+        "type": "graph",
+        "targets": [
+          {
+            "query": "network_traffic_total",
+            "legend": "Total Traffic (GB)"
+          },
+          {
+            "query": "network_traffic_blocked",
+            "legend": "Blocked Traffic"
+          },
+          {
+            "query": "network_intrusion_attempts",
+            "legend": "Intrusion Attempts"
+          }
+        ]
+      },
+      {
+        "title": "Compliance Status",
+        "type": "table",
+        "targets": [
+          {
+            "query": "compliance_owasp_score",
+            "legend": "OWASP Score"
+          },
+          {
+            "query": "compliance_nist_score",
+            "legend": "NIST Score"
+          },
+          {
+            "query": "compliance_pci_score",
+            "legend": "PCI DSS Score"
+          },
+          {
+            "query": "compliance_iso_score",
+            "legend": "ISO 27001 Score"
+          }
+        ]
+      },
+      {
+        "title": "System Health",
+        "type": "stat",
+        "targets": [
+          {
+            "query": "security_controls_active",
+            "legend": "Active Controls"
+          },
+          {
+            "query": "security_controls_failed",
+            "legend": "Failed Controls"
+          },
+          {
+            "query": "monitoring_systems_up",
+            "legend": "Monitoring Systems Up"
+          }
+        ]
+      },
+      {
+        "title": "Response Time Metrics",
+        "type": "graph",
+        "targets": [
+          {
+            "query": "incident_response_time_avg",
+            "legend": "Avg Response Time (min)"
+          },
+          {
+            "query": "vulnerability_remediation_time_avg",
+            "legend": "Avg Remediation Time (hrs)"
+          },
+          {
+            "query": "patch_deployment_time_avg",
+            "legend": "Avg Patch Time (hrs)"
+          }
+        ]
+      }
+    ]
+  },
+  "alerts": [
+    {
+      "name": "Critical Vulnerability Detected",
+      "condition": "vulnerabilities_critical > 0",
+      "severity": "critical",
+      "message": "Critical vulnerability detected requiring immediate attention"
+    },
+    {
+      "name": "High Number of Failed Logins",
+      "condition": "auth_failures_brute_force > 10",
+      "severity": "warning",
+      "message": "Possible brute force attack detected"
+    },
+    {
+      "name": "Security Incident",
+      "condition": "security_incidents_critical > 0",
+      "severity": "critical",
+      "message": "Critical security incident detected"
+    },
+    {
+      "name": "API Abuse Detected",
+      "condition": "api_rate_limit_violations > 100",
+      "severity": "warning",
+      "message": "API rate limit violations exceeding threshold"
+    },
+    {
+      "name": "Network Intrusion Attempt",
+      "condition": "network_intrusion_attempts > 5",
+      "severity": "warning",
+      "message": "Multiple network intrusion attempts detected"
+    }
+  ],
+  "kpis": [
+    {
+      "name": "Mean Time to Detection (MTTD)",
+      "target": "< 1 hour",
+      "current": "TBD",
+      "unit": "hours"
+    },
+    {
+      "name": "Mean Time to Response (MTTR)",
+      "target": "< 2 hours",
+      "current": "TBD",
+      "unit": "hours"
+    },
+    {
+      "name": "Mean Time to Remediation (MTTR)",
+      "target": "< 24 hours",
+      "current": "TBD",
+      "unit": "hours"
+    },
+    {
+      "name": "Patch Compliance Rate",
+      "target": "> 95%",
+      "current": "TBD",
+      "unit": "percentage"
+    },
+    {
+      "name": "Security Training Completion",
+      "target": "100%",
+      "current": "TBD",
+      "unit": "percentage"
+    },
+    {
+      "name": "Vulnerability Remediation Rate",
+      "target": "> 90%",
+      "current": "TBD",
+      "unit": "percentage"
+    }
+  ]
+}

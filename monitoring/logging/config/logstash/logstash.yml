@@ -1,0 +1,33 @@
+http.host: "0.0.0.0"
+path.config: /usr/share/logstash/pipeline
+path.logs: /usr/share/logstash/logs
+
+# Pipeline configuration
+pipeline.workers: 4
+pipeline.batch.size: 1000
+pipeline.batch.delay: 50
+
+# Persistent queues
+queue.type: persistent
+queue.page_capacity: 64mb
+queue.max_events: 0
+queue.max_size: 1gb
+
+# Dead letter queue
+dead_letter_queue.enable: true
+
+# JVM options
+xms: 1g
+xmx: 1g
+
+# Monitoring
+xpack.monitoring.enabled: true
+xpack.monitoring.collection.enabled: true
+
+# Logging
+log.level: info
+log.format: json
+
+# HTTP API
+http.host: "0.0.0.0"
+http.port: 9600

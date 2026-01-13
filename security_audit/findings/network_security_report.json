@@ -1,0 +1,78 @@
+{
+  "timestamp": "2025-11-02T10:46:26.824227",
+  "scan_type": "Network Security Audit",
+  "open_ports": [],
+  "total_findings": 10,
+  "findings": [
+    {
+      "severity": "MEDIUM",
+      "component": "Docker (docker-compose.dev.yml)",
+      "issue": "Container running as root user",
+      "evidence": "No user specification found",
+      "recommendation": "Specify non-root user for containers"
+    },
+    {
+      "severity": "MEDIUM",
+      "component": "Docker (docker-compose.test.yml)",
+      "issue": "Container running as root user",
+      "evidence": "No user specification found",
+      "recommendation": "Specify non-root user for containers"
+    },
+    {
+      "severity": "MEDIUM",
+      "component": "Docker (docker-compose.yml)",
+      "issue": "Container running as root user",
+      "evidence": "No user specification found",
+      "recommendation": "Specify non-root user for containers"
+    },
+    {
+      "severity": "MEDIUM",
+      "component": "Docker (docker-compose.dev.yml)",
+      "issue": "Container running as root user",
+      "evidence": "No user specification found",
+      "recommendation": "Specify non-root user for containers"
+    },
+    {
+      "severity": "MEDIUM",
+      "component": "Docker (docker-compose.yml)",
+      "issue": "Container running as root user",
+      "evidence": "No user specification found",
+      "recommendation": "Specify non-root user for containers"
+    },
+    {
+      "severity": "MEDIUM",
+      "component": "Docker (docker-compose.yml)",
+      "issue": "Container running as root user",
+      "evidence": "No user specification found",
+      "recommendation": "Specify non-root user for containers"
+    },
+    {
+      "severity": "MEDIUM",
+      "component": "Docker (docker-compose.yml)",
+      "issue": "Container running as root user",
+      "evidence": "No user specification found",
+      "recommendation": "Specify non-root user for containers"
+    },
+    {
+      "severity": "MEDIUM",
+      "component": "Docker (docker-compose.yml)",
+      "issue": "Container running as root user",
+      "evidence": "No user specification found",
+      "recommendation": "Specify non-root user for containers"
+    },
+    {
+      "severity": "MEDIUM",
+      "component": "Docker (docker-compose.tracing.yml)",
+      "issue": "Container running as root user",
+      "evidence": "No user specification found",
+      "recommendation": "Specify non-root user for containers"
+    },
+    {
+      "severity": "HIGH",
+      "component": "Nginx Configuration",
+      "issue": "Deprecated SSL/TLS protocols enabled",
+      "evidence": "Found deprecated protocol versions",
+      "recommendation": "Use only TLSv1.2 and TLSv1.3"
+    }
+  ]
+}

@@ -1,0 +1,393 @@
+# Environment Configuration Management
+# This file defines all environment-specific settings and parameters
+
+environments:
+  development:
+    name: development
+    short_name: dev
+    description: "Development environment for local development and testing"
+    priority: 1
+    
+    # API Configuration
+    api:
+      base_url: "http://localhost:8000"
+      timeout: 30000
+      retry_attempts: 3
+      retry_delay: 1000
+    
+    # Database Configuration
+    database:
+      host: "localhost"
+      port: 5432
+      name: "app_dev"
+      username: "dev_user"
+      password: "${DB_PASSWORD_DEV}"
+      ssl_mode: "disable"
+      max_connections: 20
+      connection_timeout: 30
+      idle_timeout: 300
+      pool_size: 10
+    
+    # Redis Configuration
+    redis:
+      host: "localhost"
+      port: 6379
+      password: "${REDIS_PASSWORD_DEV}"
+      db: 0
+      timeout: 5000
+      max_connections: 20
+    
+    # Logging Configuration
+    logging:
+      level: "DEBUG"
+      format: "json"
+      output: "stdout"
+      max_size: "100MB"
+      max_files: 5
+      retention: "30d"
+    
+    # Security Configuration
+    security:
+      jwt_secret: "${JWT_SECRET_DEV}"
+      jwt_expiry: "24h"
+      bcrypt_rounds: 10
+      session_timeout: 3600
+      max_login_attempts: 5
+      password_min_length: 8
+    
+    # Feature Flags
+    features:
+      debug_mode: true
+      enable_metrics: false
+      enable_profiling: true
+      enable_caching: false
+      enable_rate_limiting: false
+    
+    # External Services
+    external_services:
+      email_provider: "console"
+      storage_provider: "local"
+      payment_provider: "test"
+      notification_provider: "console"
+    
+    # Resource Limits
+    resources:
+      cpu_limit: "0.5"
+      memory_limit: "1Gi"
+      storage_limit: "10Gi"
+      bandwidth_limit: "1Gbps"
+
+  staging:
+    name: staging
+    short_name: staging
+    description: "Staging environment for pre-production testing"
+    priority: 2
+    
+    # API Configuration
+    api:
+      base_url: "https://staging-api.example.com"
+      timeout: 30000
+      retry_attempts: 3
+      retry_delay: 1000
+      rate_limit: 1000
+    
+    # Database Configuration
+    database:
+      host: "${DB_HOST_STAGING}"
+      port: 5432
+      name: "app_staging"
+      username: "${DB_USER_STAGING}"
+      password: "${DB_PASSWORD_STAGING}"
+      ssl_mode: "require"
+      max_connections: 50
+      connection_timeout: 30
+      idle_timeout: 600
+      pool_size: 20
+    
+    # Redis Configuration
+    redis:
+      host: "${REDIS_HOST_STAGING}"
+      port: 6379
+      password: "${REDIS_PASSWORD_STAGING}"
+      db: 0
+      timeout: 5000
+      max_connections: 50
+    
+    # Logging Configuration
+    logging:
+      level: "INFO"
+      format: "json"
+      output: "stdout"
+      max_size: "500MB"
+      max_files: 10
+      retention: "90d"
+    
+    # Security Configuration
+    security:
+      jwt_secret: "${JWT_SECRET_STAGING}"
+      jwt_expiry: "12h"
+      bcrypt_rounds: 12
+      session_timeout: 1800
+      max_login_attempts: 3
+      password_min_length: 12
+    
+    # Feature Flags
+    features:
+      debug_mode: false
+      enable_metrics: true
+      enable_profiling: false
+      enable_caching: true
+      enable_rate_limiting: true
+    
+    # External Services
+    external_services:
+      email_provider: "sendgrid"
+      storage_provider: "s3"
+      payment_provider: "stripe_test"
+      notification_provider: "email"
+    
+    # Resource Limits
+    resources:
+      cpu_limit: "2"
+      memory_limit: "4Gi"
+      storage_limit: "100Gi"
+      bandwidth_limit: "10Gbps"
+
+  production:
+    name: production
+    short_name: prod
+    description: "Production environment for live services"
+    priority: 3
+    
+    # API Configuration
+    api:
+      base_url: "https://api.example.com"
+      timeout: 30000
+      retry_attempts: 5
+      retry_delay: 2000
+      rate_limit: 10000
+    
+    # Database Configuration
+    database:
+      host: "${DB_HOST_PROD}"
+      port: 5432
+      name: "app_prod"
+      username: "${DB_USER_PROD}"
+      password: "${DB_PASSWORD_PROD}"
+      ssl_mode: "require"
+      max_connections: 100
+      connection_timeout: 15
+      idle_timeout: 1200
+      pool_size: 50
+    
+    # Redis Configuration
+    redis:
+      host: "${REDIS_HOST_PROD}"
+      port: 6379
+      password: "${REDIS_PASSWORD_PROD}"
+      db: 0
+      timeout: 3000
+      max_connections: 100
+    
+    # Logging Configuration
+    logging:
+      level: "WARNING"
+      format: "json"
+      output: "syslog"
+      max_size: "1GB"
+      max_files: 30
+      retention: "365d"
+    
+    # Security Configuration
+    security:
+      jwt_secret: "${JWT_SECRET_PROD}"
+      jwt_expiry: "1h"
+      bcrypt_rounds: 14
+      session_timeout: 900
+      max_login_attempts: 3
+      password_min_length: 16
+    
+    # Feature Flags
+    features:
+      debug_mode: false
+      enable_metrics: true
+      enable_profiling: false
+      enable_caching: true
+      enable_rate_limiting: true
+    
+    # External Services
+    external_services:
+      email_provider: "sendgrid"
+      storage_provider: "s3"
+      payment_provider: "stripe_live"
+      notification_provider: "email"
+    
+    # Resource Limits
+    resources:
+      cpu_limit: "8"
+      memory_limit: "16Gi"
+      storage_limit: "1Ti"
+      bandwidth_limit: "100Gbps"
+
+# Global Configuration
+global:
+  # Application Settings
+  app:
+    name: "Environment Management System"
+    version: "1.0.0"
+    port: 8080
+    host: "0.0.0.0"
+    
+  # Environment Validation
+  validation:
+    required_env_vars:
+      - "JWT_SECRET"
+      - "DB_PASSWORD"
+      - "REDIS_PASSWORD"
+    
+    optional_env_vars:
+      - "SENTRY_DSN"
+      - "ANALYTICS_API_KEY"
+      - "FEATURE_FLAGS"
+    
+    validation_rules:
+      - name: "password_strength"
+        min_length: 8
+        require_uppercase: true
+        require_lowercase: true
+        require_numbers: true
+        require_symbols: true
+      
+      - name: "url_format"
+        pattern: "^https?://"
+        description: "URLs must start with http:// or https://"
+      
+      - name: "port_range"
+        min: 1
+        max: 65535
+        description: "Port must be between 1 and 65535"
+      
+      - name: "time_format"
+        pattern: "^[0-9]+[smhd]$"
+        description: "Time format must be number followed by unit (s/m/h/d)"
+
+# Environment Variables Templates
+env_templates:
+  development:
+    template_file: ".env.development"
+    variables:
+      - name: "NODE_ENV"
+        value: "development"
+        description: "Node.js environment mode"
+        required: true
+      
+      - name: "DB_PASSWORD_DEV"
+        value: "changeme_dev_password"
+        description: "Development database password"
+        required: true
+        sensitive: true
+      
+      - name: "REDIS_PASSWORD_DEV"
+        value: "changeme_redis_password"
+        description: "Development Redis password"
+        required: true
+        sensitive: true
+      
+      - name: "JWT_SECRET_DEV"
+        value: "your-super-secret-jwt-key-dev"
+        description: "JWT secret for development"
+        required: true
+        sensitive: true
+      
+      - name: "DEBUG"
+        value: "true"
+        description: "Enable debug mode"
+        required: false
+
+  staging:
+    template_file: ".env.staging"
+    variables:
+      - name: "NODE_ENV"
+        value: "staging"
+        description: "Node.js environment mode"
+        required: true
+      
+      - name: "DB_HOST_STAGING"
+        value: ""
+        description: "Staging database host"
+        required: true
+        sensitive: false
+      
+      - name: "DB_USER_STAGING"
+        value: ""
+        description: "Staging database username"
+        required: true
+        sensitive: false
+      
+      - name: "DB_PASSWORD_STAGING"
+        value: ""
+        description: "Staging database password"
+        required: true
+        sensitive: true
+      
+      - name: "REDIS_HOST_STAGING"
+        value: ""
+        description: "Staging Redis host"
+        required: true
+        sensitive: false
+      
+      - name: "REDIS_PASSWORD_STAGING"
+        value: ""
+        description: "Staging Redis password"
+        required: true
+        sensitive: true
+      
+      - name: "JWT_SECRET_STAGING"
+        value: ""
+        description: "JWT secret for staging"
+        required: true
+        sensitive: true
+
+  production:
+    template_file: ".env.production"
+    variables:
+      - name: "NODE_ENV"
+        value: "production"
+        description: "Node.js environment mode"
+        required: true
+      
+      - name: "DB_HOST_PROD"
+        value: ""
+        description: "Production database host"
+        required: true
+        sensitive: true
+      
+      - name: "DB_USER_PROD"
+        value: ""
+        description: "Production database username"
+        required: true
+        sensitive: false
+      
+      - name: "DB_PASSWORD_PROD"
+        value: ""
+        description: "Production database password"
+        required: true
+        sensitive: true
+      
+      - name: "REDIS_HOST_PROD"
+        value: ""
+        description: "Production Redis host"
+        required: true
+        sensitive: true
+      
+      - name: "REDIS_PASSWORD_PROD"
+        value: ""
+        description: "Production Redis password"
+        required: true
+        sensitive: true
+      
+      - name: "JWT_SECRET_PROD"
+        value: ""
+        description: "JWT secret for production"
+        required: true
+        sensitive: true

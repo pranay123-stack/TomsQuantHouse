@@ -1,0 +1,329 @@
+{
+  "dashboard": {
+    "id": null,
+    "title": "Capacity Planning & Resource Utilization",
+    "tags": ["capacity", "planning", "resources"],
+    "timezone": "UTC",
+    "refresh": "1m",
+    "time": {
+      "from": "now-7d",
+      "to": "now"
+    },
+    "panels": [
+      {
+        "id": 1,
+        "title": "Current Resource Utilization",
+        "type": "stat",
+        "targets": [
+          {
+            "expr": "(1 - avg(rate(node_cpu_seconds_total{mode=\"idle\"}[5m]))) * 100",
+            "legendFormat": "CPU Usage %",
+            "refId": "A"
+          },
+          {
+            "expr": "(1 - (node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes)) * 100",
+            "legendFormat": "Memory Usage %",
+            "refId": "B"
+          },
+          {
+            "expr": "container_memory_usage_bytes / container_spec_memory_limit_bytes * 100",
+            "legendFormat": "Container Memory %",
+            "refId": "C"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "color": {"mode": "thresholds"},
+            "thresholds": {
+              "steps": [
+                {"color": "green", "value": 0},
+                {"color": "yellow", "value": 70},
+                {"color": "red", "value": 90}
+              ]
+            }
+          }
+        },
+        "gridPos": {"h": 8, "w": 12, "x": 0, "y": 0}
+      },
+      {
+        "id": 2,
+        "title": "Historical CPU Utilization (7 days)",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "(1 - avg(rate(node_cpu_seconds_total{mode=\"idle\"}[1h]))) * 100",
+            "legendFormat": "{{instance}}",
+            "refId": "A"
+          }
+        ],
+        "yAxes": [
+          {"label": "CPU Usage (%)", "min": 0, "max": 100},
+          {"show": false}
+        ],
+        "gridPos": {"h": 8, "w": 12, "x": 12, "y": 0}
+      },
+      {
+        "id": 3,
+        "title": "Memory Usage Trends",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "node_memory_MemTotal_bytes / 1024 / 1024 / 1024",
+            "legendFormat": "Total - {{instance}}",
+            "refId": "A"
+          },
+          {
+            "expr": "node_memory_MemAvailable_bytes / 1024 / 1024 / 1024",
+            "legendFormat": "Available - {{instance}}",
+            "refId": "B"
+          },
+          {
+            "expr": "node_memory_MemUsed_bytes / 1024 / 1024 / 1024",
+            "legendFormat": "Used - {{instance}}",
+            "refId": "C"
+          }
+        ],
+        "yAxes": [
+          {"label": "Memory (GB)", "min": 0},
+          {"show": false}
+        ],
+        "gridPos": {"h": 8, "w": 12, "x": 0, "y": 8}
+      },
+      {
+        "id": 4,
+        "title": "Storage Capacity Trends",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "node_filesystem_size_bytes / 1024 / 1024 / 1024",
+            "legendFormat": "Total - {{instance}} - {{mountpoint}}",
+            "refId": "A"
+          },
+          {
+            "expr": "node_filesystem_avail_bytes / 1024 / 1024 / 1024",
+            "legendFormat": "Available - {{instance}} - {{mountpoint}}",
+            "refId": "B"
+          },
+          {
+            "expr": "(node_filesystem_size_bytes - node_filesystem_avail_bytes) / 1024 / 1024 / 1024",
+            "legendFormat": "Used - {{instance}} - {{mountpoint}}",
+            "refId": "C"
+          }
+        ],
+        "yAxes": [
+          {"label": "Storage (GB)", "min": 0},
+          {"show": false}
+        ],
+        "gridPos": {"h": 8, "w": 12, "x": 12, "y": 8}
+      },
+      {
+        "id": 5,
+        "title": "Database Capacity Analysis",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "pg_database_size_bytes / 1024 / 1024 / 1024",
+            "legendFormat": "DB Size - {{datname}} - {{instance}}",
+            "refId": "A"
+          },
+          {
+            "expr": "pg_stat_database_numbackends",
+            "legendFormat": "Connections - {{datname}} - {{instance}}",
+            "refId": "B"
+          }
+        ],
+        "yAxes": [
+          {"label": "Size (GB) / Connections", "min": 0},
+          {"show": false}
+        ],
+        "gridPos": {"h": 8, "w": 12, "x": 0, "y": 16}
+      },
+      {
+        "id": 6,
+        "title": "Network Bandwidth Utilization",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "rate(node_network_receive_bytes_total[1h]) / 1024 / 1024",
+            "legendFormat": "Rx - {{instance}} - {{device}}",
+            "refId": "A"
+          },
+          {
+            "expr": "rate(node_network_transmit_bytes_total[1h]) / 1024 / 1024",
+            "legendFormat": "Tx - {{instance}} - {{device}}",
+            "refId": "B"
+          }
+        ],
+        "yAxes": [
+          {"label": "Bandwidth (MB/s)", "min": 0},
+          {"show": false}
+        ],
+        "gridPos": {"h": 8, "w": 12, "x": 12, "y": 16}
+      },
+      {
+        "id": 7,
+        "title": "Container Resource Usage",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "rate(container_cpu_usage_seconds_total[5m]) * 100",
+            "legendFormat": "CPU % - {{container}}",
+            "refId": "A"
+          },
+          {
+            "expr": "container_memory_usage_bytes / 1024 / 1024 / 1024",
+            "legendFormat": "Memory GB - {{container}}",
+            "refId": "B"
+          }
+        ],
+        "yAxes": [
+          {"label": "CPU % / Memory GB", "min": 0},
+          {"show": false}
+        ],
+        "gridPos": {"h": 8, "w": 12, "x": 0, "y": 24}
+      },
+      {
+        "id": 8,
+        "title": "Message Queue Capacity",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "rabbitmq_queue_messages",
+            "legendFormat": "Queue Depth - {{queue}}",
+            "refId": "A"
+          },
+          {
+            "expr": "rabbitmq_queue_memory_bytes / 1024 / 1024",
+            "legendFormat": "Memory MB - {{queue}}",
+            "refId": "B"
+          }
+        ],
+        "yAxes": [
+          {"label": "Messages / Memory (MB)", "min": 0},
+          {"show": false}
+        ],
+        "gridPos": {"h": 8, "w": 12, "x": 12, "y": 24}
+      },
+      {
+        "id": 9,
+        "title": "Predictive Capacity Analysis (24h forecast)",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "predict_linear(node_memory_MemAvailable_bytes[6h], 24*3600) / 1024 / 1024 / 1024",
+            "legendFormat": "Forecast Memory Available - {{instance}}",
+            "refId": "A"
+          },
+          {
+            "expr": "node_memory_MemAvailable_bytes / 1024 / 1024 / 1024",
+            "legendFormat": "Current Memory Available - {{instance}}",
+            "refId": "B"
+          }
+        ],
+        "yAxes": [
+          {"label": "Memory (GB)", "min": 0},
+          {"show": false}
+        ],
+        "gridPos": {"h": 8, "w": 12, "x": 0, "y": 32}
+      },
+      {
+        "id": 10,
+        "title": "Storage Capacity Forecast",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "predict_linear(node_filesystem_avail_bytes[6h], 48*3600) / 1024 / 1024 / 1024",
+            "legendFormat": "Forecast Storage Available - {{instance}} - {{mountpoint}}",
+            "refId": "A"
+          },
+          {
+            "expr": "node_filesystem_avail_bytes / 1024 / 1024 / 1024",
+            "legendFormat": "Current Storage Available - {{instance}} - {{mountpoint}}",
+            "refId": "B"
+          }
+        ],
+        "yAxes": [
+          {"label": "Storage (GB)", "min": 0},
+          {"show": false}
+        ],
+        "gridPos": {"h": 8, "w": 12, "x": 12, "y": 32}
+      },
+      {
+        "id": 11,
+        "title": "Resource Optimization Recommendations",
+        "type": "table",
+        "targets": [
+          {
+            "expr": "ALERTS{alertname=~\".*Scaling.*|.*Capacity.*\"}",
+            "legendFormat": "{{alertname}} - {{labels.instance}}",
+            "refId": "A"
+          }
+        ],
+        "gridPos": {"h": 8, "w": 12, "x": 0, "y": 40}
+      },
+      {
+        "id": 12,
+        "title": "Scaling Events History",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "kube_deployment_status_replicas",
+            "legendFormat": "Desired Replicas - {{deployment}}",
+            "refId": "A"
+          },
+          {
+            "expr": "kube_deployment_status_replicas_available",
+            "legendFormat": "Available Replicas - {{deployment}}",
+            "refId": "B"
+          }
+        ],
+        "yAxes": [
+          {"label": "Replicas", "min": 0},
+          {"show": false}
+        ],
+        "gridPos": {"h": 8, "w": 12, "x": 12, "y": 40}
+      }
+    ],
+    "templating": {
+      "list": [
+        {
+          "name": "instance",
+          "type": "query",
+          "query": "label_values(node_memory_MemTotal_bytes, instance)",
+          "refresh": 1,
+          "hide": 0,
+          "multi": true
+        },
+        {
+          "name": "time_range",
+          "type": "interval",
+          "query": "1h,6h,12h,1d,7d",
+          "refresh": 2,
+          "hide": 0
+        },
+        {
+          "name": "forecast_hours",
+          "type": "custom",
+          "query": "24,48,72",
+          "refresh": 1,
+          "hide": 0,
+          "multi": false
+        }
+      ]
+    },
+    "annotations": {
+      "list": [
+        {
+          "name": "Scaling Events",
+          "datasource": "Prometheus",
+          "enable": true,
+          "expr": "kube_deployment_status_replicas > kube_deployment_status_replicas_available",
+          "titleFormat": "Scaling Event",
+          "textFormat": "Scaling {{labels.deployment}} - {{value}} replicas"
+        }
+      ]
+    }
+  },
+  "folderId": null,
+  "overwrite": true
+}
